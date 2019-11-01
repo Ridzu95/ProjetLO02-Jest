@@ -21,8 +21,43 @@ public class Controller {
             System.out.println("erreur");
         }
 
+        System.out.println("Création des joueurs");
+
         Partie partie = new Partie(nbJoueurs);
         partie.debuterPartie();
+
+        System.out.println("Invocation des cartes");
+
+        Carte joker = new Carte(0, "joker", "Best Jest");
+        Carte asDeCoeur = new Carte(1, "Coeur", "Joker");
+        Carte deuxDeCoeur = new Carte(2, "Coeur", "Joker");
+        Carte troisDeCoeur = new Carte(3, "Coeur", "Joker");
+        Carte quatreDeCoeur = new Carte(4, "Coeur", "Joker");
+        Carte asDeCarreau = new Carte(1, "Carreau", "Majority 4");
+        Carte deuxDeCarreau = new Carte(2, "Carreau", "Highest Carreau");
+        Carte troisDeCarreau = new Carte(3, "Carreau", "Lowest Carreau");
+        Carte quatreDeCarreau = new Carte(4, "Carreau", "Best Jest No Joker");
+        Carte asDePique = new Carte(1, "Pique", "Highest Trefle");
+        Carte deuxDePique = new Carte(2, "Pique", "Majority 3");
+        Carte troisDePique = new Carte(3, "Pique", "Majority 2");
+        Carte quatreDePique = new Carte(4, "Pique", "Lowest Trefle");
+        Carte asDeTrefle = new Carte(1, "Trefle", "Highest Pique");
+        Carte deuxDeTrefle = new Carte(2, "Trefle", "Lowest Coeur");
+        Carte troisDeTrefle = new Carte(3, "Trefle", "Highest Coeur");
+        Carte quatreDeTrefle = new Carte(4, "Trefle", "Lowest Pique");
+
+        public enum Cartes {
+            joker,
+            asDeCoeur,
+            deuxDeCoeur,
+            troisDeCoeur,
+            // à faire quoi
+        }
+
+        for (Cartes carte : Cartes.values()) {
+            partie.addToPioche(carte);
+        }
+        partie.distribuerCartes();
 
         /* Partie partie = new Partie();
 

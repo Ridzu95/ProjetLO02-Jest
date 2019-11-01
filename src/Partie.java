@@ -1,10 +1,13 @@
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Partie implements Variante {
 
 	private int nbJoueurs;
 	// private Variante variante;
+	private ArrayList<Carte> pioche;
 	private int tour;
-	
+
 	public Partie(int nbJoueurs) {
 		this.nbJoueurs = nbJoueurs;
 		// this.variante = variante;
@@ -19,8 +22,22 @@ public class Partie implements Variante {
 	}
 	
 	public void debuterPartie() {
-		System.out.println("Vous avez choisi une partie à " + this.nbJoueurs + " joueurs, il faut donc créer " + (this.nbJoueurs - 1) + " bots.");
 
+		System.out.println("Vous avez choisi une partie à " + this.nbJoueurs + " joueurs, il faut donc créer " + (this.nbJoueurs - 1) + " bots.");
+		System.out.println("Choisissez votre nom d'utilisateur : ");
+		Scanner sc = new Scanner(System.in);
+		String username = sc.nextLine();
+		JoueurReel humain = new JoueurReel(1, username);
+
+		if (this.nbJoueurs == 3) {
+			JoueurVirtuel joueur_2 = new JoueurVirtuel(1);
+			JoueurVirtuel joueur_3 = new JoueurVirtuel(1);
+		}
+		else if (this.nbJoueurs == 4) {
+			JoueurVirtuel joueur_2 = new JoueurVirtuel(1);
+			JoueurVirtuel joueur_3 = new JoueurVirtuel(1);
+			JoueurVirtuel joueur_4 = new JoueurVirtuel(1);
+		}
 		//créer les joueurs
 		//le reste se fait dans le main ?
 	}
@@ -52,5 +69,16 @@ public class Partie implements Variante {
 	public int getNbJoueurs() {
 		return this.nbJoueurs;
 	}
-	
+
+	public ArrayList<Carte> getPioche() {
+		return pioche;
+	}
+
+	public void setPioche(ArrayList<Carte> pioche) {
+		this.pioche = pioche;
+	}
+
+	public void addToPioche(Carte carte) {
+		this.pioche.add(carte);
+	}
 }

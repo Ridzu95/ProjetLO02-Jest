@@ -1,12 +1,17 @@
+import java.util.ArrayList;
 
 public class Joueur {
 	
-	public int id;
-	public Carte[] main;
-	public Carte[] jest;
-	
+	protected int id;
+	protected ArrayList<Carte> main;
+	protected ArrayList<Carte> jest;
+
 	public Joueur() {
-		id = 0;
+		this.id = 0;
+	}
+
+	public Joueur(int id) {
+		this.id = id;
 	}
 	
 	public void faireOffre() { //va appeller soit faireOffre de virtuel ou réel

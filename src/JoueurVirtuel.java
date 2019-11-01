@@ -1,11 +1,12 @@
 
 public class JoueurVirtuel extends Joueur implements Strategie{
 	
-	private Strategie strategie;
+	// private Strategie strategie;
 	private int niveau;
 	
 	public JoueurVirtuel(int niveau) {
 		super();
+		// this.strategie = strategie;
 		this.niveau = niveau;
 	}
 	
