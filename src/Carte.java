@@ -3,7 +3,7 @@ public class Carte {
 	
 	private int valeur;
 	private String couleur;
-	private int trophé;
+	private int trophee;
 	private boolean visible;
 	
 	public Carte() {
