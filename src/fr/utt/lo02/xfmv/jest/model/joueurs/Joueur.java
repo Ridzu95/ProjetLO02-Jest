@@ -4,7 +4,7 @@ import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 
 import java.util.ArrayList;
 
-public class Joueur {
+public abstract class Joueur {
 	
 	protected int id;
 	protected ArrayList<Carte> main;

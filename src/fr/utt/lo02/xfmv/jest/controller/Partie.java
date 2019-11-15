@@ -15,38 +15,16 @@ public class Partie implements Variante {
 	private ArrayList<Carte> pioche;
 	private int tour;
 
-	public Partie(int nbJoueurs) {
-		this.nbJoueurs = nbJoueurs;
-		// this.variante = variante;
-		//this.nbJoueurs = variante.nbJoueurs(); // méthode qui va renvoyer le nb de joueurs selon la variante (3 ou 4)
-		//on fait des actions en fonction de la variante
-		this.tour = 1;
-	}
+	private Partie() {}
 	
-	public Partie() { //partie créee par défaut
-		this.tour = 1;
-		//créer la pioche
+	private static Partie partie = new Partie();
+
+	public static Partie getInstance() {
+		return partie;
 	}
-	
+
 	public void debuterPartie() {
-
-		System.out.println("Vous avez choisi une partie à " + this.nbJoueurs + " joueurs, il faut donc créer " + (this.nbJoueurs - 1) + " bots.");
-		System.out.println("Choisissez votre nom d'utilisateur : ");
-		Scanner sc = new Scanner(System.in);
-		String username = sc.nextLine();
-		JoueurReel humain = new JoueurReel(1, username);
-
-		if (this.nbJoueurs == 3) {
-			JoueurVirtuel joueur_2 = new JoueurVirtuel(1);
-			JoueurVirtuel joueur_3 = new JoueurVirtuel(1);
-		}
-		else if (this.nbJoueurs == 4) {
-			JoueurVirtuel joueur_2 = new JoueurVirtuel(1);
-			JoueurVirtuel joueur_3 = new JoueurVirtuel(1);
-			JoueurVirtuel joueur_4 = new JoueurVirtuel(1);
-		}
-		//créer les joueurs
-		//le reste se fait dans le main ?
+		
 	}
 	
 	public void distribuerCartes() { //est appellé en début de chaque tour

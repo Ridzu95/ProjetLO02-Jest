@@ -2,23 +2,19 @@ package fr.utt.lo02.xfmv.jest.model.cartes;
 
 public class Carte {
 	
-	private int valeur;
-	private String couleur;
-	private String trophee;
+	private Valeurs valeur;
+	private Couleurs couleur;
+	private Trophees trophee;
 	private boolean visible;
 	
 	public Carte() {
-		this.valeur = 0;
-		this.couleur = "";
-		this.trophee = "";
-		this.visible = false;
+
 	}
 
-	public Carte(int valeur, String couleur, String trophee) {
+	public Carte(Valeurs valeur, Couleurs couleur, Trophees trophee) {
 		this.valeur = valeur;
 		this.couleur = couleur;
 		this.trophee = trophee;
-		this.visible = true;
 	}
 
 	public String getCouleur() {
