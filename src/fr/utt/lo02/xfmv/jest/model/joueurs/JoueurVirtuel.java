@@ -1,5 +1,10 @@
 package fr.utt.lo02.xfmv.jest.model.joueurs;
 
+import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
+import fr.utt.lo02.xfmv.jest.model.strategie.Strategie;
+
+import java.util.ArrayList;
+
 public class JoueurVirtuel extends Joueur implements Strategie {
 	
 	// private Strategie strategie;
@@ -7,8 +12,9 @@ public class JoueurVirtuel extends Joueur implements Strategie {
 	
 	public JoueurVirtuel(int niveau) {
 		super();
-		// this.strategie = strategie;
 		this.niveau = niveau;
+		this.main = new ArrayList<Carte>();
+		this.jest = new ArrayList<Carte>();
 	}
 	
 	public void faireOffre() {

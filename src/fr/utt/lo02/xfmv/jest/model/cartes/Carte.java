@@ -11,25 +11,20 @@ public class Carte {
 
 	}
 
-	public Carte(Valeurs valeur, Couleurs couleur, Trophees trophee) {
+	public Carte(Valeurs valeur, Couleurs couleur) {
 		this.valeur = valeur;
 		this.couleur = couleur;
-		this.trophee = trophee;
 	}
 
-	public String getCouleur() {
+	public Couleurs getCouleur() {
 		return couleur;
 	}
 
-	public void setCouleur(String couleur) {
+	public void setCouleur(Couleurs couleur) {
 		this.couleur = couleur;
 	}
 
-	public int getTrophee() {
-		return trophee;
-	}
-
-	public void setTrophee(int trophee) {
+	public void setTrophee(Trophees trophee) {
 		this.trophee = trophee;
 	}
 
@@ -41,20 +36,14 @@ public class Carte {
 		this.visible = visible;
 	}
 
-	public int getValeur() {
+	public Valeurs getValeur() {
 		return valeur;
 	}
 
-	public void setValeur(int valeur) {
+	public void setValeur(Valeurs valeur) {
 		this.valeur = valeur;
 	}
 
-	public Carte(int valeur, String couleur) {
-		this.valeur = valeur;
-		this.couleur = couleur;
-		this.visible = false;
-	}
-	
 	public void montrer() {
 		this.visible = true;
 	}
@@ -64,7 +53,7 @@ public class Carte {
 	}
 	
 	public String toString(){
-	      return  valeur +" de "+couleur;
+	      return  valeur + " de " + couleur;
 	}
 	
 	

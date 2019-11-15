@@ -1,7 +1,6 @@
 package fr.utt.lo02.xfmv.jest.model.cartes;
 
 public enum Valeurs {
-    Un(1),
     Deux(2),
     Trois(3),
     Quatre(4),

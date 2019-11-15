@@ -1,5 +1,10 @@
 package fr.utt.lo02.xfmv.jest.model.joueurs;
 
+import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class JoueurReel extends Joueur {
 	
 	private String pseudo;
@@ -13,6 +18,8 @@ public class JoueurReel extends Joueur {
 		super();
 		this.id = id;
 		this.pseudo = username;
+		this.main = new ArrayList<Carte>();
+		this.jest = new ArrayList<Carte>();
 	}
 
 	public void faireOffre() {
