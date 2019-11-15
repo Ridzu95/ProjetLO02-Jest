@@ -9,6 +9,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Console.welcomeMessage();
-        Partie.getInstance().debuterPartie();
+        Partie.getInstance().initialiserPartie();
     }
 }

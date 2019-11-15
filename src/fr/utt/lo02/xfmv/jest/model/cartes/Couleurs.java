@@ -1,10 +1,11 @@
 package fr.utt.lo02.xfmv.jest.model.cartes;
 
 public enum Couleurs {
-    Coeur("Coeur", 1),
-    Carreau("Carreau", 2),
-    Trefle("Trefle", 3),
-    Pique("Pique", 4);
+    Coeur("♥", 1),
+    Carreau("♦", 2),
+    Trefle("♣", 3),
+    Pique("♠", 4),
+    Joker("★", 5);
 
     private String couleur;
     private int ordre;

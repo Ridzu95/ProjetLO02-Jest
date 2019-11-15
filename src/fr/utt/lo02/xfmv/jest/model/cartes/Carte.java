@@ -7,13 +7,12 @@ public class Carte {
 	private Trophees trophee;
 	private boolean visible;
 	
-	public Carte() {
-
-	}
+	public Carte() {}
 
 	public Carte(Valeurs valeur, Couleurs couleur) {
 		this.valeur = valeur;
 		this.couleur = couleur;
+		this.visible = true;
 	}
 
 	public Couleurs getCouleur() {
@@ -53,7 +52,12 @@ public class Carte {
 	}
 	
 	public String toString(){
-	      return  valeur + " de " + couleur;
+		if(this.couleur == Couleurs.Joker) {
+			return String.valueOf(this.couleur.getCouleur());
+		}
+		else {
+			return valeur.getValeur() + couleur.getCouleur();
+		}
 	}
 	
 	

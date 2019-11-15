@@ -4,6 +4,7 @@ import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 import fr.utt.lo02.xfmv.jest.model.strategie.Strategie;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class JoueurVirtuel extends Joueur implements Strategie {
 	
@@ -13,7 +14,7 @@ public class JoueurVirtuel extends Joueur implements Strategie {
 	public JoueurVirtuel(int niveau) {
 		super();
 		this.niveau = niveau;
-		this.main = new ArrayList<Carte>();
+		this.main = new LinkedList<Carte>();
 		this.jest = new ArrayList<Carte>();
 	}
 	

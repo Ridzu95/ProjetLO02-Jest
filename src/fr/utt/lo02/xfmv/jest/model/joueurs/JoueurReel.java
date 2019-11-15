@@ -4,6 +4,7 @@ import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class JoueurReel extends Joueur {
 	
@@ -11,14 +12,14 @@ public class JoueurReel extends Joueur {
 
 	public JoueurReel() {
 		super();
-		this.pseudo = "null";
+		this.pseudo = "Joueur";
 	}
 
 	public JoueurReel(int id, String username) {
 		super();
 		this.id = id;
 		this.pseudo = username;
-		this.main = new ArrayList<Carte>();
+		this.main = new LinkedList<Carte>();
 		this.jest = new ArrayList<Carte>();
 	}
 

@@ -23,6 +23,7 @@ public class Partie implements Variante {
 	private Partie() {
 		pioche = new LinkedList<Carte>();
 		tropheesPartie = new ArrayList<Carte>();
+		joueurs = new ArrayList<Joueur>();
 		this.tour = 1;
 	}
 	
@@ -32,34 +33,41 @@ public class Partie implements Variante {
 		return partie;
 	}
 
-	public void debuterPartie() {
+	public void initialiserPartie() {
 
 		for (Couleurs couleur : Couleurs.values()) {
 			for (Valeurs valeur : Valeurs.values()) {
-				this.pioche.add(new Carte(valeur, couleur));
+				if (couleur != Couleurs.Joker && valeur != Valeurs.Joker) {
+					this.pioche.add(new Carte(valeur, couleur));
+				}
 			}
 		}
+
+		this.pioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
 
 		JoueurReel player = new JoueurReel(1, Console.playerUsernameChoice());
 		JoueurVirtuel bot1 = new JoueurVirtuel(1);
 		JoueurVirtuel bot2 = new JoueurVirtuel(1);
-		joueurs.add(player);
-		joueurs.add(bot1);
-		joueurs.add(bot2);
+
+		this.joueurs.add(player);
+		this.joueurs.add(bot1);
+		this.joueurs.add(bot2);
 
 		this.distribuerCartes();
-
+		this.jouerPartie();
 
 		return;
 	}
 	
 	public void distribuerCartes() {
-		Collections.shuffle(pioche);
+		Collections.shuffle(this.pioche);
 
 		if (this.tour == 1) {
 
 			this.tropheesPartie.add(this.pioche.poll());
 			this.tropheesPartie.add(this.pioche.poll());
+
+			this.activerTrophees();
 
 			for (Joueur i : joueurs) {
 				i.getMain().add(this.pioche.poll());
@@ -69,15 +77,39 @@ public class Partie implements Variante {
 			return ;
 		}
 		else {
+
+			for(Joueur i : joueurs) {
+				this.pioche.add(i.getMain().poll());
+			}
+
+			Collections.shuffle(this.pioche);
+
+			for (Joueur i : joueurs) {
+				i.getMain().add(this.pioche.poll());
+				i.getMain().add(this.pioche.poll());
+			}
+
 			return ;
 		}
 	}
-	
-	public void terminerTour() { 
-		
+
+	public void jouerPartie() {
+
+		for(Joueur joueur : joueurs) {
+			if(joueur instanceof JoueurReel) {
+				this.choisirCarteCachee((JoueurReel) joueur);
+			}
+		}
+
+		return;
+	}
+
+	public void choisirCarteCachee(JoueurReel joueur) {
+		joueur.getMain().get(Console.cardChoice(joueur)).setVisible(false);
+		Console.tellHiddenCard(joueur);
 	}
 	
-	public void declarerVainqueur() { //est appellé en fin de partie
+	public void declarerVainqueur() { //est appellÃ© en fin de partie
 		
 	}
 
@@ -97,15 +129,21 @@ public class Partie implements Variante {
 		return this.nbJoueurs;
 	}
 
-	public ArrayList<Carte> getPioche() {
+	public LinkedList<Carte> getPioche() {
 		return pioche;
 	}
 
-	public void setPioche(ArrayList<Carte> pioche) {
+	public void setPioche(LinkedList<Carte> pioche) {
 		this.pioche = pioche;
 	}
 
-	public void addToPioche(Carte carte) {
-		this.pioche.add(carte);
+	public void activerTrophees() {
+
+		for (Carte carte : tropheesPartie) {
+
+		}
+
+		return;
+
 	}
 }
