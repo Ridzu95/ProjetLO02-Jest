@@ -1,3 +1,7 @@
+package fr.utt.lo02.xfmv.jest.controller;
+
+import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
+
 import java.util.Scanner;
 
 public class Controller {

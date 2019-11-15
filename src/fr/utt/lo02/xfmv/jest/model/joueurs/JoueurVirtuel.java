@@ -1,5 +1,6 @@
+package fr.utt.lo02.xfmv.jest.model.joueurs;
 
-public class JoueurVirtuel extends Joueur implements Strategie{
+public class JoueurVirtuel extends Joueur implements Strategie {
 	
 	// private Strategie strategie;
 	private int niveau;

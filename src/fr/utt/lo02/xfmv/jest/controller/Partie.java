@@ -1,3 +1,10 @@
+package fr.utt.lo02.xfmv.jest.controller;
+
+import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
+import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
+import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurVirtuel;
+import fr.utt.lo02.xfmv.jest.model.variantes.Variante;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
