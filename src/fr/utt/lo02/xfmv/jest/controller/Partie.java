@@ -38,13 +38,14 @@ public class Partie implements Variante {
 		for (Couleurs couleur : Couleurs.values()) {
 			for (Valeurs valeur : Valeurs.values()) {
 				if (couleur != Couleurs.Joker && valeur != Valeurs.Joker) {
-					this.pioche.add(new Carte(valeur, couleur));
+					this.pioche.add(new Carte(valeur, couleur)); /** Boucles qui ajoutent les 16 cartes */
 				}
 			}
 		}
 
-		this.pioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
+		this.pioche.add(new Carte(Valeurs.Joker, Couleurs.Joker)); /** Le joker est particulier donc on le créé "à la main" */
 
+		/** On ajoute les joueurs à une liste joueurs, qui servira à déterminer qui joue après qui au début du tour */
 		JoueurReel player = new JoueurReel(1, Console.playerUsernameChoice());
 		JoueurVirtuel bot1 = new JoueurVirtuel(1);
 		JoueurVirtuel bot2 = new JoueurVirtuel(1);
@@ -60,9 +61,12 @@ public class Partie implements Variante {
 	}
 	
 	public void distribuerCartes() {
-		Collections.shuffle(this.pioche);
 
+		/** Si c'est le premier tour, on pioche deux cartes pour les ajouter aux trophées, et on donne deux cartes à chaque joueur.
+		 * Ensuite pour les autres tours, on récupère la carte qui reste dans la main de chaque joueur, on mélange, et on redistribue. */
 		if (this.tour == 1) {
+
+			Collections.shuffle(this.pioche);
 
 			this.tropheesPartie.add(this.pioche.poll());
 			this.tropheesPartie.add(this.pioche.poll());
@@ -93,8 +97,10 @@ public class Partie implements Variante {
 		}
 	}
 
+	/** Méthode de déroulement des tours de jeu */
 	public void jouerPartie() {
 
+		/** On utilise instanceof pour récupérer uniquement les joueurs réels, puisque les bots choisissent automatiquement. */
 		for(Joueur joueur : joueurs) {
 			if(joueur instanceof JoueurReel) {
 				this.choisirCarteCachee((JoueurReel) joueur);
@@ -105,6 +111,7 @@ public class Partie implements Variante {
 	}
 
 	public void choisirCarteCachee(JoueurReel joueur) {
+		/** La première méthode à s'éxécuter est Console.cardChoice() qui renvoie l'index de la carte choisie, on récupère la référence sur la carte puis on la met cachée ! */
 		joueur.getMain().get(Console.cardChoice(joueur)).setVisible(false);
 		Console.tellHiddenCard(joueur);
 	}
