@@ -37,6 +37,10 @@ public abstract class Console {
         return choice -1;
 
     }
+    
+    public static void showBoard(JoueurReel joueur) {
+    	
+    }
 
     public static void tellHiddenCard(JoueurReel joueur) {
 
