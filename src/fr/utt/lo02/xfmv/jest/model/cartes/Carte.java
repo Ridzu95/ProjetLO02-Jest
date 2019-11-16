@@ -27,7 +27,7 @@ public class Carte {
 		this.trophee = trophee;
 	}
 
-	public void getTrophee() { return this.trophee; }
+	public Trophees getTrophee() { return this.trophee; }
 
 	public boolean isVisible() {
 		return visible;

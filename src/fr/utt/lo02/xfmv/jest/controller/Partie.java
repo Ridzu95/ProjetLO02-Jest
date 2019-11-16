@@ -101,11 +101,17 @@ public class Partie implements Variante {
 	/** Méthode de déroulement des tours de jeu */
 	public void jouerPartie() {
 
-		/** On utilise instanceof pour récupérer uniquement les joueurs réels, puisque les bots choisissent automatiquement. */
-		for(Joueur joueur : joueurs) {
-			if(joueur instanceof JoueurReel) {
-				this.choisirCarteCachee((JoueurReel) joueur);
+		while(pioche.isEmpty() == false) { /** On fait des tours de jeu jusqu'à ce que la pioche soit vide */
+
+			Console.showTrophies(this.tropheesPartie);
+
+			/** On utilise instanceof pour récupérer uniquement les joueurs réels, puisque les bots choisissent automatiquement. */
+			for (Joueur joueur : joueurs) {
+				if (joueur instanceof JoueurReel) {
+					this.choisirCarteCachee((JoueurReel) joueur);
+				}
 			}
+
 		}
 
 		return;
