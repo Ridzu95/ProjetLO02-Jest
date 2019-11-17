@@ -25,7 +25,12 @@ public class JoueurReel extends Joueur {
 	}
 
 	public int faireOffre() {
-		Scanner sc = new Scanner(System.in);
+		System.out.println("Choisissez la carte à cacher :");
+
+        System.out.println("(1) --- " + this.getMain().get(0));
+        System.out.println("(2) --- " + this.getMain().get(1));
+
+        Scanner sc = new Scanner(System.in);
         int choice = 0;
 
         do {
