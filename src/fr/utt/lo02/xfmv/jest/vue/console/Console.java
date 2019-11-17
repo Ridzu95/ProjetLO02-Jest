@@ -24,17 +24,7 @@ public abstract class Console {
         System.out.println("(1) --- " + joueur.getMain().get(0));
         System.out.println("(2) --- " + joueur.getMain().get(1));
 
-        Scanner sc = new Scanner(System.in);
-        int choice = 0;
-
-        do {
-            System.out.print("Votre choix : ");
-            choice = sc.nextInt();
-        } while (choice != 1 && choice != 2);
-
-        System.out.println("");
-
-        return choice -1;
+        return joueur.faireOffre();
 
     }
     

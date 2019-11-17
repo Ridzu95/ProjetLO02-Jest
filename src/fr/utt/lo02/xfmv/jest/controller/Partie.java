@@ -98,6 +98,8 @@ public class Partie implements Variante {
 		for(Joueur joueur : joueurs) {
 			if(joueur instanceof JoueurReel) {
 				this.choisirCarteCachee((JoueurReel) joueur);
+			} else {
+				this.choisirCarteCachee((JoueurReel) joueur);
 			}
 		}
 
