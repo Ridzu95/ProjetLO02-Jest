@@ -16,6 +16,7 @@ public class JoueurVirtuel extends Joueur implements Strategie {
 		this.niveau = niveau;
 		this.main = new LinkedList<Carte>();
 		this.jest = new ArrayList<Carte>();
+		this.nom = "fabrice";
 	}
 	
 	/*L'offre se fait aléatoirement en renvoyant un entier entre 0 et 1 */

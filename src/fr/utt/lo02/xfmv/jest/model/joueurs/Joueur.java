@@ -10,6 +10,7 @@ public abstract class Joueur {
 	protected int id;
 	protected LinkedList<Carte> main;
 	protected ArrayList<Carte> jest;
+	protected String nom;
 
 	public Joueur() {
 		this.id = 0;
@@ -24,12 +25,36 @@ public abstract class Joueur {
 	}
 	
 	public int faireOffre() {
-		return id; //va appeller soit faireOffre de virtuel ou réel
+		return 0; //va appeller soit faireOffre de virtuel ou réel
 		
 	}
 	
 	public void prendreOffre() { //va appeller soit prendrOffre de virtuel ou réel
 		
+	}
+	
+	public Carte getCarteVisible() {
+		
+		Carte carteVisible = null;
+		for(Carte carte : this.getMain()) {
+            if (carte.isVisible() == true) {
+            	carteVisible = carte;
+            }
+        }
+		
+		return carteVisible;
+	}
+	
+	public Carte getCarteCachee() {
+		
+		Carte carteCachee = null;
+		for(Carte carte : this.getMain()) {
+            if (carte.isVisible() == false) {
+            	carteCachee = carte;
+            }
+        }
+		
+		return carteCachee;
 	}
 	
 }

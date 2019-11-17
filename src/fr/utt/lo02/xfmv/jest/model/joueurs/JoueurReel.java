@@ -9,17 +9,16 @@ import java.util.LinkedList;
 
 public class JoueurReel extends Joueur {
 	
-	private String pseudo;
 
 	public JoueurReel() {
 		super();
-		this.pseudo = "Joueur";
+		this.nom = "Joueur";
 	}
 
 	public JoueurReel(int id, String username) {
 		super();
 		this.id = id;
-		this.pseudo = username;
+		this.nom = username;
 		this.main = new LinkedList<Carte>();
 		this.jest = new ArrayList<Carte>();
 	}
@@ -48,6 +47,6 @@ public class JoueurReel extends Joueur {
 	}
 	
 	public String toString(){
-	      return  pseudo;
+	      return  nom;
 	}
 }

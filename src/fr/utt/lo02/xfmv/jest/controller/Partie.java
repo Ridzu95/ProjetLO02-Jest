@@ -94,9 +94,10 @@ public class Partie implements Variante {
 	}
 
 	public void jouerPartie() {
-		this.choisirCarteCachee();
 		
-
+		this.choisirCarteCachee();
+		Console.showBoard(this.joueurs);
+		
 		return;
 	}
 
@@ -116,6 +117,11 @@ public class Partie implements Variante {
 	public void declarerVainqueur() { //est appellé en fin de partie
 		
 	}
+	
+	
+	
+	
+	/* getter setter */
 
 	public int getTour() {
 		return this.tour;
@@ -139,6 +145,14 @@ public class Partie implements Variante {
 
 	public void setPioche(LinkedList<Carte> pioche) {
 		this.pioche = pioche;
+	}
+
+	public ArrayList<Joueur> getJoueurs() {
+		return joueurs;
+	}
+
+	public void setJoueurs(ArrayList<Joueur> joueurs) {
+		this.joueurs = joueurs;
 	}
 
 	public void activerTrophees() {
