@@ -10,6 +10,7 @@ public abstract class Console {
         System.out.println("--- Jeu de Jest inventé par Brett J. Gilbert ---");
     }
 
+    /** Choix du pseudo pour le(s) joueur(s) rééel(s) */
     public static String playerUsernameChoice() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Entrez votre pseudo : ");
@@ -17,6 +18,7 @@ public abstract class Console {
         return username;
     }
 
+    /** Méthode qui permet à l'utilisateur de voir les 2 cartes dans sa main, et de renvoyer son choix de carte cachée */
     public static int cardChoice(JoueurReel joueur) {
 
         System.out.println("Choisissez la carte à cacher :");
