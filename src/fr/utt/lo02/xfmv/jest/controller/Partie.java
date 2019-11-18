@@ -104,6 +104,7 @@ public class Partie implements Variante {
 	/* méthode qui permet à chaque joueur de cacher une carte de sa main */
 	public void choisirCarteCachee() {
 		for(Joueur joueur : joueurs) {
+			Console.showTrophies(this.tropheesPartie);
 			joueur.getMain().get(joueur.faireOffre()).setVisible(false);
 			
 			if(joueur instanceof JoueurReel) {
