@@ -18,7 +18,9 @@ public class JoueurVirtuel extends Joueur implements Strategie {
 		this.jest = new ArrayList<Carte>();
 	}
 	
-	public void faireOffre() {
+	/*L'offre se fait aléatoirement en renvoyant un entier entre 0 et 1 */
+	public int faireOffre() {
+		return (int) ( Math.random() + 0.5 ) ;
 		
 	}
 	
