@@ -1,5 +1,6 @@
 package fr.utt.lo02.xfmv.jest.vue.console;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -7,6 +8,7 @@ import java.util.Scanner;
 import fr.utt.lo02.xfmv.jest.controller.Partie;
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 import fr.utt.lo02.xfmv.jest.model.joueurs.Joueur;
+import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
 
 public abstract class Console {
 
@@ -21,27 +23,40 @@ public abstract class Console {
         return username;
     }
 
-    public static int cardChoice(Joueur joueur) {
+    public static void cardChoice(Joueur joueur) {
 
+        showTrophies(Partie.getInstance().getTropheesPartie());
+        System.out.println("");
         System.out.println("Choisissez la carte à cacher :");
 
         System.out.println("(1) --- " + joueur.getMain().get(0));
         System.out.println("(2) --- " + joueur.getMain().get(1));
 
-        Scanner sc = new Scanner(System.in);
-        int choice = 0;
+        return;
+    }
 
-        do {
-            System.out.print("Votre choix : ");
-            choice = sc.nextInt();
-        } while (choice != 1 && choice != 2); /*Attention erreur si on entre un caractère*/
+    public static void showTrophies(ArrayList<Carte> tropheesPartie) {
+        System.out.println("Les deux trophées pour cette partie sont :");
+        for(Carte carte : tropheesPartie) {
+            System.out.println(carte.toString() + " --- " + carte.getTrophee().getDescription());
+        }
+    }
 
-        System.out.println("");
+    public static void displayPlayerCards(ArrayList<Joueur> joueurs) {
 
-        return choice -1;
+        for (Joueur joueur : joueurs) {
+            System.out.print(joueur.toString() + " --- ");
+            for (Carte carte : joueur.getMain()) {
+                System.out.print(carte.toString() + " ");
+            }
+            System.out.println("");
+        }
+
+
 
     }
 
+    /*
     public static void tellHiddenCard(Joueur joueur) {
 
         for(Carte carte : joueur.getMain()) {
@@ -51,11 +66,5 @@ public abstract class Console {
         }
 
     }
-
-    public static void showTrophies(ArrayList<Carte> tropheesPartie) {
-        System.out.println("Les deux trophées pour cette partie sont :");
-        for(Carte carte : tropheesPartie) {
-            System.out.println(carte.toString() + " --- " + carte.getTrophee().getDescription());
-        }
-    }
+    */
 }

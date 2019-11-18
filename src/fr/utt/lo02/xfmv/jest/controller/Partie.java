@@ -94,25 +94,24 @@ public class Partie implements Variante {
 		}
 	}
 
+	public ArrayList<Joueur> getJoueurs() {
+		return joueurs;
+	}
+
 	public void jouerPartie() {
 		this.choisirCarteCachee();
-		
-
+		Console.displayPlayerCards(this.joueurs);
 		return;
 	}
 
 	/* méthode qui permet à chaque joueur de cacher une carte de sa main */
 	public void choisirCarteCachee() {
+
 		for(Joueur joueur : joueurs) {
-			Console.showTrophies(this.tropheesPartie);
 			joueur.getMain().get(joueur.faireOffre()).setVisible(false);
-			
-			if(joueur instanceof JoueurReel) {
-				Console.tellHiddenCard(joueur);
-			}
-			
-			
 		}
+
+		return;
 	}
 	
 	public void declarerVainqueur() { //est appellé en fin de partie
@@ -141,6 +140,10 @@ public class Partie implements Variante {
 
 	public void setPioche(LinkedList<Carte> pioche) {
 		this.pioche = pioche;
+	}
+
+	public ArrayList<Carte> getTropheesPartie() {
+		return tropheesPartie;
 	}
 
 	public void activerTrophees() {
