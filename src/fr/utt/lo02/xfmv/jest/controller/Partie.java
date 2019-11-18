@@ -100,9 +100,13 @@ public class Partie implements Variante {
 
 	/** Méthode de déroulement des tours de jeu */
 	public void jouerPartie() {
+		this.choisirCarteCachee();
+	}
 
-		while(pioche.isEmpty() == false) { /** On fait des tours de jeu jusqu'à ce que la pioche soit vide */
+	/* méthode qui permet à chaque joueur de cacher une carte de sa main */
+	public void choisirCarteCachee() {
 
+		for(Joueur joueur : joueurs) {
 			Console.showTrophies(this.tropheesPartie);
 
 			/** On utilise instanceof pour récupérer uniquement les joueurs réels, puisque les bots choisissent automatiquement. */
