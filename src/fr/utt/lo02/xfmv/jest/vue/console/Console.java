@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import fr.utt.lo02.xfmv.jest.controller.Partie;
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
-import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
+import fr.utt.lo02.xfmv.jest.model.joueurs.Joueur;
 
 public abstract class Console {
 
@@ -14,7 +14,6 @@ public abstract class Console {
         System.out.println("--- Jeu de Jest inventé par Brett J. Gilbert ---");
     }
 
-    /** Choix du pseudo pour le(s) joueur(s) rééel(s) */
     public static String playerUsernameChoice() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Entrez votre pseudo : ");
@@ -22,8 +21,7 @@ public abstract class Console {
         return username;
     }
 
-    /** Méthode qui permet à l'utilisateur de voir les 2 cartes dans sa main, et de renvoyer son choix de carte cachée */
-    public static int cardChoice(JoueurReel joueur) {
+    public static int cardChoice(Joueur joueur) {
 
         System.out.println("Choisissez la carte à cacher :");
 
@@ -36,7 +34,7 @@ public abstract class Console {
         do {
             System.out.print("Votre choix : ");
             choice = sc.nextInt();
-        } while (choice != 1 && choice != 2);
+        } while (choice != 1 && choice != 2); /*Attention erreur si on entre un caractère*/
 
         System.out.println("");
 
@@ -44,7 +42,7 @@ public abstract class Console {
 
     }
 
-    public static void tellHiddenCard(JoueurReel joueur) {
+    public static void tellHiddenCard(Joueur joueur) {
 
         for(Carte carte : joueur.getMain()) {
             if (carte.isVisible() == false) {

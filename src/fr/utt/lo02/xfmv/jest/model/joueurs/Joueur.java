@@ -23,7 +23,8 @@ public abstract class Joueur {
 		return this.main;
 	}
 	
-	public void faireOffre() { //va appeller soit faireOffre de virtuel ou réel
+	public int faireOffre() {
+		return id; //va appeller soit faireOffre de virtuel ou réel
 		
 	}
 	
