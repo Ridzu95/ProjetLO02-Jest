@@ -21,7 +21,6 @@ public class JoueurVirtuel extends Joueur implements Strategie {
 	/*L'offre se fait aléatoirement en renvoyant un entier entre 0 et 1 */
 	public int faireOffre() {
 		return (int) ( Math.random() + 0.5 ) ;
-		
 	}
 	
 	public void prendreOffre() {
@@ -29,11 +28,11 @@ public class JoueurVirtuel extends Joueur implements Strategie {
 	}
 	
 	public String toString(){
-	      return  "Bot de niveau" + niveau;
+	      return  "Bot" + id;
 	}
 
 
-	public void executerStartegie() {
+	public void executerStrategie() {
 		// TODO Auto-generated method stub
 		
 	}

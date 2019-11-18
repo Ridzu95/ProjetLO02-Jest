@@ -54,11 +54,15 @@ public class Carte {
 	}
 	
 	public String toString(){
-		if(this.couleur == Couleurs.Joker) {
-			return String.valueOf(this.couleur.getCouleur());
+		if (this.visible == true) {
+			if (this.couleur == Couleurs.Joker) {
+				return String.valueOf(this.couleur.getCouleur());
+			} else {
+				return valeur.getValeur() + couleur.getCouleur();
+			}
 		}
 		else {
-			return valeur.getValeur() + couleur.getCouleur();
+			return "[]";
 		}
 	}
 	
