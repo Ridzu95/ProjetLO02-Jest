@@ -81,7 +81,7 @@ public class Partie {
 			this.tropheesPartie.add(this.pioche.poll());
 			this.tropheesPartie.add(this.pioche.poll());
 
-			this.activerTrophees();
+			this.variante.activerTrophees();
 
 			for (Joueur i : joueurs) {
 				i.getMain().add(this.pioche.poll());
@@ -189,7 +189,4 @@ public class Partie {
 		return tropheesPartie;
 	}
 
-	public void activerTrophees() {
-		this.tropheesPartie = variante.getTrophees();
-	}
 }
