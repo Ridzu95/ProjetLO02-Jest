@@ -52,6 +52,14 @@ public abstract class Console {
             System.out.println("");
         }
 
+    }
+
+    public static void displaySelectCards(ArrayList<Carte> selectCards) {
+
+        System.out.println("Choisis la carte à mettre dans ton Jest :");
+        for (int i = 0; i < selectCards.size(); i++ ) {
+            System.out.println("(" + (i + 1) + ") --- " + selectCards.get(i).toString());
+        }
 
 
     }
