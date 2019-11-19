@@ -33,13 +33,14 @@ public abstract class Console {
     	System.out.println("Choisissez une variante");
     	System.out.println("(1) -- Variante de base : les trophées sont assignés selon les règles classiques" );
     	System.out.println("(2) -- Variante 1 : les trophées sont assignés aléatoirement" );
-    	System.out.println("(3) -- Variante 2 : les trophées sont assignés manuellement selon les choix de l'utilisateur" );
-
+    	System.out.println("(3) -- Variante 2 : les trophées sont assignés selon les règles classiques mais sont inconnus" );
+    	System.out.println("");
+    	
     	do {
             System.out.print("Votre choix : ");
             System.out.println("");
             choice = sc.nextInt();
-        } while (choice !=1 && choice != 2);
+        } while (choice !=1 && choice != 2 && choice !=3);
         
         
         return choice;
@@ -47,7 +48,6 @@ public abstract class Console {
 
     public static void cardChoice(Joueur joueur) {
 
-        showTrophies(Partie.getInstance().getTropheesPartie());
         System.out.println("");
         System.out.println("Choisissez la carte à cacher :");
 
@@ -57,12 +57,6 @@ public abstract class Console {
         return;
     }
 
-    public static void showTrophies(ArrayList<Carte> tropheesPartie) {
-        System.out.println("Les deux trophées pour cette partie sont :");
-        for(Carte carte : tropheesPartie) {
-            System.out.println(carte.toString() + " --- " + carte.getTrophee().getDescription());
-        }
-    }
 
     public static void displayPlayerCards(ArrayList<Joueur> joueurs) {
 

@@ -5,15 +5,12 @@ import java.util.ArrayList;
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 import fr.utt.lo02.xfmv.jest.model.cartes.Trophees;
 
-public class Variantebase implements Variante{
-	
+public class Variante2 implements Variante{
+
 	public void showTrophies(ArrayList<Carte> trophees) {
-        System.out.println("Les deux trophées pour cette partie sont :");
-        for(Carte carte : trophees) {
-            System.out.println(carte.toString() + " --- " + carte.getTrophee().getDescription());
-        }
+        System.out.println("Les deux trophées pour cette partie sont inconnus");
     }
-	
+
 	public void activerTrophees(ArrayList<Carte> trophees) {
 		// TODO Auto-generated method stub
 		for (Carte carte : trophees) {
@@ -66,6 +63,4 @@ public class Variantebase implements Variante{
 			}
 		}
 	}
-	
-	
 }

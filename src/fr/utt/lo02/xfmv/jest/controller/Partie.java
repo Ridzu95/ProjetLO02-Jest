@@ -8,6 +8,7 @@ import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
 import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurVirtuel;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante1;
+import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
 import fr.utt.lo02.xfmv.jest.vue.console.Console;
 
@@ -63,6 +64,8 @@ public class Partie {
 			this.variante = new Variantebase();
 		} else if ( choixVariante == 2) {
 			this.variante = new Variante1();
+		} else {
+			this.variante = new Variante2();
 		}
 		
 
@@ -114,7 +117,7 @@ public class Partie {
 
 	public void jouerPartie() {
 		
-		
+		variante.showTrophies(tropheesPartie);
 		this.choisirCarteCachee();
 		Console.displayPlayerCards(joueurs);
 		Joueur choosingPlayer = joueurs.get(0);
