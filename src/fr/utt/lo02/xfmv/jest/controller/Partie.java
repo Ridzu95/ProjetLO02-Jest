@@ -2,6 +2,7 @@ package fr.utt.lo02.xfmv.jest.controller;
 
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 import fr.utt.lo02.xfmv.jest.model.cartes.Couleurs;
+import fr.utt.lo02.xfmv.jest.model.cartes.Trophees;
 import fr.utt.lo02.xfmv.jest.model.cartes.Valeurs;
 import fr.utt.lo02.xfmv.jest.model.joueurs.Joueur;
 import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
@@ -93,25 +94,25 @@ public class Partie implements Variante {
 		}
 	}
 
+	public ArrayList<Joueur> getJoueurs() {
+		return joueurs;
+	}
+
 	public void jouerPartie() {
 		
 		this.choisirCarteCachee();
-		Console.showBoard(this.joueurs);
-		
+		Console.displayPlayerCards(this.joueurs);
 		return;
 	}
 
 	/* méthode qui permet à chaque joueur de cacher une carte de sa main */
 	public void choisirCarteCachee() {
+
 		for(Joueur joueur : joueurs) {
 			joueur.getMain().get(joueur.faireOffre()).setVisible(false);
-			
-			if(joueur instanceof JoueurReel) {
-				Console.tellHiddenCard(joueur);
-			}
-			
-			
 		}
+
+		return;
 	}
 	
 	public void declarerVainqueur() { //est appellé en fin de partie
@@ -147,18 +148,60 @@ public class Partie implements Variante {
 		this.pioche = pioche;
 	}
 
-	public ArrayList<Joueur> getJoueurs() {
-		return joueurs;
-	}
-
-	public void setJoueurs(ArrayList<Joueur> joueurs) {
-		this.joueurs = joueurs;
+	public ArrayList<Carte> getTropheesPartie() {
+		return tropheesPartie;
 	}
 
 	public void activerTrophees() {
 
 		for (Carte carte : tropheesPartie) {
-
+			switch(carte.toString()) {
+				case "2♥":
+				case "4♥":
+				case "3♥":
+				case "5♥":
+					carte.setTrophee(Trophees.Joker);
+					break;
+				case "2♦":
+					carte.setTrophee(Trophees.HighestCarreau);
+					break;
+				case "3♦":
+					carte.setTrophee(Trophees.LowestCarreau);
+					break;
+				case "4♦":
+					carte.setTrophee(Trophees.BestJestNoJoker);
+					break;
+				case "5♦":
+					carte.setTrophee(Trophees.MajorityQuatre);
+					break;
+				case "2♣":
+					carte.setTrophee(Trophees.LowestCoeur);
+					break;
+				case "3♣":
+					carte.setTrophee(Trophees.HighestCoeur);
+					break;
+				case "4♣":
+					carte.setTrophee(Trophees.LowestPique);
+					break;
+				case "5♣":
+					carte.setTrophee(Trophees.HighestPique);
+					break;
+				case "2♠":
+					carte.setTrophee(Trophees.MajorityTrois);
+					break;
+				case "3♠":
+					carte.setTrophee(Trophees.MajorityDeux);
+					break;
+				case "4♠":
+					carte.setTrophee(Trophees.LowestTrefle);
+					break;
+				case "5♠":
+					carte.setTrophee(Trophees.HighestTrefle);
+					break;
+				case "★":
+					carte.setTrophee(Trophees.BestJest);
+					break;
+			}
 		}
 
 		return;

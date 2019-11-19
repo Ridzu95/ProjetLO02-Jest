@@ -1,6 +1,9 @@
 package fr.utt.lo02.xfmv.jest.model.joueurs;
 
+import fr.utt.lo02.xfmv.jest.controller.Partie;
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
+import fr.utt.lo02.xfmv.jest.vue.console.Console;
+
 import java.util.Scanner;
 
 import java.lang.reflect.Array;
@@ -24,10 +27,7 @@ public class JoueurReel extends Joueur {
 	}
 
 	public int faireOffre() {
-		System.out.println("Choisissez la carte à cacher :");
-
-        System.out.println("(1) --- " + this.getMain().get(0));
-        System.out.println("(2) --- " + this.getMain().get(1));
+		Console.cardChoice(this);
 
         Scanner sc = new Scanner(System.in);
         int choice = 0;
