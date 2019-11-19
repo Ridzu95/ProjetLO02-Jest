@@ -43,8 +43,20 @@ public class JoueurReel extends Joueur {
         return choice -1;
 	}
 	
-	public void prendreOffre() {
-		Console.displayPlayerCards(Partie.getInstance().getJoueurs());
+	public Carte prendreOffre(ArrayList<Carte> selectCards) {
+		Console.displaySelectCards(selectCards);
+
+		Scanner sc = new Scanner(System.in);
+		int choice = 0;
+
+		do {
+			System.out.print("Votre choix : ");
+			choice = sc.nextInt();
+		} while (choice == 0 && choice > selectCards.size());
+
+		System.out.println("");
+
+		return selectCards.get(choice - 1);
 
 	}
 	

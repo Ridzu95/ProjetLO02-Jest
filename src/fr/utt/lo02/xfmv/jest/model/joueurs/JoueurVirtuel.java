@@ -23,8 +23,8 @@ public class JoueurVirtuel extends Joueur implements Strategie {
 		return (int) ( Math.random() + 0.5 ) ;
 	}
 	
-	public void prendreOffre() {
-		
+	public Carte prendreOffre(ArrayList<Carte> selectCards) {
+		return selectCards.get((int) Math.round(Math.random() * (selectCards.size() - 1)));
 	}
 	
 	public String toString(){
