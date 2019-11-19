@@ -22,6 +22,24 @@ public abstract class Console {
         String username = sc.nextLine();
         return username;
     }
+    
+    public static int askVariante() {
+
+        Scanner sc = new Scanner(System.in);
+    	int choice = 0;
+    	
+    	System.out.println("Choisissez une variante");
+    	System.out.println("(1) -- Variante de base" );
+    	System.out.println("(2) -- Variante 1" );
+
+    	do {
+            System.out.print("Votre choix : ");
+            choice = sc.nextInt();
+        } while (choice !=1);
+        
+        
+        return choice;
+    }
 
     public static void cardChoice(Joueur joueur) {
 
