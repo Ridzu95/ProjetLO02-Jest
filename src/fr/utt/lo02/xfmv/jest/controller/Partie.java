@@ -10,6 +10,7 @@ import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurVirtuel;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante;
 import fr.utt.lo02.xfmv.jest.vue.console.Console;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Partie implements Variante {
@@ -103,24 +104,57 @@ public class Partie implements Variante {
 		this.choisirCarteCachee();
 		Console.displayPlayerCards(joueurs);
 		Collections.sort(joueurs);
-
 		Joueur choosingPlayer = joueurs.get(0);
-		while (choosingPlayer.getHasPlayed() == false) {
+
+		boolean everyonePlayed = false;
+
+		while (everyonePlayed == false) {
+
+			System.out.println();
+
 			ArrayList<Carte> selectCards = new ArrayList<Carte>();
+			ArrayList<Joueur> selectJoueurs = new ArrayList<Joueur>();
 			for (Joueur joueur : joueurs) {
 				if (joueur.getMain().size() == 2 && joueur != choosingPlayer) {
 					for (Carte carte : joueur.getMain()) {
 						selectCards.add(carte);
+						selectJoueurs.add(joueur);
 					}
 				}
 			}
 			if (selectCards.size() == 0) {
 				for (Carte carte : choosingPlayer.getMain()) {
 					selectCards.add(carte);
+					selectJoueurs.add(choosingPlayer);
 				}
 			}
 
-			choosingPlayer.prendreOffre(selectCards);
+			int choice = choosingPlayer.prendreOffre(selectCards);
+
+			if (choice % 2 == 0) {
+				choosingPlayer.getJest().add(selectJoueurs.get(choice).getMain().pollFirst());
+				System.out.println("La carte " + choosingPlayer.getJest().get(0) + " va dans le Jest");
+			}
+			else {
+				choosingPlayer.getJest().add(selectJoueurs.get(choice).getMain().pollLast());
+				System.out.println("La carte " + choosingPlayer.getJest().get(0) + " va dans le Jest");
+			}
+
+			choosingPlayer.setHasPlayed(true);
+			choosingPlayer = selectJoueurs.get(choice);
+
+			if (choosingPlayer.getHasPlayed() == true) {
+				int a = 0;
+				while (a < joueurs.size() && joueurs.get(a).getHasPlayed() == true) {
+					a++;
+				}
+				if (a >= joueurs.size() - 1) {
+					everyonePlayed = true;
+				}
+				else {
+					choosingPlayer = joueurs.get(a);
+				}
+			}
 
 		}
 

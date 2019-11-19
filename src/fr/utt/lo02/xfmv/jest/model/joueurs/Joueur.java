@@ -9,17 +9,21 @@ public abstract class Joueur implements Comparable<Joueur> {
 
 	protected int id;
 	protected LinkedList<Carte> main;
-	protected ArrayList<Carte> jest;
+	protected LinkedList<Carte> jest;
 	protected boolean hasPlayed;
 
 	public Joueur() {
 		this.id = 0;
 		this.hasPlayed = false;
+		this.main = new LinkedList<Carte>();
+		this.jest = new LinkedList<Carte>();
 	}
 
 	public Joueur(int id) {
 		this.id = id;
 		this.hasPlayed = false;
+		this.main = new LinkedList<Carte>();
+		this.jest = new LinkedList<Carte>();
 	}
 
 	public LinkedList<Carte> getMain() {
@@ -30,9 +34,17 @@ public abstract class Joueur implements Comparable<Joueur> {
 		return id; //va appeller soit faireOffre de virtuel ou réel
 		
 	}
-	
-	public Carte prendreOffre(ArrayList<Carte> selectCards) { //va appeller soit prendrOffre de virtuel ou réel
-		return this.getMain().get(0);
+
+	public void setHasPlayed(boolean hasPlayed) {
+		this.hasPlayed = hasPlayed;
+	}
+
+	public LinkedList<Carte> getJest() {
+		return jest;
+	}
+
+	public int prendreOffre(ArrayList<Carte> selectCards) { //va appeller soit prendrOffre de virtuel ou réel
+		return 0;
 	}
 
 	public Carte getVisibleCard() {
