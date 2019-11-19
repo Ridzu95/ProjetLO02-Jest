@@ -102,12 +102,10 @@ public class Partie implements Variante {
 
 		this.choisirCarteCachee();
 		Console.displayPlayerCards(joueurs);
-		Joueur choosingPlayer = joueurs.get(0);
 		Collections.sort(joueurs);
 
-
+		Joueur choosingPlayer = joueurs.get(0);
 		while (choosingPlayer.getHasPlayed() == false) {
-			System.out.println(choosingPlayer.getId());
 			ArrayList<Carte> selectCards = new ArrayList<Carte>();
 			for (Joueur joueur : joueurs) {
 				if (joueur.getMain().size() == 2 && joueur != choosingPlayer) {
@@ -121,6 +119,7 @@ public class Partie implements Variante {
 					selectCards.add(carte);
 				}
 			}
+
 			choosingPlayer.prendreOffre(selectCards);
 
 		}
