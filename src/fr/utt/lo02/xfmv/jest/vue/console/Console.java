@@ -23,19 +23,23 @@ public abstract class Console {
         return username;
     }
     
-    public static int askVariante() {
+    // permet de récupérer le choix du joueur pour la variante
+    
+    public static int demanderVariante() {
 
         Scanner sc = new Scanner(System.in);
     	int choice = 0;
     	
     	System.out.println("Choisissez une variante");
-    	System.out.println("(1) -- Variante de base" );
-    	System.out.println("(2) -- Variante 1" );
+    	System.out.println("(1) -- Variante de base : les trophées sont assignés selon les règles classiques" );
+    	System.out.println("(2) -- Variante 1 : les trophées sont assignés aléatoirement" );
+    	System.out.println("(3) -- Variante 2 : les trophées sont assignés manuellement selon les choix de l'utilisateur" );
 
     	do {
             System.out.print("Votre choix : ");
+            System.out.println("");
             choice = sc.nextInt();
-        } while (choice !=1);
+        } while (choice !=1 && choice != 2);
         
         
         return choice;

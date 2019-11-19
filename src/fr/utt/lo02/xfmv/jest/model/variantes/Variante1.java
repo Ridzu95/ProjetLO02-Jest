@@ -3,19 +3,18 @@ package fr.utt.lo02.xfmv.jest.model.variantes;
 import java.util.ArrayList;
 
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
+import fr.utt.lo02.xfmv.jest.model.cartes.Trophees;
 
 public class Variante1 implements Variante {
 
-	public void activerTrophees() {
+	@Override
+	public void activerTrophees(ArrayList<Carte> trophees) {
+		for (Carte carte : trophees) {
+			carte.setTrophee(Trophees.getRandomTrophee());
+		}
 		
 	}
 
-	public ArrayList<Carte> getTrophees() {
-		return null;
-	}
 	
-	public String toString() {
-		return "Cette variante attribue les trophées aléatoirement";
-	}
 
 }

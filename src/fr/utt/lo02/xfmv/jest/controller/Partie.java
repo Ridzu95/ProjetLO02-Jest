@@ -2,7 +2,6 @@ package fr.utt.lo02.xfmv.jest.controller;
 
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 import fr.utt.lo02.xfmv.jest.model.cartes.Couleurs;
-import fr.utt.lo02.xfmv.jest.model.cartes.Trophees;
 import fr.utt.lo02.xfmv.jest.model.cartes.Valeurs;
 import fr.utt.lo02.xfmv.jest.model.joueurs.Joueur;
 import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
@@ -56,15 +55,15 @@ public class Partie {
 		this.joueurs.add(bot1);
 		this.joueurs.add(bot2);
 		
-		int choixVariante = Console.askVariante();
+		/* Choix de la variante avec le choix de l'utilisateur */
+		
+		int choixVariante = Console.demanderVariante();
 		
 		if ( choixVariante == 1) {
 			this.variante = new Variantebase();
 		} else if ( choixVariante == 2) {
 			this.variante = new Variante1();
 		}
-		
-		
 		
 
 		this.distribuerCartes();
@@ -80,8 +79,10 @@ public class Partie {
 
 			this.tropheesPartie.add(this.pioche.poll());
 			this.tropheesPartie.add(this.pioche.poll());
+			
+			// On détermine les trophées en fonctions de la variante
 
-			this.variante.activerTrophees();
+			this.variante.activerTrophees(this.tropheesPartie);
 
 			for (Joueur i : joueurs) {
 				i.getMain().add(this.pioche.poll());
@@ -142,7 +143,7 @@ public class Partie {
 		return;
 	}
 
-	/* méthode qui permet à chaque joueur de cacher une carte de sa main */
+	// méthode qui permet à chaque joueur de cacher une carte de sa main 
 	public void choisirCarteCachee() {
 
 		for(Joueur joueur : joueurs) {

@@ -7,11 +7,9 @@ import fr.utt.lo02.xfmv.jest.model.cartes.Trophees;
 
 public class Variantebase implements Variante{
 	
-	private ArrayList<Carte> trophees;
-
 	
 	
-	public void activerTrophees() {
+	public void activerTrophees(ArrayList<Carte> trophees) {
 		// TODO Auto-generated method stub
 		for (Carte carte : trophees) {
 			switch(carte.toString()) {
@@ -63,16 +61,6 @@ public class Variantebase implements Variante{
 			}
 		}
 	}
-
-	public ArrayList<Carte> getTrophees() {
-		return trophees;
-		
-	}
-	
-	public String toString() {
-		return "Cette variante attribue les trophées selon les règles de base";
-	}
-	
 	
 	
 }
