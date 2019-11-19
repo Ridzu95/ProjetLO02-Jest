@@ -44,7 +44,8 @@ public class JoueurReel extends Joueur {
 	}
 	
 	public void prendreOffre() {
-		
+		Console.displayPlayerCards(Partie.getInstance().getJoueurs());
+
 	}
 	
 	public String toString(){

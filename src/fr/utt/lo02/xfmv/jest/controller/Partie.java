@@ -47,8 +47,8 @@ public class Partie implements Variante {
 		this.pioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
 
 		JoueurReel player = new JoueurReel(1, Console.playerUsernameChoice());
-		JoueurVirtuel bot1 = new JoueurVirtuel(1);
-		JoueurVirtuel bot2 = new JoueurVirtuel(1);
+		JoueurVirtuel bot1 = new JoueurVirtuel(1, 1);
+		JoueurVirtuel bot2 = new JoueurVirtuel(1, 2);
 
 		this.joueurs.add(player);
 		this.joueurs.add(bot1);
@@ -99,8 +99,14 @@ public class Partie implements Variante {
 	}
 
 	public void jouerPartie() {
+
 		this.choisirCarteCachee();
-		Console.displayPlayerCards(this.joueurs);
+		Collections.sort(joueurs);
+
+		for (Joueur joueur : joueurs) {
+			
+		}
+
 		return;
 	}
 
@@ -113,7 +119,7 @@ public class Partie implements Variante {
 
 		return;
 	}
-	
+
 	public void declarerVainqueur() { //est appellé en fin de partie
 		
 	}
