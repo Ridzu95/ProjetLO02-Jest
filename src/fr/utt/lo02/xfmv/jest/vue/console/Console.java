@@ -64,6 +64,11 @@ public abstract class Console {
 
     }
 
+    public static void showTurn() {
+        System.out.println("TOUR : " + Partie.getInstance().getTour());
+        System.out.println("");
+    }
+
     /*
     public static void tellHiddenCard(Joueur joueur) {
 

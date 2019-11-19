@@ -81,10 +81,19 @@ public class Partie implements Variante {
 		else {
 
 			for(Joueur i : joueurs) {
-				this.pioche.add(i.getMain().poll());
+				if (i.getMain().get(0) == null) {
+					this.pioche.add(i.getMain().pollLast());
+				}
+				else {
+					this.pioche.add(i.getMain().pollFirst());
+				}
 			}
 
 			Collections.shuffle(this.pioche);
+
+			for (Carte carte : pioche) {
+				carte.setVisible(true);
+			}
 
 			for (Joueur i : joueurs) {
 				i.getMain().add(this.pioche.poll());
@@ -101,11 +110,22 @@ public class Partie implements Variante {
 
 	public void jouerPartie() {
 
-		this.choisirCarteCachee();
-		Console.displayPlayerCards(joueurs);
-		Collections.sort(joueurs);
-		Joueur choosingPlayer = joueurs.get(0);
+		while (this.pioche.size() > 0) {
+			Console.showTurn();
+			this.choisirCarteCachee();
+			Console.displayPlayerCards(joueurs);
+			Collections.sort(joueurs);
+			this.controlOffers();
+			this.tour++;
+			this.distribuerCartes();
+		}
 
+		return;
+	}
+
+	public void controlOffers() {
+
+		Joueur choosingPlayer = joueurs.get(0);
 		boolean everyonePlayed = false;
 
 		while (everyonePlayed == false) {
@@ -133,12 +153,13 @@ public class Partie implements Variante {
 
 			if (choice % 2 == 0) {
 				choosingPlayer.getJest().add(selectJoueurs.get(choice).getMain().pollFirst());
-				System.out.println("La carte " + choosingPlayer.getJest().get(0) + " va dans le Jest");
 			}
 			else {
 				choosingPlayer.getJest().add(selectJoueurs.get(choice).getMain().pollLast());
-				System.out.println("La carte " + choosingPlayer.getJest().get(0) + " va dans le Jest");
 			}
+
+			System.out.println("Le joueur " + choosingPlayer.toString() + " a mis la carte " + selectCards.get(choice) + " dans son Jest !");
+			System.out.println("");
 
 			choosingPlayer.setHasPlayed(true);
 			choosingPlayer = selectJoueurs.get(choice);
@@ -148,7 +169,7 @@ public class Partie implements Variante {
 				while (a < joueurs.size() && joueurs.get(a).getHasPlayed() == true) {
 					a++;
 				}
-				if (a >= joueurs.size() - 1) {
+				if (a > joueurs.size() - 1) {
 					everyonePlayed = true;
 				}
 				else {
@@ -158,7 +179,6 @@ public class Partie implements Variante {
 
 		}
 
-		return;
 	}
 
 	/* méthode qui permet à chaque joueur de cacher une carte de sa main */
