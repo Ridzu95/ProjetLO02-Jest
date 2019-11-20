@@ -179,12 +179,15 @@ public class Partie implements Variante {
 
 		}
 
+		
+
 	}
 
 	/* méthode qui permet à chaque joueur de cacher une carte de sa main */
 	public void choisirCarteCachee() {
 
 		for(Joueur joueur : joueurs) {
+			joueur.setHasPlayed(false);
 			joueur.getMain().get(joueur.faireOffre()).setVisible(false);
 		}
 
