@@ -23,8 +23,6 @@ public class JoueurReel extends Joueur {
 		super();
 		this.id = id;
 		this.pseudo = username;
-		this.main = new LinkedList<Carte>();
-		this.jest = new ArrayList<Carte>();
 	}
 
 	public int faireOffre() {
@@ -43,7 +41,7 @@ public class JoueurReel extends Joueur {
         return choice -1;
 	}
 	
-	public Carte prendreOffre(ArrayList<Carte> selectCards) {
+	public int prendreOffre(ArrayList<Carte> selectCards) {
 		Console.displaySelectCards(selectCards);
 
 		Scanner sc = new Scanner(System.in);
@@ -56,7 +54,7 @@ public class JoueurReel extends Joueur {
 
 		System.out.println("");
 
-		return selectCards.get(choice - 1);
+		return choice - 1;
 
 	}
 	
