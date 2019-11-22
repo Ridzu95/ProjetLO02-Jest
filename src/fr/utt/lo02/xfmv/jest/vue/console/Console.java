@@ -64,8 +64,8 @@ public abstract class Console {
 
     }
 
-    public static void showTurn() {
-        System.out.println("TOUR : " + Partie.getInstance().getTour());
+    public static void showTurn(int tour) {
+        System.out.println("TOUR : " + tour);
         System.out.println("");
     }
 

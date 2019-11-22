@@ -15,17 +15,17 @@ import java.util.*;
 
 public class Partie implements Variante {
 
-	private int nbJoueurs;
-	// private Variante variante;
-	private LinkedList<Carte> pioche;
+	private LinkedList<Carte> basePioche;
+	private LinkedList<Carte> tempPioche;
 	private ArrayList<Carte> tropheesPartie;
 	private ArrayList<Joueur> joueurs;
 	private int tour;
 
 	private Partie() {
-		pioche = new LinkedList<Carte>();
+		basePioche = new LinkedList<Carte>();
 		tropheesPartie = new ArrayList<Carte>();
 		joueurs = new ArrayList<Joueur>();
+		tempPioche = new LinkedList<Carte>();
 		this.tour = 1;
 	}
 	
@@ -40,12 +40,12 @@ public class Partie implements Variante {
 		for (Couleurs couleur : Couleurs.values()) {
 			for (Valeurs valeur : Valeurs.values()) {
 				if (couleur != Couleurs.Joker && valeur != Valeurs.Joker) {
-					this.pioche.add(new Carte(valeur, couleur));
+					this.basePioche.add(new Carte(valeur, couleur));
 				}
 			}
 		}
 
-		this.pioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
+		this.basePioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
 
 		JoueurReel player = new JoueurReel(1, Console.playerUsernameChoice());
 		JoueurVirtuel bot1 = new JoueurVirtuel(1, 2);
@@ -55,25 +55,28 @@ public class Partie implements Variante {
 		this.joueurs.add(bot1);
 		this.joueurs.add(bot2);
 
-		this.distribuerCartes();
+		Collections.shuffle(this.basePioche);
 		this.jouerPartie();
 
 		return;
 	}
 	
 	public void distribuerCartes() {
-		Collections.shuffle(this.pioche);
 
 		if (this.tour == 1) {
 
-			this.tropheesPartie.add(this.pioche.poll());
-			this.tropheesPartie.add(this.pioche.poll());
+
+			this.tropheesPartie.add(this.basePioche.poll());
+
+			if (joueurs.size() == 3) {
+				this.tropheesPartie.add(this.basePioche.poll());
+			}
 
 			this.activerTrophees();
 
 			for (Joueur i : joueurs) {
-				i.getMain().add(this.pioche.poll());
-				i.getMain().add(this.pioche.poll());
+				i.getMain().add(this.basePioche.poll());
+				i.getMain().add(this.basePioche.poll());
 			}
 
 			return ;
@@ -82,22 +85,26 @@ public class Partie implements Variante {
 
 			for(Joueur i : joueurs) {
 				if (i.getMain().get(0) == null) {
-					this.pioche.add(i.getMain().pollLast());
+					this.tempPioche.add(i.getMain().pollLast());
 				}
 				else {
-					this.pioche.add(i.getMain().pollFirst());
+					this.tempPioche.add(i.getMain().pollFirst());
 				}
-			}
-
-			Collections.shuffle(this.pioche);
-
-			for (Carte carte : pioche) {
-				carte.setVisible(true);
 			}
 
 			for (Joueur i : joueurs) {
-				i.getMain().add(this.pioche.poll());
-				i.getMain().add(this.pioche.poll());
+				this.tempPioche.add(this.basePioche.poll());
+			}
+
+			for (Carte carte : tempPioche) {
+				carte.setVisible(true);
+			}
+
+			Collections.shuffle(this.tempPioche);
+
+			for (Joueur i : joueurs) {
+				i.getMain().add(this.tempPioche.poll());
+				i.getMain().add(this.tempPioche.poll());
 			}
 
 			return ;
@@ -110,15 +117,15 @@ public class Partie implements Variante {
 
 	public void jouerPartie() {
 
-		while (this.pioche.size() > 0) {
-			Console.showTurn();
+		do {
+			this.distribuerCartes();
+			Console.showTurn(this.tour);
 			this.choisirCarteCachee();
 			Console.displayPlayerCards(joueurs);
 			Collections.sort(joueurs);
 			this.controlOffers();
 			this.tour++;
-			this.distribuerCartes();
-		}
+		} while (basePioche.size() != 0);
 
 		return;
 	}
@@ -179,7 +186,7 @@ public class Partie implements Variante {
 
 		}
 
-		
+
 
 	}
 
@@ -206,20 +213,12 @@ public class Partie implements Variante {
 		this.tour = tour;
 	}
 
-	public void setNbJoueurs(int nbJoueurs) {
-		this.nbJoueurs = nbJoueurs;
+	public LinkedList<Carte> getBasePioche() {
+		return basePioche;
 	}
 
-	public int getNbJoueurs() {
-		return this.nbJoueurs;
-	}
-
-	public LinkedList<Carte> getPioche() {
-		return pioche;
-	}
-
-	public void setPioche(LinkedList<Carte> pioche) {
-		this.pioche = pioche;
+	public LinkedList<Carte> getTempPioche() {
+		return tempPioche;
 	}
 
 	public ArrayList<Carte> getTropheesPartie() {
