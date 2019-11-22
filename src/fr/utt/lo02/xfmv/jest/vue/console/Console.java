@@ -18,7 +18,7 @@ public abstract class Console {
 
     public static String playerUsernameChoice() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Entrez votre pseudo : ");
+        System.out.print("Entrez votre pseudo : ");
         String username = sc.nextLine();
         return username;
     }
@@ -65,8 +65,29 @@ public abstract class Console {
     }
 
     public static void showTurn(int tour) {
-        System.out.println("TOUR : " + tour);
         System.out.println("");
+        System.out.println("*********");
+        System.out.println(" TOUR " + tour);
+        System.out.println("*********");
+        System.out.println("");
+    }
+
+    public static void showJests() {
+        System.out.println("Révélez vos Jests !");
+        for (Joueur joueur : Partie.getInstance().getJoueurs()) {
+            System.out.print(joueur.toString() + ": ");
+            for (Carte carte : joueur.getJest()) {
+                carte.setVisible(true);
+                System.out.print(carte.toString() + " ");
+            }
+            System.out.println("");
+        }
+    }
+
+    public static void showScores() {
+        for (Joueur joueur : Partie.getInstance().getJoueurs()) {
+            System.out.println(joueur.toString() + " : " + joueur.getScore());
+        }
     }
 
     /*

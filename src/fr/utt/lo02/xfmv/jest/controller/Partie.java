@@ -127,6 +127,15 @@ public class Partie implements Variante {
 			this.tour++;
 		} while (basePioche.size() != 0);
 
+		Console.showJests();
+		CompteurVarianteBase compteur = new CompteurVarianteBase();
+
+		for (Joueur joueur : joueurs) {
+			joueur.accept(compteur);
+		}
+
+		Console.showScores();
+
 		return;
 	}
 
@@ -166,7 +175,6 @@ public class Partie implements Variante {
 			}
 
 			System.out.println("Le joueur " + choosingPlayer.toString() + " a mis la carte " + selectCards.get(choice) + " dans son Jest !");
-			System.out.println("");
 
 			choosingPlayer.setHasPlayed(true);
 			choosingPlayer = selectJoueurs.get(choice);
