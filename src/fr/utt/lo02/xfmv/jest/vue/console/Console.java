@@ -79,6 +79,11 @@ public abstract class Console {
 
 
     }
+    
+    public static void showTurn(int tour) {
+        System.out.println("TOUR : " + tour);
+        System.out.println("");
+    }
 
     /*
     public static void tellHiddenCard(Joueur joueur) {

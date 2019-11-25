@@ -12,18 +12,18 @@ import java.util.LinkedList;
 
 public class JoueurReel extends Joueur {
 	
-
+	private String username;
+		
 	public JoueurReel() {
 		super();
-		this.nom = "Joueur";
 	}
 
 	public JoueurReel(int id, String username) {
 		super();
 		this.id = id;
-		this.nom = username;
 		this.main = new LinkedList<Carte>();
-		this.jest = new ArrayList<Carte>();
+		this.jest = new LinkedList<Carte>();
+		this.username = username;
 	}
 
 	public int faireOffre() {
@@ -42,7 +42,7 @@ public class JoueurReel extends Joueur {
         return choice -1;
 	}
 	
-	public Carte prendreOffre(ArrayList<Carte> selectCards) {
+	public int prendreOffre(ArrayList<Carte> selectCards) {
 		Console.displaySelectCards(selectCards);
 
 		Scanner sc = new Scanner(System.in);
@@ -55,11 +55,12 @@ public class JoueurReel extends Joueur {
 
 		System.out.println("");
 
-		return selectCards.get(choice - 1);
+		return choice - 1;
 
 	}
 	
-	public String toString(){
-	      return  nom;
+
+	public String toString() {
+		return this.username;
 	}
 }

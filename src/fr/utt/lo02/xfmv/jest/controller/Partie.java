@@ -16,15 +16,16 @@ import java.util.*;
 
 public class Partie {
 
-	private int nbJoueurs;
 	private Variante variante;
-	private LinkedList<Carte> pioche;
+	private LinkedList<Carte> basePioche;
+	private LinkedList<Carte> tempPioche;
 	private ArrayList<Carte> tropheesPartie;
 	private ArrayList<Joueur> joueurs;
 	private int tour;
 
 	private Partie() {
-		pioche = new LinkedList<Carte>();
+		basePioche = new LinkedList<Carte>();
+		tempPioche = new LinkedList<Carte>();
 		tropheesPartie = new ArrayList<Carte>();
 		joueurs = new ArrayList<Joueur>();
 		this.tour = 1;
@@ -41,16 +42,16 @@ public class Partie {
 		for (Couleurs couleur : Couleurs.values()) {
 			for (Valeurs valeur : Valeurs.values()) {
 				if (couleur != Couleurs.Joker && valeur != Valeurs.Joker) {
-					this.pioche.add(new Carte(valeur, couleur));
+					this.basePioche.add(new Carte(valeur, couleur));
 				}
 			}
 		}
 
-		this.pioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
+		this.basePioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
 
 		JoueurReel player = new JoueurReel(1, Console.playerUsernameChoice());
-		JoueurVirtuel bot1 = new JoueurVirtuel(1, 2);
-		JoueurVirtuel bot2 = new JoueurVirtuel(1, 3);
+		JoueurVirtuel bot1 = new JoueurVirtuel(1);
+		JoueurVirtuel bot2 = new JoueurVirtuel(2);
 
 		this.joueurs.add(player);
 		this.joueurs.add(bot1);
@@ -68,28 +69,31 @@ public class Partie {
 			this.variante = new Variante2();
 		}
 		
-
-		this.distribuerCartes();
+		
+		Collections.shuffle(this.basePioche);
 		this.jouerPartie();
 
 		return;
 	}
 	
 	public void distribuerCartes() {
-		Collections.shuffle(this.pioche);
 
 		if (this.tour == 1) {
 
-			this.tropheesPartie.add(this.pioche.poll());
-			this.tropheesPartie.add(this.pioche.poll());
-			
-			// On détermine les trophées en fonctions de la variante
+
+			this.tropheesPartie.add(this.basePioche.poll());
+
+			if (joueurs.size() == 3) {
+				this.tropheesPartie.add(this.basePioche.poll());
+			}
 
 			this.variante.activerTrophees(this.tropheesPartie);
+			this.variante.showTrophies(tropheesPartie);
+
 
 			for (Joueur i : joueurs) {
-				i.getMain().add(this.pioche.poll());
-				i.getMain().add(this.pioche.poll());
+				i.getMain().add(this.basePioche.poll());
+				i.getMain().add(this.basePioche.poll());
 			}
 
 			return ;
@@ -97,14 +101,27 @@ public class Partie {
 		else {
 
 			for(Joueur i : joueurs) {
-				this.pioche.add(i.getMain().poll());
+				if (i.getMain().get(0) == null) {
+					this.tempPioche.add(i.getMain().pollLast());
+				}
+				else {
+					this.tempPioche.add(i.getMain().pollFirst());
+				}
 			}
 
-			Collections.shuffle(this.pioche);
+			for (Joueur i : joueurs) {
+				this.tempPioche.add(this.basePioche.poll());
+			}
+
+			for (Carte carte : tempPioche) {
+				carte.setVisible(true);
+			}
+
+			Collections.shuffle(this.tempPioche);
 
 			for (Joueur i : joueurs) {
-				i.getMain().add(this.pioche.poll());
-				i.getMain().add(this.pioche.poll());
+				i.getMain().add(this.tempPioche.poll());
+				i.getMain().add(this.tempPioche.poll());
 			}
 
 			return ;
@@ -116,40 +133,85 @@ public class Partie {
 	}
 
 	public void jouerPartie() {
-		
-		variante.showTrophies(tropheesPartie);
-		this.choisirCarteCachee();
-		Console.displayPlayerCards(joueurs);
+
+		do {
+			this.distribuerCartes();
+			Console.showTurn(this.tour);
+			this.choisirCarteCachee();
+			Console.displayPlayerCards(joueurs);
+			Collections.sort(joueurs);
+			this.controlOffers();
+			this.tour++;
+		} while (basePioche.size() != 0);
+
+		return;
+	}
+	
+	public void controlOffers() {
+
 		Joueur choosingPlayer = joueurs.get(0);
-		Collections.sort(joueurs);
+		boolean everyonePlayed = false;
 
+		while (everyonePlayed == false) {
 
-		while (choosingPlayer.getHasPlayed() == false) {
-			System.out.println(choosingPlayer.getId());
+			System.out.println();
+
 			ArrayList<Carte> selectCards = new ArrayList<Carte>();
+			ArrayList<Joueur> selectJoueurs = new ArrayList<Joueur>();
 			for (Joueur joueur : joueurs) {
 				if (joueur.getMain().size() == 2 && joueur != choosingPlayer) {
 					for (Carte carte : joueur.getMain()) {
 						selectCards.add(carte);
+						selectJoueurs.add(joueur);
 					}
 				}
 			}
 			if (selectCards.size() == 0) {
 				for (Carte carte : choosingPlayer.getMain()) {
 					selectCards.add(carte);
+					selectJoueurs.add(choosingPlayer);
 				}
 			}
-			choosingPlayer.prendreOffre(selectCards);
+
+			int choice = choosingPlayer.prendreOffre(selectCards);
+
+			if (choice % 2 == 0) {
+				choosingPlayer.getJest().add(selectJoueurs.get(choice).getMain().pollFirst());
+			}
+			else {
+				choosingPlayer.getJest().add(selectJoueurs.get(choice).getMain().pollLast());
+			}
+
+			System.out.println("Le joueur " + choosingPlayer.toString() + " a mis la carte " + selectCards.get(choice) + " dans son Jest !");
+			System.out.println("");
+
+			choosingPlayer.setHasPlayed(true);
+			choosingPlayer = selectJoueurs.get(choice);
+
+			if (choosingPlayer.getHasPlayed() == true) {
+				int a = 0;
+				while (a < joueurs.size() && joueurs.get(a).getHasPlayed() == true) {
+					a++;
+				}
+				if (a > joueurs.size() - 1) {
+					everyonePlayed = true;
+				}
+				else {
+					choosingPlayer = joueurs.get(a);
+				}
+			}
 
 		}
 
-		return;
+
+
 	}
 
 	// méthode qui permet à chaque joueur de cacher une carte de sa main 
 	public void choisirCarteCachee() {
 
 		for(Joueur joueur : joueurs) {
+			joueur.setHasPlayed(false);
 			joueur.getMain().get(joueur.faireOffre()).setVisible(false);
 		}
 
@@ -173,20 +235,13 @@ public class Partie {
 		this.tour = tour;
 	}
 
-	public void setNbJoueurs(int nbJoueurs) {
-		this.nbJoueurs = nbJoueurs;
-	}
 
-	public int getNbJoueurs() {
-		return this.nbJoueurs;
+	public LinkedList<Carte> getBasePioche() {
+		return basePioche;
 	}
-
-	public LinkedList<Carte> getPioche() {
-		return pioche;
-	}
-
-	public void setPioche(LinkedList<Carte> pioche) {
-		this.pioche = pioche;
+	
+	public LinkedList<Carte> getTempPioche() {
+		return tempPioche;
 	}
 
 	public ArrayList<Carte> getTropheesPartie() {

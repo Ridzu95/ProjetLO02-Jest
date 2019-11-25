@@ -9,18 +9,21 @@ public abstract class Joueur implements Comparable<Joueur> {
 
 	protected int id;
 	protected LinkedList<Carte> main;
-	protected ArrayList<Carte> jest;
-	protected String nom;
+	protected LinkedList<Carte> jest;
 	protected boolean hasPlayed;
 
 	public Joueur() {
 		this.id = 0;
 		this.hasPlayed = false;
+		this.main = new LinkedList<Carte>();
+		this.jest = new LinkedList<Carte>();
 	}
 
 	public Joueur(int id) {
 		this.id = id;
 		this.hasPlayed = false;
+		this.main = new LinkedList<Carte>();
+		this.jest = new LinkedList<Carte>();
 	}
 
 	public LinkedList<Carte> getMain() {
@@ -32,8 +35,16 @@ public abstract class Joueur implements Comparable<Joueur> {
 		
 	}
 	
-	public Carte prendreOffre(ArrayList<Carte> selectCards) { //va appeller soit prendrOffre de virtuel ou réel
-		return this.getMain().get(0);
+	public void setHasPlayed(boolean hasPlayed) {
+		this.hasPlayed = hasPlayed;
+	}
+	
+	public LinkedList<Carte> getJest() {
+		return jest;
+	}
+	
+	public int prendreOffre(ArrayList<Carte> selectCards) { //va appeller soit prendrOffre de virtuel ou réel
+		return 0;
 	}
 
 	public Carte getVisibleCard() {
@@ -62,28 +73,6 @@ public abstract class Joueur implements Comparable<Joueur> {
 
 	}
 	
-	public Carte getCarteVisible() {
-		
-		Carte carteVisible = null;
-		for(Carte carte : this.getMain()) {
-            if (carte.isVisible() == true) {
-            	carteVisible = carte;
-            }
-        }
-		
-		return carteVisible;
-	}
 	
-	public Carte getCarteCachee() {
-		
-		Carte carteCachee = null;
-		for(Carte carte : this.getMain()) {
-            if (carte.isVisible() == false) {
-            	carteCachee = carte;
-            }
-        }
-		
-		return carteCachee;
-	}
 	
 }
