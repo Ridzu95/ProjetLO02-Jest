@@ -48,14 +48,21 @@ public class Partie {
 		}
 
 		this.basePioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
-
-		JoueurReel player = new JoueurReel(1, Console.playerUsernameChoice());
-		JoueurVirtuel bot1 = new JoueurVirtuel(1);
-		JoueurVirtuel bot2 = new JoueurVirtuel(2);
-
-		this.joueurs.add(player);
-		this.joueurs.add(bot1);
-		this.joueurs.add(bot2);
+		
+		//Création des joueurs
+		
+		int temp1 = Console.demanderNombreJoueurs();
+		int temp2 = Console.demanderJoueursReels(temp1);
+		
+		for ( int i = 0; i < temp2 ; i++ ) {
+			JoueurReel player = new JoueurReel(i, Console.playerUsernameChoice(i+1));
+			this.joueurs.add(player);
+		}
+		
+		for ( int i = 0; i < temp1 - temp2 ; i++ ) {
+			JoueurVirtuel bot = new JoueurVirtuel(i);
+			this.joueurs.add(bot);
+		}
 		
 		/* Choix de la variante avec le choix de l'utilisateur */
 		

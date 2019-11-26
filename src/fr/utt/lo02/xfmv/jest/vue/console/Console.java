@@ -16,9 +16,9 @@ public abstract class Console {
         System.out.println("--- Jeu de Jest inventé par Brett J. Gilbert ---");
     }
 
-    public static String playerUsernameChoice() {
+    public static String playerUsernameChoice(int id) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Entrez votre pseudo : ");
+        System.out.println("Entrez le pseudo du joueur n° " + id);
         String username = sc.nextLine();
         return username;
     }
@@ -41,6 +41,40 @@ public abstract class Console {
             System.out.println("");
             choice = sc.nextInt();
         } while (choice !=1 && choice != 2 && choice !=3);
+        
+        
+        return choice;
+    }
+    
+    public static int demanderNombreJoueurs() {
+    	Scanner sc = new Scanner(System.in);
+    	int choice = 0;
+    	
+    	System.out.println("Voulez-vous jouer à 3 ou 4 joueurs ?");
+    	System.out.println("");
+    	
+    	do {
+            System.out.print("Votre choix : ");
+            System.out.println("");
+            choice = sc.nextInt();
+        } while (choice !=3 && choice != 4);
+        
+        
+        return choice;
+    }
+    
+    public static int demanderJoueursReels(int nombreJoueurs) {
+    	Scanner sc = new Scanner(System.in);
+    	int choice = 0;
+    	
+    	System.out.println("Combien y a-t-il de joueurs réels ?");
+    	System.out.println("");
+    	
+    	do {
+            System.out.print("Votre choix : ");
+            System.out.println("");
+            choice = sc.nextInt();
+        } while (choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
         
         
         return choice;
