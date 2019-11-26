@@ -30,7 +30,7 @@ public abstract class Console {
         Scanner sc = new Scanner(System.in);
     	int choice = 0;
     	
-    	System.out.println("Choisissez une variante");
+    	System.out.println("Choisissez une variante pour la partie");
     	System.out.println("(1) -- Variante de base : les trophées sont assignés selon les règles classiques" );
     	System.out.println("(2) -- Variante 1 : les trophées sont assignés aléatoirement" );
     	System.out.println("(3) -- Variante 2 : les trophées sont assignés selon les règles classiques mais sont inconnus" );
@@ -75,6 +75,26 @@ public abstract class Console {
             System.out.println("");
             choice = sc.nextInt();
         } while (choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
+        
+        
+        return choice;
+    }
+    
+    public static int demanderStrategie(int id) {
+
+        Scanner sc = new Scanner(System.in);
+    	int choice = 0;
+    	
+    	System.out.println("Choisissez la stratégie utilisée par le bot n°" + (id + 1));
+    	System.out.println("(1) -- Stratégie de base : le bot choisis aléatoirement une carte à chaque tour de jeu" );
+    	System.out.println("(2) -- Startégie avancée : le bot choisis la carte avec la valeur la plus haute" );
+    	System.out.println("");
+    	
+    	do {
+            System.out.print("Votre choix : ");
+            System.out.println("");
+            choice = sc.nextInt();
+        } while (choice !=1 && choice != 2);
         
         
         return choice;

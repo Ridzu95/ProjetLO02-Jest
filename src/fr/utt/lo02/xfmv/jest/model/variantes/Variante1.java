@@ -8,7 +8,7 @@ import fr.utt.lo02.xfmv.jest.model.cartes.Trophees;
 public class Variante1 implements Variante {
 	
 	public void showTrophies(ArrayList<Carte> trophees) {
-        System.out.println("Les deux trophées pour cette partie sont :");
+        System.out.println("Le(s) trophée(s) pour cette partie sont :");
         for(Carte carte : trophees) {
             System.out.println(carte.toString() + " --- " + carte.getTrophee().getDescription());
         }

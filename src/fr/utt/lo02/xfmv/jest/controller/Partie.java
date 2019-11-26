@@ -60,7 +60,7 @@ public class Partie {
 		}
 		
 		for ( int i = 0; i < temp1 - temp2 ; i++ ) {
-			JoueurVirtuel bot = new JoueurVirtuel(i);
+			JoueurVirtuel bot = new JoueurVirtuel(i,Console.demanderStrategie(i));
 			this.joueurs.add(bot);
 		}
 		

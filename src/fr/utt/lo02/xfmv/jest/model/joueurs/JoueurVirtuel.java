@@ -2,6 +2,7 @@ package fr.utt.lo02.xfmv.jest.model.joueurs;
 
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 import fr.utt.lo02.xfmv.jest.model.strategie.StratAleatoire;
+import fr.utt.lo02.xfmv.jest.model.strategie.StratBest;
 import fr.utt.lo02.xfmv.jest.model.strategie.Strategie;
 
 
@@ -12,10 +13,17 @@ public class JoueurVirtuel extends Joueur{
 	
 	private Strategie strategie;
 	
-	public JoueurVirtuel(int id) {
+	public JoueurVirtuel(int id, int choicestrat) {
 		super(id);
-		Strategie strat = new StratAleatoire();
-		this.strategie = strat;
+		if (choicestrat == 2) {
+			Strategie strat = new StratBest();
+			this.strategie = strat;
+		} else {
+			Strategie strat = new StratAleatoire();
+			this.strategie = strat;
+		}
+		
+		
 	}
 	
 	public JoueurVirtuel(int id, Strategie strategie) {
