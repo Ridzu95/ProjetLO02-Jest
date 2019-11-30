@@ -160,14 +160,5 @@ public abstract class Console {
         }
     }
 
-    /*
-    public static void tellHiddenCard(Joueur joueur) {
-
-        for(Carte carte : joueur.getMain()) {
-            if (carte.isVisible() == false) {
-                System.out.println("La carte " + carte.toString() + " est cachée !");
-            }
-        }
-
-    }
+    
 }
