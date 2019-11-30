@@ -35,7 +35,7 @@ public abstract class Joueur implements Comparable<Joueur> {
 	}
 	
 	public int faireOffre() {
-		return id; //va appeller soit faireOffre de virtuel ou réel
+		return 0; //va appeller soit faireOffre de virtuel ou réel
 		
 	}
 
@@ -88,5 +88,7 @@ public abstract class Joueur implements Comparable<Joueur> {
 	public void accept(Compteur compteur) {
 		compteur.compterJests(this);
 	}
+	
+	
 	
 }
