@@ -1,6 +1,8 @@
 package fr.utt.lo02.xfmv.jest.vue.console;
 
+import java.awt.*;
 import java.lang.reflect.Array;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -14,6 +16,34 @@ public abstract class Console {
 
     public static void welcomeMessage() {
         System.out.println("--- Jeu de Jest inventé par Brett J. Gilbert ---");
+    }
+
+    public static void showMenu() {
+        System.out.println("(1) --- Jouer\n(2) --- Lire les règles\n(3) --- Quitter");
+        Scanner sc = new Scanner(System.in);
+        int choice = 0;
+        do {
+            System.out.print("Votre choix : ");
+            choice = sc.nextInt();
+            System.out.println("");
+        } while (choice !=1 && choice != 2 && choice !=3);
+        switch (choice) {
+            case 1 :
+                Partie.getInstance().initialiserPartie();
+                break;
+            case 2 :
+                try {
+                    URI uri = new URI("https://puu.sh/EKl29/655216593a.png");
+                    Desktop.getDesktop().browse(uri);
+                }
+                catch(Exception ex) {}
+                Console.showMenu();
+                break;
+            case 3 :
+                System.exit(0);
+                break;
+        }
+
     }
 
     public static String playerUsernameChoice(int id) {
@@ -160,5 +190,23 @@ public abstract class Console {
         }
     }
 
+    public static void endOfGame() {
+        System.out.println("(1) --- Retourner au menu\n(2) --- Quitter");
+        Scanner sc = new Scanner(System.in);
+        int choice = 0;
+        do {
+            System.out.print("Votre choix : ");
+            choice = sc.nextInt();
+            System.out.println("");
+        } while (choice !=1 && choice != 2);
+        switch (choice) {
+            case 1 :
+                Console.showMenu();
+                break;
+            case 2 :
+                System.exit(0);
+                break;
+        }
+    }
     
 }

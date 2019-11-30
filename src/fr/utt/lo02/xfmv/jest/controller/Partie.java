@@ -163,6 +163,7 @@ public class Partie {
 		}
 
 		Console.showScores();
+		Console.endOfGame();
 
 		return;
 	}
