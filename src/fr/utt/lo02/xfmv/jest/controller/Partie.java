@@ -95,7 +95,7 @@ public class Partie {
 			}
 
 			this.variante.activerTrophees(this.tropheesPartie);
-			this.variante.showTrophies(tropheesPartie);
+			this.variante.showTrophies(this.tropheesPartie);
 
 
 			for (Joueur i : joueurs) {

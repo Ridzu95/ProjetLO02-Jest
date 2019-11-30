@@ -68,8 +68,8 @@ public abstract class Console {
     	
     	do {
             System.out.print("Votre choix : ");
-            System.out.println("");
             choice = sc.nextInt();
+            System.out.println("");
         } while (choice !=1 && choice != 2 && choice !=3);
         
         
@@ -85,8 +85,8 @@ public abstract class Console {
     	
     	do {
             System.out.print("Votre choix : ");
-            System.out.println("");
             choice = sc.nextInt();
+            System.out.println("");
         } while (choice !=3 && choice != 4);
         
         
@@ -102,8 +102,8 @@ public abstract class Console {
     	
     	do {
             System.out.print("Votre choix : ");
-            System.out.println("");
             choice = sc.nextInt();
+            System.out.println("");
         } while (choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
         
         
@@ -122,8 +122,8 @@ public abstract class Console {
     	
     	do {
             System.out.print("Votre choix : ");
-            System.out.println("");
             choice = sc.nextInt();
+            System.out.println("");
         } while (choice !=1 && choice != 2);
         
         
@@ -185,6 +185,8 @@ public abstract class Console {
     }
 
     public static void showScores() {
+        System.out.println("");
+        System.out.println("Voilà les scores !");
         for (Joueur joueur : Partie.getInstance().getJoueurs()) {
             System.out.println(joueur.toString() + " : " + joueur.getScore());
         }
