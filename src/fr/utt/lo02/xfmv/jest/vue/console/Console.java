@@ -133,9 +133,41 @@ public abstract class Console {
 
 
     }
-    
+
     public static void showTurn(int tour) {
-        System.out.println("TOUR : " + tour);
         System.out.println("");
+        System.out.println("*********");
+        System.out.println(" TOUR " + tour);
+        System.out.println("*********");
+        System.out.println("");
+    }
+
+    public static void showJests() {
+        System.out.println("Révélez vos Jests !");
+        for (Joueur joueur : Partie.getInstance().getJoueurs()) {
+            System.out.print(joueur.toString() + ": ");
+            for (Carte carte : joueur.getJest()) {
+                carte.setVisible(true);
+                System.out.print(carte.toString() + " ");
+            }
+            System.out.println("");
+        }
+    }
+
+    public static void showScores() {
+        for (Joueur joueur : Partie.getInstance().getJoueurs()) {
+            System.out.println(joueur.toString() + " : " + joueur.getScore());
+        }
+    }
+
+    /*
+    public static void tellHiddenCard(Joueur joueur) {
+
+        for(Carte carte : joueur.getMain()) {
+            if (carte.isVisible() == false) {
+                System.out.println("La carte " + carte.toString() + " est cachée !");
+            }
+        }
+
     }
 }

@@ -12,6 +12,7 @@ import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
 import fr.utt.lo02.xfmv.jest.vue.console.Console;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Partie {
@@ -28,6 +29,7 @@ public class Partie {
 		tempPioche = new LinkedList<Carte>();
 		tropheesPartie = new ArrayList<Carte>();
 		joueurs = new ArrayList<Joueur>();
+		tempPioche = new LinkedList<Carte>();
 		this.tour = 1;
 	}
 	
@@ -142,18 +144,27 @@ public class Partie {
 	public void jouerPartie() {
 
 		do {
-			this.distribuerCartes(); //on redistribue les mains
-			Console.showTurn(this.tour); 
-			this.choisirCarteCachee(); //chacun choisis la carte qu'il veut cacher
-			Console.displayPlayerCards(joueurs); //montre les mains des joueurs
-			Collections.sort(joueurs); //trie la collection des joueurs
-			this.controlOffers(); //méthode qui permet aux joueurs de faire leurs offres
+			this.distribuerCartes();
+			Console.showTurn(this.tour);
+			this.choisirCarteCachee();
+			Console.displayPlayerCards(joueurs);
+			Collections.sort(joueurs);
+			this.controlOffers();
 			this.tour++;
 		} while (basePioche.size() != 0);
 
+		Console.showJests();
+		CompteurVarianteBase compteur = new CompteurVarianteBase();
+
+		for (Joueur joueur : joueurs) {
+			joueur.accept(compteur);
+		}
+
+		Console.showScores();
+
 		return;
 	}
-	
+
 	public void controlOffers() {
 
 		Joueur choosingPlayer = joueurs.get(0);
@@ -161,6 +172,7 @@ public class Partie {
 
 		while (everyonePlayed == false) {
 
+			System.out.println();
 
 			ArrayList<Carte> selectCards = new ArrayList<Carte>();
 			ArrayList<Joueur> selectJoueurs = new ArrayList<Joueur>();
