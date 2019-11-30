@@ -140,7 +140,6 @@ public class Partie {
 	}
 
 	public void jouerPartie() {
-		Console.displayPlayerCards(joueurs); //
 
 		do {
 			this.distribuerCartes(); //on redistribue les mains

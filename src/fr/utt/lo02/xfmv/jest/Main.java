@@ -10,7 +10,6 @@ public class Main {
     public static void main(String[] args) {
         Console.welcomeMessage();
         Partie.getInstance().initialiserPartie();
-		Console.displayPlayerCards(joueurs); //
 
     }
 }

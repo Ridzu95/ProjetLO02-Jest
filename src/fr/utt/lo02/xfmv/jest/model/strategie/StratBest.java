@@ -16,15 +16,15 @@ public class StratBest implements Strategie{
 		for (Carte carte : selectCards) {
 			if (carte.isVisible() == true) {
 				
-				if (carte.getValeur() > carteChoisie.getValeur() ) {
-					
+				if (carte.getValeur().getValeur() > carteChoisie.getValeur().getValeur() ) {
+					carteChoisie = carte;
 				}
  				
 			}
 				
 			
 		}
-		return 0;
+		return selectCards.indexOf(carteChoisie);
 	}
 
 }
