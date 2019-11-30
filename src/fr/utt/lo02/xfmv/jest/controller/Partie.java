@@ -2,19 +2,22 @@ package fr.utt.lo02.xfmv.jest.controller;
 
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 import fr.utt.lo02.xfmv.jest.model.cartes.Couleurs;
-import fr.utt.lo02.xfmv.jest.model.cartes.Trophees;
 import fr.utt.lo02.xfmv.jest.model.cartes.Valeurs;
 import fr.utt.lo02.xfmv.jest.model.joueurs.Joueur;
 import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
 import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurVirtuel;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante;
+import fr.utt.lo02.xfmv.jest.model.variantes.Variante1;
+import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
+import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
 import fr.utt.lo02.xfmv.jest.vue.console.Console;
 
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class Partie implements Variante {
+public class Partie {
 
+	private Variante variante;
 	private LinkedList<Carte> basePioche;
 	private LinkedList<Carte> tempPioche;
 	private ArrayList<Carte> tropheesPartie;
@@ -23,6 +26,7 @@ public class Partie implements Variante {
 
 	private Partie() {
 		basePioche = new LinkedList<Carte>();
+		tempPioche = new LinkedList<Carte>();
 		tropheesPartie = new ArrayList<Carte>();
 		joueurs = new ArrayList<Joueur>();
 		tempPioche = new LinkedList<Carte>();
@@ -46,15 +50,35 @@ public class Partie implements Variante {
 		}
 
 		this.basePioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
-
-		JoueurReel player = new JoueurReel(1, Console.playerUsernameChoice());
-		JoueurVirtuel bot1 = new JoueurVirtuel(1, 2);
-		JoueurVirtuel bot2 = new JoueurVirtuel(1, 3);
-
-		this.joueurs.add(player);
-		this.joueurs.add(bot1);
-		this.joueurs.add(bot2);
-
+		
+		//Création des joueurs
+		
+		int temp1 = Console.demanderNombreJoueurs();
+		int temp2 = Console.demanderJoueursReels(temp1);
+		
+		for ( int i = 0; i < temp2 ; i++ ) {
+			JoueurReel player = new JoueurReel(i, Console.playerUsernameChoice(i+1));
+			this.joueurs.add(player);
+		}
+		
+		for ( int i = 0; i < temp1 - temp2 ; i++ ) {
+			JoueurVirtuel bot = new JoueurVirtuel(i,Console.demanderStrategie(i));
+			this.joueurs.add(bot);
+		}
+		
+		/* Choix de la variante avec le choix de l'utilisateur */
+		
+		int choixVariante = Console.demanderVariante();
+		
+		if ( choixVariante == 1) {
+			this.variante = new Variantebase();
+		} else if ( choixVariante == 2) {
+			this.variante = new Variante1();
+		} else {
+			this.variante = new Variante2();
+		}
+		
+		
 		Collections.shuffle(this.basePioche);
 		this.jouerPartie();
 
@@ -72,7 +96,9 @@ public class Partie implements Variante {
 				this.tropheesPartie.add(this.basePioche.poll());
 			}
 
-			this.activerTrophees();
+			this.variante.activerTrophees(this.tropheesPartie);
+			this.variante.showTrophies(tropheesPartie);
+
 
 			for (Joueur i : joueurs) {
 				i.getMain().add(this.basePioche.poll());
@@ -126,6 +152,15 @@ public class Partie implements Variante {
 			this.controlOffers();
 			this.tour++;
 		} while (basePioche.size() != 0);
+
+		Console.showJests();
+		CompteurVarianteBase compteur = new CompteurVarianteBase();
+
+		for (Joueur joueur : joueurs) {
+			joueur.accept(compteur);
+		}
+
+		Console.showScores();
 
 		return;
 	}
@@ -190,7 +225,7 @@ public class Partie implements Variante {
 
 	}
 
-	/* méthode qui permet à chaque joueur de cacher une carte de sa main */
+	// méthode qui permet à chaque joueur de cacher une carte de sa main 
 	public void choisirCarteCachee() {
 
 		for(Joueur joueur : joueurs) {
@@ -204,6 +239,11 @@ public class Partie implements Variante {
 	public void declarerVainqueur() { //est appellé en fin de partie
 		
 	}
+	
+	
+	
+	
+	/* getter setter */
 
 	public int getTour() {
 		return this.tour;
@@ -213,10 +253,11 @@ public class Partie implements Variante {
 		this.tour = tour;
 	}
 
+
 	public LinkedList<Carte> getBasePioche() {
 		return basePioche;
 	}
-
+	
 	public LinkedList<Carte> getTempPioche() {
 		return tempPioche;
 	}
@@ -225,59 +266,4 @@ public class Partie implements Variante {
 		return tropheesPartie;
 	}
 
-	public void activerTrophees() {
-
-		for (Carte carte : tropheesPartie) {
-			switch(carte.toString()) {
-				case "2♥":
-				case "4♥":
-				case "3♥":
-				case "5♥":
-					carte.setTrophee(Trophees.Joker);
-					break;
-				case "2♦":
-					carte.setTrophee(Trophees.HighestCarreau);
-					break;
-				case "3♦":
-					carte.setTrophee(Trophees.LowestCarreau);
-					break;
-				case "4♦":
-					carte.setTrophee(Trophees.BestJestNoJoker);
-					break;
-				case "5♦":
-					carte.setTrophee(Trophees.MajorityQuatre);
-					break;
-				case "2♣":
-					carte.setTrophee(Trophees.LowestCoeur);
-					break;
-				case "3♣":
-					carte.setTrophee(Trophees.HighestCoeur);
-					break;
-				case "4♣":
-					carte.setTrophee(Trophees.LowestPique);
-					break;
-				case "5♣":
-					carte.setTrophee(Trophees.HighestPique);
-					break;
-				case "2♠":
-					carte.setTrophee(Trophees.MajorityTrois);
-					break;
-				case "3♠":
-					carte.setTrophee(Trophees.MajorityDeux);
-					break;
-				case "4♠":
-					carte.setTrophee(Trophees.LowestTrefle);
-					break;
-				case "5♠":
-					carte.setTrophee(Trophees.HighestTrefle);
-					break;
-				case "★":
-					carte.setTrophee(Trophees.BestJest);
-					break;
-			}
-		}
-
-		return;
-
-	}
 }

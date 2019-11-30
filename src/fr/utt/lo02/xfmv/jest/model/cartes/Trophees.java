@@ -1,5 +1,7 @@
 package fr.utt.lo02.xfmv.jest.model.cartes;
 
+import java.util.Random;
+
 public enum Trophees {
 
     HighestTrefle(1, "Ce trophée revient au joueur avec la meilleure carte en trèfle."),
@@ -23,6 +25,13 @@ public enum Trophees {
     Trophees(int id, String description) {
         this.id = id;
         this.description = description;
+    }
+    
+    /*méthode qui va permettre de renvoyer un trophée aléatoire */
+    
+    public static Trophees getRandomTrophee() {
+        Random random = new Random();
+        return values()[random.nextInt(values().length)];
     }
 
     public String getDescription() { return description; }

@@ -1,5 +1,6 @@
 package fr.utt.lo02.xfmv.jest.model.joueurs;
 
+import fr.utt.lo02.xfmv.jest.controller.Compteur;
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 
 import java.util.ArrayList;
@@ -11,9 +12,11 @@ public abstract class Joueur implements Comparable<Joueur> {
 	protected LinkedList<Carte> main;
 	protected LinkedList<Carte> jest;
 	protected boolean hasPlayed;
+	protected int score;
 
 	public Joueur() {
 		this.id = 0;
+		this.score = 0;
 		this.hasPlayed = false;
 		this.main = new LinkedList<Carte>();
 		this.jest = new LinkedList<Carte>();
@@ -21,6 +24,7 @@ public abstract class Joueur implements Comparable<Joueur> {
 
 	public Joueur(int id) {
 		this.id = id;
+		this.score = 0;
 		this.hasPlayed = false;
 		this.main = new LinkedList<Carte>();
 		this.jest = new LinkedList<Carte>();
@@ -31,7 +35,7 @@ public abstract class Joueur implements Comparable<Joueur> {
 	}
 	
 	public int faireOffre() {
-		return id; //va appeller soit faireOffre de virtuel ou réel
+		return 0; //va appeller soit faireOffre de virtuel ou réel
 		
 	}
 
@@ -59,6 +63,14 @@ public abstract class Joueur implements Comparable<Joueur> {
 		return id;
 	}
 
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	@Override
 	public int compareTo(Joueur joueur) {
 
@@ -72,5 +84,11 @@ public abstract class Joueur implements Comparable<Joueur> {
 		}
 
 	}
+
+	public void accept(Compteur compteur) {
+		compteur.compterJests(this);
+	}
+	
+	
 	
 }
