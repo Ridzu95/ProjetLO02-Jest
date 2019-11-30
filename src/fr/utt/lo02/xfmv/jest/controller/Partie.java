@@ -29,7 +29,6 @@ public class Partie {
 		tempPioche = new LinkedList<Carte>();
 		tropheesPartie = new ArrayList<Carte>();
 		joueurs = new ArrayList<Joueur>();
-		tempPioche = new LinkedList<Carte>();
 		this.tour = 1;
 	}
 	
@@ -92,11 +91,11 @@ public class Partie {
 
 			if (joueurs.size() == 3) {
 				this.tropheesPartie.add(this.basePioche.poll());
+				System.out.println(this.tropheesPartie);
 			}
 
 			this.variante.activerTrophees(this.tropheesPartie);
-			this.variante.showTrophies(tropheesPartie);
-
+			this.variante.showTrophies(this.tropheesPartie);
 
 			for (Joueur i : joueurs) {
 				i.getMain().add(this.basePioche.poll());
@@ -154,14 +153,15 @@ public class Partie {
 		for (Joueur joueur : joueurs) {
 		    joueur.getJest().add(joueur.getMain().poll());
         }
-
+		
+		this.attribuerTrophees();
 		Console.showJests();
 		CompteurVarianteBase compteur = new CompteurVarianteBase();
 
 		for (Joueur joueur : joueurs) {
 			joueur.accept(compteur);
 		}
-
+		
 		Console.showScores();
 
 		return;
@@ -242,7 +242,238 @@ public class Partie {
 		
 	}
 	
-	
+	public void attribuerTrophees() { //permet d'attribuer les trophées de la partie
+		
+		for (Carte trophee : this.tropheesPartie) {
+			
+			System.out.println(trophee.getTrophee().getDescription());
+			
+			//on analyse le type de trophée
+			if (trophee.getTrophee().getId() == 1) { //HighestTrefle
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♣" && carte.getValeur().getValeur() == 4) {
+							joueur.getJest().add(trophee);
+							System.out.println(joueur + " a remporté le trophée");
+						}
+					}
+				}
+			}
+			
+			if (trophee.getTrophee().getId() == 3) { //HighestCoeur
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♥" && carte.getValeur().getValeur() == 4) {
+							joueur.getJest().add(trophee);
+							System.out.println(joueur + " a remporté le trophée");
+						}
+					}
+				}
+			}
+			
+			if (trophee.getTrophee().getId() == 4 ) {//HighestPique
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♠" && carte.getValeur().getValeur() == 4) {
+							joueur.getJest().add(trophee);
+							System.out.println(joueur + " a remporté le trophée");
+						}
+					}
+				}
+			}
+			
+			if (trophee.getTrophee().getId() == 2) {//"HighestCarreau"
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♦" && carte.getValeur().getValeur() == 4) {
+							joueur.getJest().add(trophee);
+							System.out.println(joueur + " a remporté le trophée");
+						}
+					}
+				}
+			}
+			
+			if (trophee.getTrophee().getId() == 6) {//LowestCarreau"
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♦" && carte.getValeur().getValeur() == 1) {
+							joueur.getJest().add(trophee);
+							System.out.println(joueur + " a remporté le trophée");
+						}
+					}
+				}
+			}
+			
+			if (trophee.getTrophee().getId() == 8) {//"LowestPique"
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♠" && carte.getValeur().getValeur() == 1) {
+							joueur.getJest().add(trophee);
+							System.out.println(joueur + " a remporté le trophée");
+						}
+					}
+				}
+			}
+			
+			if (trophee.getTrophee().getId() == 7) {//"LowestCoeur"
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♥" && carte.getValeur().getValeur() == 1) {
+							joueur.getJest().add(trophee);
+							System.out.println(joueur + " a remporté le trophée");
+						}
+					}
+				}
+			}
+			
+			if (trophee.getTrophee().getId() == 5) {//"LowestTrefle"
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♣" && carte.getValeur().getValeur() == 1) {
+							joueur.getJest().add(trophee);
+							System.out.println(joueur + " a remporté le trophée");
+						}
+					}
+				}
+			}
+			
+			if (trophee.getTrophee().getId() == 14) {//"Joker"
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "★") {
+							joueur.getJest().add(trophee);
+							System.out.println(joueur + " a remporté le trophée");
+						}
+					}
+				}
+			}
+			
+			if (trophee.getTrophee().getId() == 9) {//"MajorityDeux"
+				int nb;
+				int position = -1;
+				int nbest = 0;
+				for ( Joueur joueur : this.joueurs) {
+					nb = 0;
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getValeur().getValeur() == 2) {
+							nb+= 1;
+							
+						}
+					}
+					if (nb > nbest) {
+						position += 1;
+						nbest = nb;
+					}
+				}
+				joueurs.get(position).getJest().add(trophee);
+				System.out.println(joueurs.get(position) + " a remporté le trophée !");
+
+			}
+			
+			if (trophee.getTrophee().getId() == 10) {//"MajorityTrois"
+				int nb;
+				int position = -1;
+				int nbest = 0;
+				for ( Joueur joueur : this.joueurs) {
+					nb = 0;
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getValeur().getValeur() == 3) {
+							nb+= 1;
+							
+						}
+					}
+					if (nb > nbest) {
+						position += 1;
+						nbest = nb;
+					}
+				}
+				joueurs.get(position).getJest().add(trophee);
+				System.out.println(joueurs.get(position) + " a remporté le trophée !");
+
+			}
+			
+			if (trophee.getTrophee().getId() == 11) {//"MajorityQuatre"
+				int nb;
+				int position = -1;
+				int nbest = 0;
+				for ( Joueur joueur : this.joueurs) {
+					nb = 0;
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getValeur().getValeur() == 4) {
+							nb+= 1;
+							
+						}
+					}
+					if (nb > nbest) {
+						position += 1;
+						nbest = nb;
+					}
+				}
+				joueurs.get(position).getJest().add(trophee);
+				System.out.println(joueurs.get(position) + " a remporté le trophée !");
+
+			}
+			
+			if (trophee.getTrophee().getId() == 12) {//"BestJest"
+				CompteurVarianteBase compteur = new CompteurVarianteBase();
+
+				int score;
+				int position = -1;
+				int bestscore = 0;
+				for ( Joueur joueur : this.joueurs) {
+					joueur.accept(compteur);
+					score = joueur.getScore();
+					if (score > bestscore) {
+						position += 1;
+						bestscore = score;
+					}
+					joueur.setScore(0); //à vérifier si c'est nécessaure
+				}
+				joueurs.get(position).getJest().add(trophee);
+				System.out.println(joueurs.get(position) + " a remporté le trophée !");
+
+			}
+			
+			if (trophee.getTrophee().getId() == 14) {//"BestJestNoJoker"
+				CompteurVarianteBase compteur = new CompteurVarianteBase();
+
+				int score;
+				int position = -1;
+				int bestscore = 0;
+				boolean hasJoker;
+				for ( Joueur joueur : this.joueurs){
+					hasJoker = false;
+					for (Carte carte : joueur.getJest()) {
+						if ( carte.getCouleur().getCouleur() == "★" ) {
+							hasJoker = true;
+						}
+					}
+					
+					if (hasJoker == false) {
+						joueur.accept(compteur);
+					score = joueur.getScore();
+					if (score > bestscore) {
+						position += 1;
+						bestscore = score;
+						}
+					joueur.setScore(0); //à vérifier si c'est nécessaire
+					}
+					
+						
+					
+					
+					
+				}
+				joueurs.get(position).getJest().add(trophee);
+				System.out.println(joueurs.get(position) + " a remporté le trophée !");
+			}
+				
+			
+			
+			
+			
+		}
+	}
 	
 	
 	/* getter setter */

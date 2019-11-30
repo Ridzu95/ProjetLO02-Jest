@@ -21,7 +21,7 @@ public class Variantebase implements Variante{
 				case "2♥":
 				case "4♥":
 				case "3♥":
-				case "5♥":
+				case "1♥":
 					carte.setTrophee(Trophees.Joker);
 					break;
 				case "2♦":
@@ -33,7 +33,7 @@ public class Variantebase implements Variante{
 				case "4♦":
 					carte.setTrophee(Trophees.BestJestNoJoker);
 					break;
-				case "5♦":
+				case "1♦":
 					carte.setTrophee(Trophees.MajorityQuatre);
 					break;
 				case "2♣":
@@ -45,7 +45,7 @@ public class Variantebase implements Variante{
 				case "4♣":
 					carte.setTrophee(Trophees.LowestPique);
 					break;
-				case "5♣":
+				case "1♣":
 					carte.setTrophee(Trophees.HighestPique);
 					break;
 				case "2♠":
@@ -57,7 +57,7 @@ public class Variantebase implements Variante{
 				case "4♠":
 					carte.setTrophee(Trophees.LowestTrefle);
 					break;
-				case "5♠":
+				case "1♠":
 					carte.setTrophee(Trophees.HighestTrefle);
 					break;
 				case "★":
