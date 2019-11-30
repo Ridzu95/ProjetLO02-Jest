@@ -38,7 +38,11 @@ public class Carte {
 	}
 
 	public Valeurs getValeur() {
-		return valeur;
+		return this.valeur;
+	}
+	
+	public boolean getVisible() {
+		return this.visible;
 	}
 
 	public void setValeur(Valeurs valeur) {

@@ -140,14 +140,15 @@ public class Partie {
 	}
 
 	public void jouerPartie() {
+		Console.displayPlayerCards(joueurs); //
 
 		do {
-			this.distribuerCartes();
-			Console.showTurn(this.tour);
-			this.choisirCarteCachee();
-			Console.displayPlayerCards(joueurs);
-			Collections.sort(joueurs);
-			this.controlOffers();
+			this.distribuerCartes(); //on redistribue les mains
+			Console.showTurn(this.tour); 
+			this.choisirCarteCachee(); //chacun choisis la carte qu'il veut cacher
+			Console.displayPlayerCards(joueurs); //montre les mains des joueurs
+			Collections.sort(joueurs); //trie la collection des joueurs
+			this.controlOffers(); //méthode qui permet aux joueurs de faire leurs offres
 			this.tour++;
 		} while (basePioche.size() != 0);
 
@@ -161,7 +162,6 @@ public class Partie {
 
 		while (everyonePlayed == false) {
 
-			System.out.println();
 
 			ArrayList<Carte> selectCards = new ArrayList<Carte>();
 			ArrayList<Joueur> selectJoueurs = new ArrayList<Joueur>();

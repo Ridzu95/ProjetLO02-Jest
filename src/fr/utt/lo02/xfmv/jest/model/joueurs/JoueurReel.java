@@ -43,7 +43,7 @@ public class JoueurReel extends Joueur {
 	}
 	
 	public int prendreOffre(ArrayList<Carte> selectCards) {
-		Console.displaySelectCards(selectCards);
+		Console.displaySelectCards(selectCards, this);
 
 		Scanner sc = new Scanner(System.in);
 		int choice = 0;

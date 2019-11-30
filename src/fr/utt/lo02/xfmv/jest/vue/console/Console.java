@@ -87,7 +87,7 @@ public abstract class Console {
     	
     	System.out.println("Choisissez la stratégie utilisée par le bot n°" + (id + 1));
     	System.out.println("(1) -- Stratégie de base : le bot choisis aléatoirement une carte à chaque tour de jeu" );
-    	System.out.println("(2) -- Startégie avancée : le bot choisis la carte avec la valeur la plus haute" );
+    	System.out.println("(2) -- Stratégie avancée : le bot choisis la carte avec la valeur la plus haute" );
     	System.out.println("");
     	
     	do {
@@ -103,7 +103,7 @@ public abstract class Console {
     public static void cardChoice(Joueur joueur) {
 
         System.out.println("");
-        System.out.println("Choisissez la carte à cacher :");
+        System.out.println(joueur + " choisis la carte à cacher :");
 
         System.out.println("(1) --- " + joueur.getMain().get(0));
         System.out.println("(2) --- " + joueur.getMain().get(1));
@@ -124,9 +124,9 @@ public abstract class Console {
 
     }
 
-    public static void displaySelectCards(ArrayList<Carte> selectCards) {
+    public static void displaySelectCards(ArrayList<Carte> selectCards, Joueur joueur) {
 
-        System.out.println("Choisis la carte à mettre dans ton Jest :");
+        System.out.println(joueur + " choisis la carte à mettre dans ton Jest :");
         for (int i = 0; i < selectCards.size(); i++ ) {
             System.out.println("(" + (i + 1) + ") --- " + selectCards.get(i).toString());
         }
@@ -138,21 +138,4 @@ public abstract class Console {
         System.out.println("TOUR : " + tour);
         System.out.println("");
     }
-
-    /*
-    public static void tellHiddenCard(Joueur joueur) {
-                System.out.println("La carte " + joueur.getCarteCachee().toString() + " est cachée !");
-           
-
-    }
-    
-    public static void showBoard(ArrayList<Joueur> joueurs) {
-    	System.out.println("Voici les cartes de la main de chaque joueur");
-    	System.out.println("");
-    	for (Joueur joueur : joueurs) {
-    		System.out.println("Le joueur " + joueur + " possèdes :");
-    		System.out.println(joueur.getCarteVisible() + " et une carte face cachée");
-    	}
-    }
-    */
 }
