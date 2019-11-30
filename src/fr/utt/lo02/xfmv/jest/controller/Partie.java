@@ -57,13 +57,11 @@ public class Partie {
 		int temp2 = Console.demanderJoueursReels(temp1);
 		
 		for ( int i = 0; i < temp2 ; i++ ) {
-			JoueurReel player = new JoueurReel(i, Console.playerUsernameChoice(i+1));
-			this.joueurs.add(player);
+		    this.joueurs.add(new JoueurReel(i, Console.playerUsernameChoice(i+1)));
 		}
 		
 		for ( int i = 0; i < temp1 - temp2 ; i++ ) {
-			JoueurVirtuel bot = new JoueurVirtuel(i,Console.demanderStrategie(i));
-			this.joueurs.add(bot);
+		    this.joueurs.add(new JoueurVirtuel(i,Console.demanderStrategie(i)));
 		}
 		
 		/* Choix de la variante avec le choix de l'utilisateur */
@@ -152,6 +150,10 @@ public class Partie {
 			this.controlOffers();
 			this.tour++;
 		} while (basePioche.size() != 0);
+
+		for (Joueur joueur : joueurs) {
+		    joueur.getJest().add(joueur.getMain().poll());
+        }
 
 		Console.showJests();
 		CompteurVarianteBase compteur = new CompteurVarianteBase();
