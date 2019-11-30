@@ -143,6 +143,18 @@ public abstract class Console {
     }
 
     public static void showJests() {
+
+        for (Carte carte : Partie.getInstance().getTempPioche()) {
+            carte.toString();
+            System.out.print(" ");
+        }
+        System.out.println("");
+        for (Carte carte : Partie.getInstance().getBasePioche()) {
+            carte.toString();
+            System.out.print(" ");
+        }
+        System.out.println("");
+
         System.out.println("Révélez vos Jests !");
         for (Joueur joueur : Partie.getInstance().getJoueurs()) {
             System.out.print(joueur.toString() + ": ");
