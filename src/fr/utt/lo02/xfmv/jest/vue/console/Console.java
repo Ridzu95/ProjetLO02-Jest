@@ -190,6 +190,7 @@ public abstract class Console {
         for (Joueur joueur : Partie.getInstance().getJoueurs()) {
             System.out.println(joueur.toString() + " : " + joueur.getScore());
         }
+        System.out.println("");
     }
 
     public static void endOfGame() {
