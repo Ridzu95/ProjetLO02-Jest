@@ -245,19 +245,20 @@ public class Partie {
 	
 	public void attribuerTrophees() { //permet d'attribuer les trophées de la partie
 		
+		System.out.println(this.tropheesPartie);
 		for ( Joueur joueur : this.joueurs) {
 			for (Carte carte : joueur.getJest()) {
 				carte.setVisible(true);
 			}
 			Collections.sort(joueur.getJest());
-			System.out.println(joueur.getJest());
+			System.out.println(joueur);
+			System.out.println(joueur.getJest()); //utilisé pour le debug
 		}
 		
 		int i = 0, pos1 = 0, pos2 = 0, position = -1;
 		
 		for (Carte trophee : this.tropheesPartie) {
 			i += 1;
-			System.out.println(i);
 			System.out.println(trophee.getTrophee().getDescription());
 			
 			//on analyse le type de trophée
@@ -470,7 +471,6 @@ public class Partie {
 			
 			if (trophee.getTrophee().getId() == 12) {//"BestJest"
 				CompteurVarianteBase compteur = new CompteurVarianteBase();
-				System.out.println("aa");
 				int score;
 				position = 0;
 				int bestscore = 0;
@@ -488,10 +488,8 @@ public class Partie {
 
 			}
 			
-			if (trophee.getTrophee().getId() == 14) {//"BestJestNoJoker"
+			if (trophee.getTrophee().getId() == 13) {//"BestJestNoJoker"
 				CompteurVarianteBase compteur = new CompteurVarianteBase();
-				System.out.println("bb");
-
 				int score;
 				position = -1;
 				int bestscore = 0;
@@ -533,7 +531,10 @@ public class Partie {
 		}
 		
 		this.joueurs.get(pos1).getJest().add(this.tropheesPartie.get(0)); //fait en dehors de la boucle sinon erreur de concurrence
-		this.joueurs.get(pos2).getJest().add(this.tropheesPartie.get(1));
+		
+		if (this.tropheesPartie.size() == 2) {
+			this.joueurs.get(pos2).getJest().add(this.tropheesPartie.get(1));
+		}
 	}
 	
 	
