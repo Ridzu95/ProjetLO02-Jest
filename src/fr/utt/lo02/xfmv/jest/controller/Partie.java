@@ -76,6 +76,7 @@ public class Partie {
 		}
 		
 		
+		
 		Collections.shuffle(this.basePioche);
 		this.jouerPartie();
 
@@ -244,10 +245,19 @@ public class Partie {
 	
 	public void attribuerTrophees() { //permet d'attribuer les trophées de la partie
 		
+		for ( Joueur joueur : this.joueurs) {
+			for (Carte carte : joueur.getJest()) {
+				carte.setVisible(true);
+			}
+			Collections.sort(joueur.getJest());
+			System.out.println(joueur.getJest());
+		}
+		
 		int i = 0, pos1 = 0, pos2 = 0, position = -1;
 		
 		for (Carte trophee : this.tropheesPartie) {
 			i += 1;
+			System.out.println(i);
 			System.out.println(trophee.getTrophee().getDescription());
 			
 			//on analyse le type de trophée
@@ -371,7 +381,7 @@ public class Partie {
 			
 			if (trophee.getTrophee().getId() == 9) {//"MajorityDeux"
 				int nb;
-				position = -1;
+				position = 0;
 				int nbest = 0;
 				for ( Joueur joueur : this.joueurs) {
 					nb = 0;
@@ -381,12 +391,12 @@ public class Partie {
 						}
 					}
 					if (nb > nbest) {
-						position += 1;
+						position = joueurs.indexOf(joueur);
 						nbest = nb;
 					} else if (nb == nbest) { //si égalité on garde la position du joueur qui possède le pique
 						for (Carte carte : joueur.getJest()) {
 							if (carte.getValeur().getValeur() == 2 && carte.getCouleur().getCouleur() == "♠") {
-								position+= 1;
+								position = joueurs.indexOf(joueur);
 								nbest = nb;
 							}
 						}
@@ -402,7 +412,7 @@ public class Partie {
 			
 			if (trophee.getTrophee().getId() == 10) {//"MajorityTrois"
 				int nb;
-				position = -1;
+				position = 0;
 				int nbest = 0;
 				for ( Joueur joueur : this.joueurs) {
 					nb = 0;
@@ -412,12 +422,12 @@ public class Partie {
 						}
 					}
 					if (nb > nbest) {
-						position += 1;
+						position = joueurs.indexOf(joueur);
 						nbest = nb;
 					} else if (nb == nbest) { //si égalité on garde la position du joueur qui possède le pique
 						for (Carte carte : joueur.getJest()) {
 							if (carte.getValeur().getValeur() == 3 && carte.getCouleur().getCouleur() == "♠") {
-								position+= 1;
+								position = joueurs.indexOf(joueur);
 								nbest = nb;
 							}
 						}
@@ -431,23 +441,22 @@ public class Partie {
 			
 			if (trophee.getTrophee().getId() == 11) {//"MajorityQuatre"
 				int nb;
-				position = -1;
+				position = 0;
 				int nbest = 0;
 				for ( Joueur joueur : this.joueurs) {
 					nb = 0;
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getValeur().getValeur() == 4) {
 							nb+= 1;
-							
 						}
 					}
 					if (nb > nbest) {
-						position += 1;
+						position = joueurs.indexOf(joueur);
 						nbest = nb;
 					} else if (nb == nbest) { //si égalité on garde la position du joueur qui possède le pique
 						for (Carte carte : joueur.getJest()) {
 							if (carte.getValeur().getValeur() == 4 && carte.getCouleur().getCouleur() == "♠") {
-								position+= 1;
+								position = joueurs.indexOf(joueur);
 								nbest = nb;
 							}
 						}
@@ -461,15 +470,15 @@ public class Partie {
 			
 			if (trophee.getTrophee().getId() == 12) {//"BestJest"
 				CompteurVarianteBase compteur = new CompteurVarianteBase();
-
+				System.out.println("aa");
 				int score;
-				position = -1;
+				position = 0;
 				int bestscore = 0;
 				for ( Joueur joueur : this.joueurs) {
 					joueur.accept(compteur);
 					score = joueur.getScore();
 					if (score > bestscore) {
-						position += 1;
+						position = joueurs.indexOf(joueur);
 						bestscore = score;
 					}
 					joueur.setScore(0); //à vérifier si c'est nécessaure
@@ -481,6 +490,7 @@ public class Partie {
 			
 			if (trophee.getTrophee().getId() == 14) {//"BestJestNoJoker"
 				CompteurVarianteBase compteur = new CompteurVarianteBase();
+				System.out.println("bb");
 
 				int score;
 				position = -1;
@@ -523,7 +533,7 @@ public class Partie {
 		}
 		
 		this.joueurs.get(pos1).getJest().add(this.tropheesPartie.get(0)); //fait en dehors de la boucle sinon erreur de concurrence
-		this.joueurs.get(pos2).getJest().add(this.tropheesPartie.get(0));
+		this.joueurs.get(pos2).getJest().add(this.tropheesPartie.get(1));
 	}
 	
 	
