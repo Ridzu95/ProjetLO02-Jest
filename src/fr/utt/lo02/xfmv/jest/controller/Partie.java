@@ -24,6 +24,7 @@ public class Partie {
 	private ArrayList<Joueur> joueurs;
 	private int tour;
 
+	//constructeur de Partie
 	private Partie() {
 		basePioche = new LinkedList<Carte>();
 		tempPioche = new LinkedList<Carte>();
@@ -38,8 +39,9 @@ public class Partie {
 		return partie;
 	}
 
-	public void initialiserPartie() {
-
+	public void initialiserPartie() { //création des objets qui vont être manipulés dans la partie
+									
+		//création des cartes
 		for (Couleurs couleur : Couleurs.values()) {
 			for (Valeurs valeur : Valeurs.values()) {
 				if (couleur != Couleurs.Joker && valeur != Valeurs.Joker) {
@@ -63,7 +65,7 @@ public class Partie {
 		    this.joueurs.add(new JoueurVirtuel(i,Console.demanderStrategie(i)));
 		}
 		
-		/* Choix de la variante avec le choix de l'utilisateur */
+		// Choix de la variante avec le choix de l'utilisateur
 		
 		int choixVariante = Console.demanderVariante();
 		
@@ -83,10 +85,9 @@ public class Partie {
 		return;
 	}
 	
-	public void distribuerCartes() {
+	public void distribuerCartes() { //méthode qui permet de distribuer mes cartes à chaque tour
 
-		if (this.tour == 1) {
-
+		if (this.tour == 1) { //si premier tour alors on doit créer des trophées et les retirer de la pioche
 
 			this.tropheesPartie.add(this.basePioche.poll());
 
@@ -133,10 +134,6 @@ public class Partie {
 
 			return ;
 		}
-	}
-
-	public ArrayList<Joueur> getJoueurs() {
-		return joueurs;
 	}
 
 	public void jouerPartie() {
@@ -261,27 +258,22 @@ public class Partie {
 
 		return;
 	}
-
-	public void declarerVainqueur() { //est appellé en fin de partie
-		
-	}
 	
-	public void attribuerTrophees() { //permet d'attribuer les trophées de la partie
+	/* attribuerTrophees() méthode qui permet d'assigner le(s) trophée(s) à la fin de la partie
+	 * on test chaque id de trophée et on les assigne en fonction de leur caractétistiques */
+	public void attribuerTrophees() {
 		
 		
-		int i = 0, pos1 = 0, pos2 = 0, position = -1;
+		int i = 0, pos1 = 0, pos2 = 0, position = -1; //on a besoin de positions pour garder en mémoire à qui on va attribuer les trophées
 		
 		for (Carte trophee : this.tropheesPartie) {
 			i += 1;
-			System.out.println(trophee.getTrophee().getDescription());
-			
-			//on analyse le type de trophée
 			if (trophee.getTrophee().getId() == 1) { //HighestTrefle
-				for ( Joueur joueur : this.joueurs) {
+				for ( Joueur joueur : this.joueurs) { //test pour chaque joueur s'il possède le 4 de trèfle
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♣" && carte.getValeur().getValeur() == 4) {
 							
-							position = this.joueurs.indexOf(joueur);
+							position = this.joueurs.indexOf(joueur); //on sauvegarde la position du joueur qui possède le trophée
 							System.out.println(joueur + " a remporté le trophée");
 							System.out.println("");
 
@@ -518,11 +510,11 @@ public class Partie {
 			}
 			
 			if (trophee.getTrophee().getId() == 13) {//"BestJestNoJoker"
-				CompteurVarianteBase compteur1 = new CompteurVarianteBase();
+				CompteurVarianteBase compteur1 = new CompteurVarianteBase(); //compteur pour comparer la valeur des Jest
 				int score;
 				position = 0;
 				int bestscore = 0;
-				boolean hasJoker;
+				boolean hasJoker; //permet d'exclure le joueur qui possède le Joker
 				for ( Joueur joueur : this.joueurs){
 					hasJoker = false;
 					for (Carte carte : joueur.getJest()) {
@@ -537,14 +529,15 @@ public class Partie {
 					if (score > bestscore) {
 						position = joueurs.indexOf(joueur);
 						bestscore = score;
-						}  else if (score == bestscore) {
+						}  else if (score == bestscore) { // si égalité on va tester qui a la plus grande valeur
 							Carte bestCardJest = joueur.getJest().get(0);
-							Collections.sort(joueur.getJest());
+							Collections.sort(joueur.getJest()); //sort permet de mettre la carte la plus forte du joueur en position 0 du Jest
 							Collections.sort(this.joueurs.get(position).getJest());
 							if (bestCardJest.getValeur().getValeur() > this.joueurs.get(position).getJest().get(0).getValeur().getValeur()) {
 								position = joueurs.indexOf(joueur);
 								bestscore = score;
-							} else if (bestCardJest.getValeur().getValeur() == this.joueurs.get(position).getJest().get(0).getValeur().getValeur() 
+							} else if //si à nouveau égalité on va tester qui a la couleur la plus hate
+							(bestCardJest.getValeur().getValeur() == this.joueurs.get(position).getJest().get(0).getValeur().getValeur()
 									&& bestCardJest.getCouleur().getOrdre() > this.joueurs.get(position).getJest().get(0).getCouleur().getOrdre()) {
 								position = joueurs.indexOf(joueur);
 								bestscore = score;
@@ -569,7 +562,7 @@ public class Partie {
 
 			
 		}
-		
+		//enfin on ajoute les trophées dans les Jest des joueurs
 		this.joueurs.get(pos1).getJest().add(this.tropheesPartie.get(0)); //fait en dehors de la boucle sinon erreur de concurrence
 		
 		if (this.tropheesPartie.size() == 2) {
@@ -599,6 +592,10 @@ public class Partie {
 
 	public ArrayList<Carte> getTropheesPartie() {
 		return tropheesPartie;
+	}
+
+	public ArrayList<Joueur> getJoueurs() {
+		return joueurs;
 	}
 
 }
