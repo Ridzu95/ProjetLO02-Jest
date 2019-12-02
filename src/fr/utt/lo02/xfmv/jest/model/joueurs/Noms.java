@@ -4,6 +4,15 @@ public enum Noms {
 	Bob,
 	John,
 	Tony,
-	Will;
-
+	Will,
+	Jean,
+	McFly,
+	Carlito,
+	Michel,
+	Johnny,
+	Marceau,
+	Xavier,
+	Kinane,
+	Julo,
+	Thomas;
 }

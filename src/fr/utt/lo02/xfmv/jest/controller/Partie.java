@@ -85,7 +85,7 @@ public class Partie {
 		return;
 	}
 	
-	public void distribuerCartes() { //méthode qui permet de distribuer mes cartes à chaque tour
+	public void distribuerCartes() { //méthode qui permet de distribuer les cartes à chaque tour
 
 		if (this.tour == 1) { //si premier tour alors on doit créer des trophées et les retirer de la pioche
 
@@ -106,27 +106,27 @@ public class Partie {
 
 			return ;
 		}
-		else {
+		else { // pendant chaque tour de jeu suivant, ce bloc est éxécuté
 
+			// on récupère la carte qui reste de la main du joueur
 			for(Joueur i : joueurs) {
-				if (i.getMain().get(0) == null) {
-					this.tempPioche.add(i.getMain().pollLast());
-				}
-				else {
-					this.tempPioche.add(i.getMain().pollFirst());
-				}
+				this.tempPioche.add(i.getMain().poll());
 			}
 
+			// on ajoute des cartes dans la pioche temporaire (qui sert entre les tours)
 			for (Joueur i : joueurs) {
 				this.tempPioche.add(this.basePioche.poll());
 			}
 
+			// comme les cartes ont pu être cachées, on les remet visibles
 			for (Carte carte : tempPioche) {
 				carte.setVisible(true);
 			}
 
+			//on mélange
 			Collections.shuffle(this.tempPioche);
 
+			// on distribue
 			for (Joueur i : joueurs) {
 				i.getMain().add(this.tempPioche.poll());
 				i.getMain().add(this.tempPioche.poll());
@@ -136,8 +136,15 @@ public class Partie {
 		}
 	}
 
-	public void jouerPartie() {
+	public void jouerPartie() { // fonction qui contrôle le déroulement d'une partie de Jest
 
+		/*
+		les tours s'enchaînent jusqu'à ce que la pioche soit vide
+		on distribue les cartes
+		chaque joueur fait une offre
+		chaque joueur prend une offre
+		on passe au tour suivant
+		*/
 		do {
 			this.distribuerCartes();
 			Console.showTurn(this.tour);
@@ -148,18 +155,22 @@ public class Partie {
 			this.tour++;
 		} while (basePioche.size() != 0);
 
+		// à ce stade, il reste une carte dans la main de chaque joueur, donc on la récupère pour la mettre dans leur jest respectifs
 		for (Joueur joueur : joueurs) {
 		    joueur.getJest().add(joueur.getMain().poll());
         }
-		
+
+		// on attribue les trophées aux joueurs
 		this.attribuerTrophees();
 		Console.showJests();
 		CompteurVarianteBase compteur = new CompteurVarianteBase();
 
+		// design pattern VISITOR : comptage des points
 		for (Joueur joueur : joueurs) {
 			joueur.accept(compteur);
 		}
-		
+
+		// affichage des scores et du gagnant, menu de fin de partie
 		Console.showScores();
 		this.terminerPartie();
 		Console.endOfGame();
@@ -167,8 +178,9 @@ public class Partie {
 		return;
 	}
 
-	public void terminerPartie() {
+	public void terminerPartie() { //méthode de conclusion de partie
 
+		// on regarde les scores de chaque joueur pour décider du gagnant
 		Joueur winner = joueurs.get(0);
 		for (Joueur joueur : joueurs) {
 			if (joueur.getScore() > winner.getScore()) {
@@ -176,8 +188,10 @@ public class Partie {
 			}
 		}
 
+		// affichage
 		Console.showWinner(winner);
 
+		// on vide les collections au cas où on veut refaire une partie
 		this.basePioche.clear();
 		this.tempPioche.clear();
 		this.joueurs.clear();
@@ -185,18 +199,19 @@ public class Partie {
 		this.tropheesPartie.clear();
 	}
 
-	public void controlOffers() {
+	public void controlOffers() { // méthode de choix d'offre
 
+		// la collection de joueurs est triée en fonction de leur carte visible dans jouerPartie() --> Collections.sort
 		Joueur choosingPlayer = joueurs.get(0);
 		boolean everyonePlayed = false;
 
+		// on reste dans cette phase jusqu'à ce que tout le monde ait joué
 		while (everyonePlayed == false) {
 
-			System.out.println();
-
+			// on créé deux collections qui serviront de références dans cette phase de sélection
 			ArrayList<Carte> selectCards = new ArrayList<Carte>();
 			ArrayList<Joueur> selectJoueurs = new ArrayList<Joueur>();
-			for (Joueur joueur : joueurs) {
+			for (Joueur joueur : joueurs) { // chaque joueur peut piocher dans l'offre d'un autre seulement si l'offre est complète
 				if (joueur.getMain().size() == 2 && joueur != choosingPlayer) {
 					for (Carte carte : joueur.getMain()) {
 						selectCards.add(carte);
@@ -204,15 +219,18 @@ public class Partie {
 					}
 				}
 			}
-			if (selectCards.size() == 0) {
+			if (selectCards.size() == 0) { // si personne n'a d'offre complète, il pioche dans la sienne
 				for (Carte carte : choosingPlayer.getMain()) {
 					selectCards.add(carte);
 					selectJoueurs.add(choosingPlayer);
 				}
 			}
 
-			int choice = choosingPlayer.prendreOffre(selectCards);
+			int choice = choosingPlayer.prendreOffre(selectCards); // on appelle la méthode prendreOffre() de Joueur qui renvoie un entier représentant le choix
 
+			/*
+			si le choix est pair, cela veut dire que c'est forcément la première carte d'un joueur donc on pollFirst, et inversement
+			*/
 			if (choice % 2 == 0) {
 				choosingPlayer.getJest().add(selectJoueurs.get(choice).getMain().pollFirst());
 			}
