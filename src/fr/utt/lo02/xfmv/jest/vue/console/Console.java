@@ -228,6 +228,11 @@ public abstract class Console {
     public static void showWinner(Joueur winner) {
         System.out.println("Le gagnant de la partie est " + winner.toString() + " !");
     }
+    
+    public static void showTropheeWinner(Joueur joueur, Carte trophee) {
+    	System.out.println(joueur + " a remporté le trophée : " + trophee.getTrophee().getDescription());
+		System.out.println("");
+    }
 
     public static void endOfGame() {
         System.out.println("(1) --- Retourner au menu\n(2) --- Quitter");

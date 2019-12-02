@@ -271,8 +271,8 @@ public class Partie {
 						if (carte.getCouleur().getCouleur() == "♣" && carte.getValeur().getValeur() == 4) {
 							
 							position = this.joueurs.indexOf(joueur); //on sauvegarde la position du joueur qui possède le trophée
-							System.out.println(joueur + " a remporté le trophée : " + trophee);
-							System.out.println("");
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 						}
 					}
@@ -284,8 +284,8 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♥" && carte.getValeur().getValeur() == 4) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée : " + trophee);
-							System.out.println("");
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 						}
 					}
@@ -297,8 +297,8 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♠" && carte.getValeur().getValeur() == 4) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée : " + trophee);
-							System.out.println("");
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 						}
 					}
@@ -310,8 +310,8 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♦" && carte.getValeur().getValeur() == 4) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée : " + trophee);
-							System.out.println("");
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 						}
 					}
@@ -323,8 +323,8 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♦" && carte.getValeur().getValeur() == 1) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée : " + trophee);
-							System.out.println("");
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 						}
 					}
@@ -336,8 +336,8 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♠" && carte.getValeur().getValeur() == 1) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée : " + trophee);
-							System.out.println("");
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 						}
 					}
@@ -349,8 +349,8 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♥" && carte.getValeur().getValeur() == 1) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée : " + trophee);
-							System.out.println("");
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 						}
 					}
@@ -362,8 +362,8 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♣" && carte.getValeur().getValeur() == 1) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée : " + trophee);
-							System.out.println("");
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 						}
 					}
@@ -375,8 +375,8 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "★") {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée : " + trophee);
-							System.out.println("");
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 						}
 					}
@@ -408,8 +408,8 @@ public class Partie {
 					
 					
 				}
-				System.out.println(joueurs.get(position) + " a remporté le trophée : " + trophee);
-				System.out.println("");
+				Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 
 			}
@@ -437,8 +437,8 @@ public class Partie {
 						}
 					}
 				}
-				System.out.println(joueurs.get(position) + " a remporté le trophée : " + trophee);
-				System.out.println("");
+				Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 
 			}
@@ -466,8 +466,8 @@ public class Partie {
 						}
 					}
 				}
-				System.out.println(joueurs.get(position) + " a remporté le trophée : " + trophee);
-				System.out.println("");
+				Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 
 			}
@@ -501,9 +501,7 @@ public class Partie {
 					}
 					joueur.setScore(0); //à vérifier si c'est nécessaure
 				}
-				System.out.println(joueurs.get(position) + " a remporté le trophée : " + trophee);
-				System.out.println("");
-				System.out.println("position :" + position);
+				Console.showTropheeWinner(joueurs.get(position),trophee);
 			}
 			
 			if (trophee.getTrophee().getId() == 13) {//"BestJestNoJoker"
@@ -544,9 +542,8 @@ public class Partie {
 					}
 					
 				}
-				System.out.println(joueurs.get(position) + "a remporté le trophée : " + trophee);
-				System.out.println("");
-				System.out.println("position :" + position);
+				Console.showTropheeWinner(joueurs.get(position),trophee);
+
 
 			}
 			
