@@ -147,6 +147,9 @@ public class Partie {
 			this.choisirCarteCachee();
 			Console.displayPlayerCards(joueurs);
 			Collections.sort(joueurs);
+			for (Joueur joueur : this.joueurs) {
+				System.out.println(joueur.getMain());
+			}
 			this.controlOffers();
 			this.tour++;
 		} while (basePioche.size() != 0);
@@ -245,15 +248,6 @@ public class Partie {
 	
 	public void attribuerTrophees() { //permet d'attribuer les trophées de la partie
 		
-		System.out.println(this.tropheesPartie);
-		for ( Joueur joueur : this.joueurs) {
-			for (Carte carte : joueur.getJest()) {
-				carte.setVisible(true);
-			}
-			Collections.sort(joueur.getJest());
-			System.out.println(joueur);
-			System.out.println(joueur.getJest()); //utilisé pour le debug
-		}
 		
 		int i = 0, pos1 = 0, pos2 = 0, position = -1;
 		
@@ -475,23 +469,38 @@ public class Partie {
 				position = 0;
 				int bestscore = 0;
 				for ( Joueur joueur : this.joueurs) {
+					
 					joueur.accept(compteur);
 					score = joueur.getScore();
 					if (score > bestscore) {
 						position = joueurs.indexOf(joueur);
 						bestscore = score;
+					} else if (score == bestscore) {
+						Carte bestCardJest = joueur.getJest().get(0);
+						
+						Collections.sort(joueur.getJest());
+						Collections.sort(this.joueurs.get(position).getJest());
+
+						if (bestCardJest.getValeur().getValeur() > this.joueurs.get(position).getJest().get(0).getValeur().getValeur()) {
+							position = joueurs.indexOf(joueur);
+							bestscore = score;
+						} else if (bestCardJest.getValeur().getValeur() == this.joueurs.get(position).getJest().get(0).getValeur().getValeur() 
+								&& bestCardJest.getCouleur().getOrdre() > this.joueurs.get(position).getJest().get(0).getCouleur().getOrdre()) {
+							position = joueurs.indexOf(joueur);
+							bestscore = score;
+						}
 					}
 					joueur.setScore(0); //à vérifier si c'est nécessaure
 				}
 				System.out.println(joueurs.get(position) + " a remporté le trophée !");
 				System.out.println("");
-
+				System.out.println("position :" + position);
 			}
 			
 			if (trophee.getTrophee().getId() == 13) {//"BestJestNoJoker"
-				CompteurVarianteBase compteur = new CompteurVarianteBase();
+				CompteurVarianteBase compteur1 = new CompteurVarianteBase();
 				int score;
-				position = -1;
+				position = 0;
 				int bestscore = 0;
 				boolean hasJoker;
 				for ( Joueur joueur : this.joueurs){
@@ -503,11 +512,23 @@ public class Partie {
 					}
 					
 					if (hasJoker == false) {
-						joueur.accept(compteur);
-					score = joueur.getScore();
+						joueur.accept(compteur1);
+						score = joueur.getScore();
 					if (score > bestscore) {
-						position += 1;
+						position = joueurs.indexOf(joueur);
 						bestscore = score;
+						}  else if (score == bestscore) {
+							Carte bestCardJest = joueur.getJest().get(0);
+							Collections.sort(joueur.getJest());
+							Collections.sort(this.joueurs.get(position).getJest());
+							if (bestCardJest.getValeur().getValeur() > this.joueurs.get(position).getJest().get(0).getValeur().getValeur()) {
+								position = joueurs.indexOf(joueur);
+								bestscore = score;
+							} else if (bestCardJest.getValeur().getValeur() == this.joueurs.get(position).getJest().get(0).getValeur().getValeur() 
+									&& bestCardJest.getCouleur().getOrdre() > this.joueurs.get(position).getJest().get(0).getCouleur().getOrdre()) {
+								position = joueurs.indexOf(joueur);
+								bestscore = score;
+							}
 						}
 					joueur.setScore(0); //à vérifier si c'est nécessaire
 					}
@@ -515,6 +536,7 @@ public class Partie {
 				}
 				System.out.println(joueurs.get(position) + " a remporté le trophée !");
 				System.out.println("");
+				System.out.println("position :" + position);
 
 			}
 			
@@ -524,9 +546,7 @@ public class Partie {
 				pos2 = position;
 			}
 				
-			
-			
-			
+
 			
 		}
 		

@@ -61,9 +61,9 @@ public class Carte implements Comparable<Carte>{
 	
 	public int compareTo(Carte carte) {
 
-		int sorter = carte.getValeur().getValeur() - carte.getValeur().getValeur();
+		int sorter = carte.getValeur().getValeur() - this.getValeur().getValeur();
 		if (sorter == 0) {
-			sorter = carte.getCouleur().getOrdre() - carte.getCouleur().getOrdre();
+			sorter = carte.getCouleur().getOrdre() - this.getCouleur().getOrdre();
 			return sorter;
 		}
 		else {
