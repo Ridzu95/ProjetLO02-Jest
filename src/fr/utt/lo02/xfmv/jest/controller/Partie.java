@@ -163,9 +163,28 @@ public class Partie {
 		}
 
 		Console.showScores();
+		this.terminerPartie();
 		Console.endOfGame();
 
 		return;
+	}
+
+	public void terminerPartie() {
+
+		Joueur winner = joueurs.get(0);
+		for (Joueur joueur : joueurs) {
+			if (joueur.getScore() > winner.getScore()) {
+				winner = joueur;
+			}
+		}
+
+		Console.showWinner(winner);
+
+		this.basePioche.clear();
+		this.tempPioche.clear();
+		this.joueurs.clear();
+		this.tour = 1;
+		this.tropheesPartie.clear();
 	}
 
 	public void controlOffers() {

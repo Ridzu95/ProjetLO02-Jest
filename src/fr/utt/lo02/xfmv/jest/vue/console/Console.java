@@ -4,6 +4,7 @@ import java.awt.*;
 import java.lang.reflect.Array;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -23,10 +24,17 @@ public abstract class Console {
         Scanner sc = new Scanner(System.in);
         int choice = 0;
         do {
-            System.out.print("Votre choix : ");
-            choice = sc.nextInt();
-            System.out.println("");
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
         } while (choice !=1 && choice != 2 && choice !=3);
+
         switch (choice) {
             case 1 :
                 Partie.getInstance().initialiserPartie();
@@ -67,9 +75,15 @@ public abstract class Console {
     	System.out.println("");
     	
     	do {
-            System.out.print("Votre choix : ");
-            choice = sc.nextInt();
-            System.out.println("");
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
         } while (choice !=1 && choice != 2 && choice !=3);
         
         
@@ -84,9 +98,15 @@ public abstract class Console {
     	System.out.println("");
     	
     	do {
-            System.out.print("Votre choix : ");
-            choice = sc.nextInt();
-            System.out.println("");
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
         } while (choice !=3 && choice != 4);
         
         
@@ -101,10 +121,16 @@ public abstract class Console {
     	System.out.println("");
     	
     	do {
-            System.out.print("Votre choix : ");
-            choice = sc.nextInt();
-            System.out.println("");
-        } while (choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
+        } while ( choice < -1 || choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
         
         
         return choice;
@@ -121,9 +147,15 @@ public abstract class Console {
     	System.out.println("");
     	
     	do {
-            System.out.print("Votre choix : ");
-            choice = sc.nextInt();
-            System.out.println("");
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
         } while (choice !=1 && choice != 2);
         
         
@@ -192,15 +224,25 @@ public abstract class Console {
         }
         System.out.println("");
     }
+    
+    public static void showWinner(Joueur winner) {
+        System.out.println("Le gagnant de la partie est " + winner.toString() + " !");
+    }
 
     public static void endOfGame() {
         System.out.println("(1) --- Retourner au menu\n(2) --- Quitter");
         Scanner sc = new Scanner(System.in);
         int choice = 0;
         do {
-            System.out.print("Votre choix : ");
-            choice = sc.nextInt();
-            System.out.println("");
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
         } while (choice !=1 && choice != 2);
         switch (choice) {
             case 1 :
