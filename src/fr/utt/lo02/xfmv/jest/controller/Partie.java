@@ -274,7 +274,7 @@ public class Partie {
 						if (carte.getCouleur().getCouleur() == "♣" && carte.getValeur().getValeur() == 4) {
 							
 							position = this.joueurs.indexOf(joueur); //on sauvegarde la position du joueur qui possède le trophée
-							System.out.println(joueur + " a remporté le trophée");
+							System.out.println(joueur + " a remporté le trophée : " + trophee);
 							System.out.println("");
 
 						}
@@ -287,7 +287,7 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♥" && carte.getValeur().getValeur() == 4) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée");
+							System.out.println(joueur + " a remporté le trophée : " + trophee);
 							System.out.println("");
 
 						}
@@ -300,7 +300,7 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♠" && carte.getValeur().getValeur() == 4) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée");
+							System.out.println(joueur + " a remporté le trophée : " + trophee);
 							System.out.println("");
 
 						}
@@ -313,7 +313,7 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♦" && carte.getValeur().getValeur() == 4) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée");
+							System.out.println(joueur + " a remporté le trophée : " + trophee);
 							System.out.println("");
 
 						}
@@ -326,7 +326,7 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♦" && carte.getValeur().getValeur() == 1) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée");
+							System.out.println(joueur + " a remporté le trophée : " + trophee);
 							System.out.println("");
 
 						}
@@ -339,7 +339,7 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♠" && carte.getValeur().getValeur() == 1) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée");
+							System.out.println(joueur + " a remporté le trophée : " + trophee);
 							System.out.println("");
 
 						}
@@ -352,7 +352,7 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♥" && carte.getValeur().getValeur() == 1) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée");
+							System.out.println(joueur + " a remporté le trophée : " + trophee);
 							System.out.println("");
 
 						}
@@ -365,7 +365,7 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "♣" && carte.getValeur().getValeur() == 1) {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée");
+							System.out.println(joueur + " a remporté le trophée : " + trophee);
 							System.out.println("");
 
 						}
@@ -378,7 +378,7 @@ public class Partie {
 					for (Carte carte : joueur.getJest()) {
 						if (carte.getCouleur().getCouleur() == "★") {
 							position = this.joueurs.indexOf(joueur);
-							System.out.println(joueur + " a remporté le trophée");
+							System.out.println(joueur + " a remporté le trophée : " + trophee);
 							System.out.println("");
 
 						}
@@ -411,7 +411,7 @@ public class Partie {
 					
 					
 				}
-				System.out.println(joueurs.get(position) + " a remporté le trophée !");
+				System.out.println(joueurs.get(position) + " a remporté le trophée : " + trophee);
 				System.out.println("");
 
 
@@ -440,7 +440,7 @@ public class Partie {
 						}
 					}
 				}
-				System.out.println(joueurs.get(position) + " a remporté le trophée !");
+				System.out.println(joueurs.get(position) + " a remporté le trophée : " + trophee);
 				System.out.println("");
 
 
@@ -469,7 +469,7 @@ public class Partie {
 						}
 					}
 				}
-				System.out.println(joueurs.get(position) + " a remporté le trophée !");
+				System.out.println(joueurs.get(position) + " a remporté le trophée : " + trophee);
 				System.out.println("");
 
 
@@ -504,7 +504,7 @@ public class Partie {
 					}
 					joueur.setScore(0); //à vérifier si c'est nécessaure
 				}
-				System.out.println(joueurs.get(position) + " a remporté le trophée !");
+				System.out.println(joueurs.get(position) + " a remporté le trophée : " + trophee);
 				System.out.println("");
 				System.out.println("position :" + position);
 			}
@@ -547,7 +547,7 @@ public class Partie {
 					}
 					
 				}
-				System.out.println(joueurs.get(position) + " a remporté le trophée !");
+				System.out.println(joueurs.get(position) + "a remporté le trophée : " + trophee);
 				System.out.println("");
 				System.out.println("position :" + position);
 

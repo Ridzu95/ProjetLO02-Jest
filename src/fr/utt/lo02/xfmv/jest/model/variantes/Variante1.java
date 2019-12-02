@@ -14,6 +14,7 @@ public class Variante1 implements Variante {
         }
     }
 	
+	//Variante 1 génères des trophées aléatoires grâce à la méthode getRandomTrophee de Trophees
 	public void activerTrophees(ArrayList<Carte> trophees) {
 		for (Carte carte : trophees) {
 			carte.setTrophee(Trophees.getRandomTrophee());
