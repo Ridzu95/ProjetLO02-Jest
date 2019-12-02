@@ -144,9 +144,6 @@ public class Partie {
 			this.choisirCarteCachee();
 			Console.displayPlayerCards(joueurs);
 			Collections.sort(joueurs);
-			for (Joueur joueur : this.joueurs) {
-				System.out.println(joueur.getMain());
-			}
 			this.controlOffers();
 			this.tour++;
 		} while (basePioche.size() != 0);
