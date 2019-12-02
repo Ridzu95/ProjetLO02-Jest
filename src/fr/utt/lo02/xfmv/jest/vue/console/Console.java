@@ -1,7 +1,10 @@
 package fr.utt.lo02.xfmv.jest.vue.console;
 
+import java.awt.*;
 import java.lang.reflect.Array;
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -14,6 +17,41 @@ public abstract class Console {
 
     public static void welcomeMessage() {
         System.out.println("--- Jeu de Jest inventé par Brett J. Gilbert ---");
+    }
+
+    public static void showMenu() {
+        System.out.println("(1) --- Jouer\n(2) --- Lire les règles\n(3) --- Quitter");
+        Scanner sc = new Scanner(System.in);
+        int choice = 0;
+        do {
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
+        } while (choice !=1 && choice != 2 && choice !=3);
+
+        switch (choice) {
+            case 1 :
+                Partie.getInstance().initialiserPartie();
+                break;
+            case 2 :
+                try {
+                    URI uri = new URI("https://puu.sh/EKl29/655216593a.png");
+                    Desktop.getDesktop().browse(uri);
+                }
+                catch(Exception ex) {}
+                Console.showMenu();
+                break;
+            case 3 :
+                System.exit(0);
+                break;
+        }
+
     }
 
     public static String playerUsernameChoice(int id) {
@@ -37,9 +75,15 @@ public abstract class Console {
     	System.out.println("");
     	
     	do {
-            System.out.print("Votre choix : ");
-            System.out.println("");
-            choice = sc.nextInt();
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
         } while (choice !=1 && choice != 2 && choice !=3);
         
         
@@ -54,9 +98,15 @@ public abstract class Console {
     	System.out.println("");
     	
     	do {
-            System.out.print("Votre choix : ");
-            System.out.println("");
-            choice = sc.nextInt();
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
         } while (choice !=3 && choice != 4);
         
         
@@ -71,10 +121,16 @@ public abstract class Console {
     	System.out.println("");
     	
     	do {
-            System.out.print("Votre choix : ");
-            System.out.println("");
-            choice = sc.nextInt();
-        } while (choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
+        } while ( choice < -1 || choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
         
         
         return choice;
@@ -91,9 +147,15 @@ public abstract class Console {
     	System.out.println("");
     	
     	do {
-            System.out.print("Votre choix : ");
-            System.out.println("");
-            choice = sc.nextInt();
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
         } while (choice !=1 && choice != 2);
         
         
@@ -155,10 +217,41 @@ public abstract class Console {
     }
 
     public static void showScores() {
+        System.out.println("");
+        System.out.println("Voilà les scores !");
         for (Joueur joueur : Partie.getInstance().getJoueurs()) {
             System.out.println(joueur.toString() + " : " + joueur.getScore());
         }
+        System.out.println("");
+    }
+    
+    public static void showWinner(Joueur winner) {
+        System.out.println("Le gagnant de la partie est " + winner.toString() + " !");
     }
 
+    public static void endOfGame() {
+        System.out.println("(1) --- Retourner au menu\n(2) --- Quitter");
+        Scanner sc = new Scanner(System.in);
+        int choice = 0;
+        do {
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            }
+            catch (InputMismatchException e){
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
+        } while (choice !=1 && choice != 2);
+        switch (choice) {
+            case 1 :
+                Console.showMenu();
+                break;
+            case 2 :
+                System.exit(0);
+                break;
+        }
+    }
     
 }
