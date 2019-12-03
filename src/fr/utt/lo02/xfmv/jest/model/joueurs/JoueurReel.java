@@ -29,12 +29,10 @@ public class JoueurReel extends Joueur {
 	public int faireOffre() {
 		Console.cardChoice(this);
 
-        Scanner sc = new Scanner(System.in);
         int choice = 0;
 
         do {
-            System.out.print("Votre choix : ");
-            choice = sc.nextInt();
+			choice = Console.choiceMaking();
         } while (choice != 1 && choice != 2);
 
         System.out.println("");
@@ -45,13 +43,11 @@ public class JoueurReel extends Joueur {
 	public int prendreOffre(ArrayList<Carte> selectCards) {
 		Console.displaySelectCards(selectCards, this);
 
-		Scanner sc = new Scanner(System.in);
 		int choice = 0;
 
 		do {
-			System.out.print("Votre choix : ");
-			choice = sc.nextInt();
-		} while (choice == 0 && choice > selectCards.size());
+			choice = Console.choiceMaking();
+		} while (choice <= 0 || choice > selectCards.size());
 
 		System.out.println("");
 

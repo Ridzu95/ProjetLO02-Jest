@@ -93,7 +93,6 @@ public class Partie {
 
 			if (joueurs.size() == 3) {
 				this.tropheesPartie.add(this.basePioche.poll());
-				System.out.println(this.tropheesPartie);
 			}
 
 			this.variante.activerTrophees(this.tropheesPartie);
