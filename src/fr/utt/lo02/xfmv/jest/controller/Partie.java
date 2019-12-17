@@ -15,7 +15,7 @@ import fr.utt.lo02.xfmv.jest.vue.console.Console;
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class Partie {
+public class Partie extends Observable {
 
 	private Variante variante;
 	private LinkedList<Carte> basePioche;
@@ -23,6 +23,7 @@ public class Partie {
 	private ArrayList<Carte> tropheesPartie;
 	private ArrayList<Joueur> joueurs;
 	private int tour;
+	private boolean isStarted;
 
 	private Partie() {
 		basePioche = new LinkedList<Carte>();
@@ -31,6 +32,7 @@ public class Partie {
 		joueurs = new ArrayList<Joueur>();
 		tempPioche = new LinkedList<Carte>();
 		this.tour = 1;
+		isStarted = false;
 	}
 	
 	private static Partie partie = new Partie();
@@ -40,6 +42,9 @@ public class Partie {
 	}
 
 	public void initialiserPartie() {
+
+		this.isStarted = true;
+		this.notifyObservers();
 
 		for (Couleurs couleur : Couleurs.values()) {
 			for (Valeurs valeur : Valeurs.values()) {
@@ -286,6 +291,14 @@ public class Partie {
 
 	public ArrayList<Carte> getTropheesPartie() {
 		return tropheesPartie;
+	}
+
+	public boolean isStarted() {
+		return isStarted;
+	}
+
+	public void setStarted(boolean started) {
+		isStarted = started;
 	}
 
 }
