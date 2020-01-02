@@ -1,8 +1,6 @@
 package fr.utt.lo02.xfmv.jest.model.cartes;
 
-import fr.utt.lo02.xfmv.jest.model.joueurs.Joueur;
-
-public class Carte implements Comparable<Carte>{
+public class Carte {
 	
 	private Valeurs valeur;
 	private Couleurs couleur;
@@ -57,19 +55,6 @@ public class Carte implements Comparable<Carte>{
 	
 	public void cacher() {
 		this.visible = false;
-	}
-	
-	public int compareTo(Carte carte) {
-
-		int sorter = carte.getValeur().getValeur() - this.getValeur().getValeur();
-		if (sorter == 0) {
-			sorter = carte.getCouleur().getOrdre() - this.getCouleur().getOrdre();
-			return sorter;
-		}
-		else {
-			return sorter;
-		}
-
 	}
 	
 	public String toString(){

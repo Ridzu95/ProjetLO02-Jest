@@ -19,7 +19,7 @@ public abstract class Console {
         System.out.println("--- Jeu de Jest inventé par Brett J. Gilbert ---");
     }
 
-    public static void showMenu() {
+    public static void showMenu() throws InterruptedException {
         System.out.println("(1) --- Jouer\n(2) --- Lire les règles\n(3) --- Quitter");
         Scanner sc = new Scanner(System.in);
         int choice = 0;
@@ -229,7 +229,7 @@ public abstract class Console {
         System.out.println("Le gagnant de la partie est " + winner.toString() + " !");
     }
 
-    public static void endOfGame() {
+    public static void endOfGame() throws InterruptedException {
         System.out.println("(1) --- Retourner au menu\n(2) --- Quitter");
         Scanner sc = new Scanner(System.in);
         int choice = 0;
