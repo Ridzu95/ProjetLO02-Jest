@@ -11,11 +11,12 @@ import fr.utt.lo02.xfmv.jest.model.variantes.Variante1;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
 import fr.utt.lo02.xfmv.jest.vue.console.Console;
+import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GameConfig;
 
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class Partie extends Observable {
+public class Partie extends Observable implements Runnable {
 
 	private Variante variante;
 	private LinkedList<Carte> basePioche;
@@ -24,6 +25,12 @@ public class Partie extends Observable {
 	private ArrayList<Joueur> joueurs;
 	private int tour;
 	private boolean isStarted;
+	private boolean isSetup;
+	private boolean hidingPhasePlayed;
+	private int playerCount;
+	private int realPlayerCount;
+	private String gamePhase;
+	private boolean jestingPhasePlayed;
 
 	private Partie() {
 		basePioche = new LinkedList<Carte>();
@@ -33,6 +40,12 @@ public class Partie extends Observable {
 		tempPioche = new LinkedList<Carte>();
 		this.tour = 1;
 		isStarted = false;
+		isSetup = false;
+		playerCount = 0;
+		realPlayerCount = 0;
+		gamePhase = "init";
+		hidingPhasePlayed = false;
+		jestingPhasePlayed = false;
 	}
 	
 	private static Partie partie = new Partie();
@@ -41,10 +54,7 @@ public class Partie extends Observable {
 		return partie;
 	}
 
-	public void initialiserPartie() {
-
-		this.isStarted = true;
-		this.notifyObservers();
+	public void initialiserPartie() throws InterruptedException {
 
 		for (Couleurs couleur : Couleurs.values()) {
 			for (Valeurs valeur : Valeurs.values()) {
@@ -57,31 +67,19 @@ public class Partie extends Observable {
 		this.basePioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
 		
 		//Création des joueurs
+
+		do {
+			Thread.sleep(500);
+		} while (!this.isSetup());
 		
-		int temp1 = Console.demanderNombreJoueurs();
-		int temp2 = Console.demanderJoueursReels(temp1);
-		
-		for ( int i = 0; i < temp2 ; i++ ) {
-		    this.joueurs.add(new JoueurReel(i, Console.playerUsernameChoice(i+1)));
+		for ( int i = 0; i < realPlayerCount ; i++ ) {
+		    this.joueurs.add(new JoueurReel(i, "realPlayer"));
 		}
 		
-		for ( int i = 0; i < temp1 - temp2 ; i++ ) {
-		    this.joueurs.add(new JoueurVirtuel(i,Console.demanderStrategie(i)));
+		for ( int i = 0; i < (playerCount - realPlayerCount) ; i++ ) {
+		    this.joueurs.add(new JoueurVirtuel(i,1));
 		}
-		
-		/* Choix de la variante avec le choix de l'utilisateur */
-		
-		int choixVariante = Console.demanderVariante();
-		
-		if ( choixVariante == 1) {
-			this.variante = new Variantebase();
-		} else if ( choixVariante == 2) {
-			this.variante = new Variante1();
-		} else {
-			this.variante = new Variante2();
-		}
-		
-		
+
 		Collections.shuffle(this.basePioche);
 		this.jouerPartie();
 
@@ -106,6 +104,11 @@ public class Partie extends Observable {
 			for (Joueur i : joueurs) {
 				i.getMain().add(this.basePioche.poll());
 				i.getMain().add(this.basePioche.poll());
+				if (i instanceof JoueurVirtuel) {
+					for (Carte card : i.getMain()) {
+						card.setVisible(false);
+					}
+				}
 			}
 
 			return ;
@@ -140,18 +143,37 @@ public class Partie extends Observable {
 		}
 	}
 
-	public ArrayList<Joueur> getJoueurs() {
-		return joueurs;
-	}
-
-	public void jouerPartie() {
+	public void jouerPartie() throws InterruptedException {
 
 		do {
+
 			this.distribuerCartes();
-			Console.showTurn(this.tour);
+
+			this.gamePhase = "sélection de la carte à cacher";
+
+			this.setChanged();
+			this.notifyObservers();
+
+			// Console.showTurn(this.tour);
+			// this.choisirCarteCachee();
+			// Console.displayPlayerCards(joueurs);
+
+			do {
+				Thread.sleep(500);
+			} while (!this.hidingPhasePlayed);
+
 			this.choisirCarteCachee();
-			Console.displayPlayerCards(joueurs);
+
+			this.gamePhase = "sélection de la carte à mettre dans le Jest";
 			Collections.sort(joueurs);
+
+			this.setChanged();
+			this.notifyObservers();
+
+			do {
+				Thread.sleep(500);
+			} while (!this.jestingPhasePlayed);
+
 			this.controlOffers();
 			this.tour++;
 		} while (basePioche.size() != 0);
@@ -169,7 +191,7 @@ public class Partie extends Observable {
 
 		Console.showScores();
 		this.terminerPartie();
-		Console.endOfGame();
+		// Console.endOfGame();
 
 		return;
 	}
@@ -252,12 +274,16 @@ public class Partie extends Observable {
 
 	}
 
-	// méthode qui permet à chaque joueur de cacher une carte de sa main 
+	// méthode qui permet à chaque joueur de cacher une carte de sa main
+
 	public void choisirCarteCachee() {
 
 		for(Joueur joueur : joueurs) {
 			joueur.setHasPlayed(false);
-			joueur.getMain().get(joueur.faireOffre()).setVisible(false);
+			if (joueur instanceof JoueurVirtuel) {
+				joueur.getMain().get(joueur.faireOffre()).setVisible(true);
+			}
+
 		}
 
 		return;
@@ -267,8 +293,22 @@ public class Partie extends Observable {
 		
 	}
 	
-	
-	
+	public boolean checkCardsStates() {
+		if (this.gamePhase == "sélection de la carte à cacher") {
+			for (Joueur player : joueurs) {
+				if (player instanceof JoueurReel) {
+					if (player.getMain().get(0).isVisible() && player.getMain().get(1).isVisible()) {
+						return false;
+					}
+					else if (!player.getMain().get(0).isVisible() && !player.getMain().get(1).isVisible()) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 	
 	/* getter setter */
 
@@ -280,6 +320,9 @@ public class Partie extends Observable {
 		this.tour = tour;
 	}
 
+	public ArrayList<Joueur> getJoueurs() {
+		return joueurs;
+	}
 
 	public LinkedList<Carte> getBasePioche() {
 		return basePioche;
@@ -301,4 +344,63 @@ public class Partie extends Observable {
 		isStarted = started;
 	}
 
+	public boolean isSetup() {
+		return isSetup;
+	}
+
+	public void setSetup(boolean setup) {
+		isSetup = setup;
+	}
+
+	public int getPlayerCount() {
+		return playerCount;
+	}
+
+	public void setPlayerCount(int playerCount) {
+		this.playerCount = playerCount;
+	}
+
+	public int getRealPlayerCount() {
+		return realPlayerCount;
+	}
+
+	public void setRealPlayerCount(int realPlayerCount) {
+		this.realPlayerCount = realPlayerCount;
+	}
+
+	public Variante getVariante() {
+		return variante;
+	}
+
+	public void setVariante(Variante variante) {
+		this.variante = variante;
+	}
+
+	public String getGamePhase() {
+		return gamePhase;
+	}
+
+	public void setGamePhase(String gamePhase) {
+		this.gamePhase = gamePhase;
+	}
+
+	public boolean isHidingPhasePlayed() {
+		return hidingPhasePlayed;
+	}
+
+	public void setHidingPhasePlayed(boolean hidingPhasePlayed) {
+		this.hidingPhasePlayed = hidingPhasePlayed;
+	}
+
+	@Override
+	public void run() {
+		this.isStarted = true;
+		this.setChanged();
+		this.notifyObservers();
+		try {
+			this.initialiserPartie();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -10,16 +10,17 @@ import java.net.URI;
 
 public class MenuController {
 
-    public MenuController(JButton playButton, JButton rulesButton, JButton quitButton) {
+    public MenuController(Menu menu) {
 
-        playButton.addActionListener(new ActionListener() {
+        menu.getPlayButton().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                Partie.getInstance().initialiserPartie();
+                Thread gameEngine = new Thread(Partie.getInstance());
+                gameEngine.start();
             }
         });
 
-        rulesButton.addActionListener(new ActionListener() {
+        menu.getRulesButton().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -30,7 +31,7 @@ public class MenuController {
             }
         });
 
-        quitButton.addActionListener(new ActionListener() {
+        menu.getQuitButton().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);

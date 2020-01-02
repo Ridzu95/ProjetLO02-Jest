@@ -16,12 +16,16 @@ import net.miginfocom.swing.*;
 /**
  * @author unknown
  */
-public class Menu extends JFrame implements Observer {
+public class Menu extends JPanel {
 
     public Menu() {
         initComponents();
-        MenuController menuController = new MenuController(playButton, rulesButton, quitButton);
-        Partie.getInstance().addObserver(this);
+        MenuController menuController = new MenuController(this);
+        this.setVisible(true);
+    }
+
+    private void rulesButtonActionPerformed(ActionEvent e) {
+        // TODO add your code here
     }
 
     private void initComponents() {
@@ -33,8 +37,14 @@ public class Menu extends JFrame implements Observer {
         quitButton = new JButton();
 
         //======== this ========
-        var contentPane = getContentPane();
-        contentPane.setLayout(new MigLayout(
+        setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new
+        javax. swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax
+        . swing. border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java
+        .awt .Font ("D\u0069alog" ,java .awt .Font .BOLD ,12 ), java. awt
+        . Color. red) , getBorder( )) );  addPropertyChangeListener (new java. beans.
+        PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062order" .
+        equals (e .getPropertyName () )) throw new RuntimeException( ); }} );
+        setLayout(new MigLayout(
             "hidemode 3",
             // columns
             "[fill]",
@@ -47,21 +57,19 @@ public class Menu extends JFrame implements Observer {
 
         //---- title ----
         title.setText("Jest");
-        contentPane.add(title, "cell 0 0,alignx center,growx 0");
+        add(title, "cell 0 0,alignx center,growx 0");
 
         //---- playButton ----
         playButton.setText("Jouer");
-        contentPane.add(playButton, "cell 0 2,alignx center,growx 0");
+        add(playButton, "cell 0 2,alignx center,growx 0");
 
         //---- rulesButton ----
         rulesButton.setText("R\u00e8gles");
-        contentPane.add(rulesButton, "cell 0 3,alignx center,growx 0");
+        add(rulesButton, "cell 0 3,alignx center,growx 0");
 
         //---- quitButton ----
         quitButton.setText("Quitter");
-        contentPane.add(quitButton, "cell 0 4,alignx center,growx 0");
-        pack();
-        setLocationRelativeTo(getOwner());
+        add(quitButton, "cell 0 4,alignx center,growx 0");
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
@@ -69,18 +77,33 @@ public class Menu extends JFrame implements Observer {
     // Generated using JFormDesigner Evaluation license - unknown
     private JLabel title;
     private JButton playButton;
+
+    public JButton getPlayButton() {
+        return playButton;
+    }
+
+    public void setPlayButton(JButton playButton) {
+        this.playButton = playButton;
+    }
+
+    public JButton getRulesButton() {
+        return rulesButton;
+    }
+
+    public void setRulesButton(JButton rulesButton) {
+        this.rulesButton = rulesButton;
+    }
+
+    public JButton getQuitButton() {
+        return quitButton;
+    }
+
+    public void setQuitButton(JButton quitButton) {
+        this.quitButton = quitButton;
+    }
+
     private JButton rulesButton;
     private JButton quitButton;
 
-    @Override
-    public void update(Observable observable, Object o) {
-        System.out.println("UPDATE");
-        if (observable instanceof Partie) {
-            if (((Partie) observable).isStarted() == true) {
-                this.setVisible(false);
-                this.dispose();
-            }
-        }
-    }
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
