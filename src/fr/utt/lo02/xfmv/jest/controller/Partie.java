@@ -155,12 +155,13 @@ public class Partie extends Observable implements Runnable {
 			this.notifyObservers();
 
 			// Console.showTurn(this.tour);
-			// this.choisirCarteCachee();
 			// Console.displayPlayerCards(joueurs);
 
+			/**
 			do {
 				Thread.sleep(500);
 			} while (!this.hidingPhasePlayed);
+			**/
 
 			this.choisirCarteCachee();
 
@@ -170,11 +171,15 @@ public class Partie extends Observable implements Runnable {
 			this.setChanged();
 			this.notifyObservers();
 
+			this.controlOffers();
+
+			/**
 			do {
 				Thread.sleep(500);
 			} while (!this.jestingPhasePlayed);
+			 **/
 
-			this.controlOffers();
+
 			this.tour++;
 		} while (basePioche.size() != 0);
 
@@ -218,6 +223,10 @@ public class Partie extends Observable implements Runnable {
 
 		Joueur choosingPlayer = joueurs.get(0);
 		boolean everyonePlayed = false;
+
+		for (Joueur joueur : joueurs) {
+			joueur.setHasPlayed(false);
+		}
 
 		while (everyonePlayed == false) {
 
@@ -279,11 +288,21 @@ public class Partie extends Observable implements Runnable {
 	public void choisirCarteCachee() {
 
 		for(Joueur joueur : joueurs) {
-			joueur.setHasPlayed(false);
+			if (!hidingPhasePlayed && joueur instanceof JoueurReel) {
+				joueur.getMain().get(joueur.faireOffre()).setVisible(false);
+				joueur.setHasPlayed(true);
+				this.setChanged();
+				this.notifyObservers();
+			}
+		}
+
+		for (Joueur joueur : joueurs) {
 			if (joueur instanceof JoueurVirtuel) {
 				joueur.getMain().get(joueur.faireOffre()).setVisible(true);
+				joueur.setHasPlayed(true);
+				this.setChanged();
+				this.notifyObservers();
 			}
-
 		}
 
 		return;

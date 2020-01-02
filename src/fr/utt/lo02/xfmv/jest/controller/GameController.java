@@ -15,6 +15,7 @@ public class GameController {
             public void actionPerformed(ActionEvent e) {
                 if (Partie.getInstance().getGamePhase() == "sélection de la carte à cacher" && Partie.getInstance().checkCardsStates()) {
                     Partie.getInstance().setHidingPhasePlayed(true);
+
                 }
             }
         });
@@ -23,7 +24,7 @@ public class GameController {
 
             public void actionPerformed(ActionEvent e) {
                 if (Partie.getInstance().getGamePhase() == "sélection de la carte à cacher") {
-                    if (Partie.getInstance().getJoueurs().get(0) instanceof JoueurReel) {
+                    if (Partie.getInstance().getJoueurs().get(0) instanceof JoueurReel && Partie.getInstance().getJoueurs().get(0).getHasPlayed() == false) {
                         if (Partie.getInstance().getJoueurs().get(0).getMain().get(0).getVisible() == true) {
                             Partie.getInstance().getJoueurs().get(0).getMain().get(0).setVisible(false);
                         }
@@ -41,7 +42,7 @@ public class GameController {
 
             public void actionPerformed(ActionEvent e) {
                 if (Partie.getInstance().getGamePhase() == "sélection de la carte à cacher") {
-                    if (Partie.getInstance().getJoueurs().get(0) instanceof JoueurReel) {
+                    if (Partie.getInstance().getJoueurs().get(0) instanceof JoueurReel && Partie.getInstance().getJoueurs().get(0).getHasPlayed() == false) {
                         if (Partie.getInstance().getJoueurs().get(0).getMain().get(1).getVisible() == true) {
                             Partie.getInstance().getJoueurs().get(0).getMain().get(1).setVisible(false);
                         }
@@ -59,7 +60,7 @@ public class GameController {
 
             public void actionPerformed(ActionEvent e) {
                 if (Partie.getInstance().getGamePhase() == "sélection de la carte à cacher") {
-                    if (Partie.getInstance().getJoueurs().get(1) instanceof JoueurReel) {
+                    if (Partie.getInstance().getJoueurs().get(1) instanceof JoueurReel && Partie.getInstance().getJoueurs().get(1).getHasPlayed() == false) {
                         if (Partie.getInstance().getJoueurs().get(1).getMain().get(0).getVisible() == true) {
                             Partie.getInstance().getJoueurs().get(1).getMain().get(0).setVisible(false);
                         }
@@ -77,7 +78,7 @@ public class GameController {
 
             public void actionPerformed(ActionEvent e) {
                 if (Partie.getInstance().getGamePhase() == "sélection de la carte à cacher") {
-                    if (Partie.getInstance().getJoueurs().get(1) instanceof JoueurReel) {
+                    if (Partie.getInstance().getJoueurs().get(1) instanceof JoueurReel && Partie.getInstance().getJoueurs().get(1).getHasPlayed() == false) {
                         if (Partie.getInstance().getJoueurs().get(1).getMain().get(1).getVisible() == true) {
                             Partie.getInstance().getJoueurs().get(1).getMain().get(1).setVisible(false);
                         }
@@ -95,7 +96,7 @@ public class GameController {
 
             public void actionPerformed(ActionEvent e) {
                 if (Partie.getInstance().getGamePhase() == "sélection de la carte à cacher") {
-                    if (Partie.getInstance().getJoueurs().get(2) instanceof JoueurReel) {
+                    if (Partie.getInstance().getJoueurs().get(2) instanceof JoueurReel && Partie.getInstance().getJoueurs().get(2).getHasPlayed() == false) {
                         if (Partie.getInstance().getJoueurs().get(2).getMain().get(0).getVisible() == true) {
                             Partie.getInstance().getJoueurs().get(2).getMain().get(0).setVisible(false);
                         }
@@ -113,7 +114,7 @@ public class GameController {
 
             public void actionPerformed(ActionEvent e) {
                 if (Partie.getInstance().getGamePhase() == "sélection de la carte à cacher") {
-                    if (Partie.getInstance().getJoueurs().get(2) instanceof JoueurReel) {
+                    if (Partie.getInstance().getJoueurs().get(2) instanceof JoueurReel && Partie.getInstance().getJoueurs().get(2).getHasPlayed() == false) {
                         if (Partie.getInstance().getJoueurs().get(2).getMain().get(1).getVisible() == true) {
                             Partie.getInstance().getJoueurs().get(2).getMain().get(1).setVisible(false);
                         }
