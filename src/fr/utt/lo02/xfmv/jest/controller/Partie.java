@@ -10,6 +10,7 @@ import fr.utt.lo02.xfmv.jest.model.variantes.Variante;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante1;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
+import fr.utt.lo02.xfmv.jest.vue.Message;
 import fr.utt.lo02.xfmv.jest.vue.console.Console;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GameConfig;
 
@@ -34,9 +35,9 @@ public class Partie extends Observable implements Runnable {
 	private String gamePhase;
 	private boolean jestingPhasePlayed;
 
-	private BlockingQueue<Integer> queue;
+	private BlockingQueue<Message> queue;
 
-	private Partie(BlockingQueue<Integer> queue) {
+	private Partie(BlockingQueue<Message> queue) {
 		basePioche = new LinkedList<Carte>();
 		tempPioche = new LinkedList<Carte>();
 		tropheesPartie = new ArrayList<Carte>();
@@ -405,30 +406,28 @@ public class Partie extends Observable implements Runnable {
 
 		while (true){ //le thread tourne en boucle pour reçevoir des informations
 			try {
-				Integer input = queue.take();
-				this.process(input);
+				Message msg = queue.take();
+				this.process(msg);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	public void process(Integer input) throws InterruptedException {
-
-		if (this.isStarted == false){
-			if ( input == 1){
+	public void process(Message msg) throws InterruptedException {
+		System.out.println("DEBUG Partie:418 : Un message vient d'être receptionné par la partie, traitement en cours");
+		if (msg.getKey() == "menu"){
+			if ( msg.getValue() == 1){
 				this.isStarted = true;
 				this.setChanged();
 				this.notifyObservers();
 				this.initialiserPartie();
 			}
 		}
-		//si on est dans tel état
-		//si l'input vaut tel
 
 	}
 
-	public BlockingQueue<Integer> getQueue() {
+	public BlockingQueue<Message> getQueue() {
 		return queue;
 	}
 	//partie consumer

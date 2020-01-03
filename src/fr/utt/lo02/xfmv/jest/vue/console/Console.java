@@ -10,16 +10,15 @@ import fr.utt.lo02.xfmv.jest.controller.Partie;
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 import fr.utt.lo02.xfmv.jest.model.joueurs.Joueur;
 import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
+import fr.utt.lo02.xfmv.jest.vue.Message;
 
 public class Console implements Runnable, Observer {
 
-    private final BlockingQueue<Integer> queue;
-    private Integer input;
+    private final BlockingQueue<Message> queue;
     private Scanner scan;
 
-    public Console(BlockingQueue<Integer> queue){
+    public Console(BlockingQueue<Message> queue){
         this.queue = queue;
-        this.input = -1; //valeure par défaut qui ne fait rien
         Partie.getInstance().addObserver(this);
     }
 
@@ -45,7 +44,9 @@ public class Console implements Runnable, Observer {
 
         switch (choice) {
             case 1 :
-                this.input = 1;
+                Partie.getInstance().getQueue().put(new Message("menu", 1));
+
+                System.out.println("Un input a été envoyé par la console");
                 break;
             case 2 :
                 try {
@@ -281,21 +282,20 @@ public class Console implements Runnable, Observer {
 
             this.showMenu();
         }
-        System.out.println("bb");
+        System.out.println("DEBUG Console:286 : Un message a été envoyé par la console");
         /* if (Partie.getInstance().isStarted() == true && Partie.getInstance().isSetup() == false) {
             this.demanderNombreJoueurs();
             this.demanderNombreJoueurs();
             //this.demanderStrategie();
             this.demanderVariante();
         } */
-        this.queue.put(input); //on ajoute dans la queue l'input (si il vaut -1 ca fait rien)
-        System.out.println("L'input " + this.input +  " a été envoyé par la console");
+
         Thread.sleep(500);
     }
 
 
     @Override
     public void update(Observable o, Object arg) {
-        run();
+        run(); //maj de la console
     }
 }

@@ -12,6 +12,7 @@ import javax.swing.*;
 
 import fr.utt.lo02.xfmv.jest.controller.MenuController;
 import fr.utt.lo02.xfmv.jest.controller.Partie;
+import fr.utt.lo02.xfmv.jest.vue.Message;
 import net.miginfocom.swing.*;
 
 /**
@@ -19,11 +20,11 @@ import net.miginfocom.swing.*;
  */
 public class Menu extends JPanel {
 
-    private BlockingQueue<Integer> queue;
 
-    public Menu(BlockingQueue<Integer> queue) {
+
+    public Menu() {
         initComponents();
-        MenuController menuController = new MenuController(this, this.queue);
+        MenuController menuController = new MenuController(this);
         this.setVisible(true);
     }
 

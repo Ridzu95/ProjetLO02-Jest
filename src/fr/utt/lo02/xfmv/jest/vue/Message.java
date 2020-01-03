@@ -1,22 +1,22 @@
 package fr.utt.lo02.xfmv.jest.vue;
 
 public class Message {
+    private int value;
     private String key;
-    private int valeur;
 
-    public Message(String key, int valeur){
+    public Message(String key, int value){
         this.key = key;
-        this.valeur = valeur;
+        this.value = value;
     }
 
 
 
-    public int getValeur() {
-        return valeur;
+    public int getValue() {
+        return value;
     }
 
-    public void setValeur(int valeur) {
-        this.valeur = valeur;
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public String getKey() {
@@ -25,5 +25,9 @@ public class Message {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String toString(){
+        return ("message : " + this.key + " " + this.value);
     }
 }

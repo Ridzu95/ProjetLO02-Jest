@@ -7,6 +7,7 @@ package fr.utt.lo02.xfmv.jest.vue.graphicInterface;
 import javax.swing.*;
 
 import fr.utt.lo02.xfmv.jest.controller.Partie;
+import fr.utt.lo02.xfmv.jest.vue.Message;
 import net.miginfocom.swing.*;
 
 import java.util.Observable;
@@ -18,10 +19,10 @@ import java.util.concurrent.BlockingQueue;
  */
 public class GUI extends JFrame implements Runnable, Observer {
 
-    private BlockingQueue<Integer> queue;
+    private BlockingQueue<Message> queue;
 
 
-    public GUI(BlockingQueue<Integer> queue) {
+    public GUI(BlockingQueue<Message> queue) {
         this.queue = queue;
         initComponents();
         Partie.getInstance().addObserver(this);
@@ -50,7 +51,7 @@ public class GUI extends JFrame implements Runnable, Observer {
     @Override
     public void run() {
         this.setVisible(true); //maj l'affichage
-        this.getContentPane().add(new Menu(this.queue));
+        this.getContentPane().add(new Menu());
         this.pack();
 
     }
@@ -62,7 +63,6 @@ public class GUI extends JFrame implements Runnable, Observer {
             this.getContentPane().removeAll();
             this.getContentPane().add(new GameConfig());
             this.pack();
-            System.out.println("aa");
         }
         if (observable instanceof Partie && ((Partie) observable).isStarted() && ((Partie) observable).isSetup()) {
             this.getContentPane().removeAll();

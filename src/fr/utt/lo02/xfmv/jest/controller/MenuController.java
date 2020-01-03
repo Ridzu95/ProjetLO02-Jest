@@ -1,5 +1,6 @@
 package fr.utt.lo02.xfmv.jest.controller;
 
+import fr.utt.lo02.xfmv.jest.vue.Message;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.Menu;
 
 import javax.management.openmbean.TabularData;
@@ -12,16 +13,8 @@ import java.util.concurrent.BlockingQueue;
 
 public class MenuController {
 
-    private BlockingQueue<Integer> queue;
-    private Integer integer;
 
-    public BlockingQueue<Integer> getQueue() {
-        return queue;
-    }
-
-    public MenuController(Menu menu, BlockingQueue<Integer> queue) {
-        this.queue = queue;
-        this.integer = -1;
+    public MenuController(Menu menu) {
 
         menu.getPlayButton().addActionListener(new ActionListener() {
 
@@ -29,8 +22,8 @@ public class MenuController {
 
             public void actionPerformed(ActionEvent e) {
                 try {
-                    System.out.println("input envoyé par le menu");
-                    Partie.getInstance().getQueue().put(1);
+                    System.out.println("DEBUG MenuController:25 : Un message a été envoyé par le Menu");
+                    Partie.getInstance().getQueue().put(new Message("menu",1));
 
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
