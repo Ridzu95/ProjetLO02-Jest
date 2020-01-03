@@ -282,6 +282,10 @@ public class Console implements Runnable, Observer {
 
             this.showMenu();
         }
+
+        if (Partie.getInstance().isStarted() == true && Partie.getInstance().isSetup() == false){
+            this.demanderNombreJoueurs();
+        }
         System.out.println("DEBUG Console:286 : Un message a été envoyé par la console");
         /* if (Partie.getInstance().isStarted() == true && Partie.getInstance().isSetup() == false) {
             this.demanderNombreJoueurs();
@@ -290,12 +294,15 @@ public class Console implements Runnable, Observer {
             this.demanderVariante();
         } */
 
-        Thread.sleep(500);
     }
 
 
     @Override
     public void update(Observable o, Object arg) {
-        run(); //maj de la console
+        System.out.println("La console a été notifiée");
+        run();
+        System.out.println("aa");
+
+
     }
 }

@@ -54,21 +54,25 @@ public class GUI extends JFrame implements Runnable, Observer {
         this.getContentPane().add(new Menu());
         this.pack();
 
-    }
-
-    @Override
-    public void update(Observable observable, Object o) {
-
-        if (observable instanceof Partie && ((Partie) observable).isStarted() && !((Partie) observable).isSetup()) {
+        if (Partie.getInstance().isStarted() && !Partie.getInstance().isSetup()) {
             this.getContentPane().removeAll();
             this.getContentPane().add(new GameConfig());
             this.pack();
         }
-        if (observable instanceof Partie && ((Partie) observable).isStarted() && ((Partie) observable).isSetup()) {
+        if (Partie.getInstance().isStarted() && Partie.getInstance().isSetup()) {
             this.getContentPane().removeAll();
             this.getContentPane().add(new Game());
             this.pack();
         }
+
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        System.out.println("GUI a été notifié");
+        run();
+
+
     }
 
 

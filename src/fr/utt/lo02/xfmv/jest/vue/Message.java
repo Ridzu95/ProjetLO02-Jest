@@ -1,17 +1,17 @@
 package fr.utt.lo02.xfmv.jest.vue;
 
 public class Message {
-    private int value;
     private String key;
+    private Object value;
 
-    public Message(String key, int value){
+    public Message(String key, Object value){
         this.key = key;
         this.value = value;
     }
 
 
 
-    public int getValue() {
+    public Object getValue() {
         return value;
     }
 

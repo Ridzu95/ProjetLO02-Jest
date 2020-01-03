@@ -13,21 +13,21 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         Partie.getInstance();
 
 
         GUI gui = new GUI(Partie.getInstance().getQueue());
+        Partie.getInstance().setGUI(gui);
 
         Console console = new Console(Partie.getInstance().getQueue());
+        Partie.getInstance().setCons(console);
 
-        Thread consoleThread = new Thread(console);
-        Thread guiThread = new Thread(gui);
+        new Thread(gui).start();
+        new Thread(console).start();
+
         Thread partieThread = new Thread(Partie.getInstance());
-
-        consoleThread.start();
-        guiThread.start();
         partieThread.start();
 
     }

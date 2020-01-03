@@ -12,6 +12,7 @@ import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
 import fr.utt.lo02.xfmv.jest.vue.Message;
 import fr.utt.lo02.xfmv.jest.vue.console.Console;
+import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GUI;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GameConfig;
 
 import java.lang.reflect.Array;
@@ -36,6 +37,8 @@ public class Partie extends Observable implements Runnable {
 	private boolean jestingPhasePlayed;
 
 	private BlockingQueue<Message> queue;
+	private GUI gui;
+	private Console console;
 
 	private Partie(BlockingQueue<Message> queue) {
 		basePioche = new LinkedList<Carte>();
@@ -75,11 +78,9 @@ public class Partie extends Observable implements Runnable {
 
 		this.basePioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
 
-		//Création des joueurs
+		}
 
-		do {
-			Thread.sleep(500);
-		} while (!this.isSetup());
+	public void créerPartie() throws InterruptedException {
 
 		for ( int i = 0; i < realPlayerCount ; i++ ) {
 		    this.joueurs.add(new JoueurReel(i, "realPlayer"));
@@ -404,6 +405,8 @@ public class Partie extends Observable implements Runnable {
 	@Override
 	public void run() {
 
+		System.out.println("Recherche de message ...");
+
 		while (true){ //le thread tourne en boucle pour reçevoir des informations
 			try {
 				Message msg = queue.take();
@@ -415,20 +418,58 @@ public class Partie extends Observable implements Runnable {
 	}
 
 	public void process(Message msg) throws InterruptedException {
+
 		System.out.println("DEBUG Partie:418 : Un message vient d'être receptionné par la partie, traitement en cours");
+
 		if (msg.getKey() == "menu"){
-			if ( msg.getValue() == 1){
+			if ( (int) msg.getValue() == 1){
 				this.isStarted = true;
 				this.setChanged();
-				this.notifyObservers();
+				new Thread(this.gui).start();
+				new Thread(this.console).start();
+
 				this.initialiserPartie();
+
 			}
 		}
+
+		if (msg.getKey() == "nbplayer"){
+			this.playerCount = (int) msg.getValue();
+			System.out.println(this.playerCount);
+		}
+
+		if (msg.getKey() == "nbrealplayer"){
+			this.realPlayerCount = (int) msg.getValue();
+			System.out.println(this.realPlayerCount);
+		}
+
+		if (msg.getKey() == "variante"){
+			switch ((String) msg.getValue()){
+				case "Normal":
+					this.variante = new Variantebase();
+					break;
+				case "Aléatoire":
+					this.variante = new Variante1();
+					break;
+				case "Caché":
+					this.variante = new Variante2();
+			}
+		}
+
+		this.run(); // on retourne dans la boucle
 
 	}
 
 	public BlockingQueue<Message> getQueue() {
 		return queue;
+	}
+
+	public void setGUI(GUI gui){
+		this.gui = gui;
+	}
+
+	public void setCons(Console console){
+		this.console = console;
 	}
 	//partie consumer
 }
