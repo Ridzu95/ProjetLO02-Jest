@@ -3,41 +3,49 @@ package fr.utt.lo02.xfmv.jest.vue.console;
 import java.awt.*;
 import java.lang.reflect.Array;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
+import java.util.concurrent.BlockingQueue;
 
 import fr.utt.lo02.xfmv.jest.controller.Partie;
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 import fr.utt.lo02.xfmv.jest.model.joueurs.Joueur;
 import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
 
-public abstract class Console {
+public class Console implements Runnable, Observer {
+
+    private final BlockingQueue<Integer> queue;
+    private Integer input;
+    private Scanner scan;
+
+    public Console(BlockingQueue<Integer> queue){
+        this.queue = queue;
+        this.input = -1; //valeure par défaut qui ne fait rien
+        Partie.getInstance().addObserver(this);
+    }
 
     public static void welcomeMessage() {
         System.out.println("--- Jeu de Jest inventé par Brett J. Gilbert ---");
     }
 
-    public static void showMenu() throws InterruptedException {
+    public void showMenu() throws InterruptedException {
         System.out.println("(1) --- Jouer\n(2) --- Lire les règles\n(3) --- Quitter");
-        Scanner sc = new Scanner(System.in);
+        this.scan = new Scanner(System.in);
         int choice = 0;
         do {
             try {
                 System.out.print("Votre choix : ");
-                choice = sc.nextInt();
+                choice = this.scan.nextInt();
                 System.out.println("");
             }
             catch (InputMismatchException e){
                 System.out.println("Format invalide.");
             }
-            sc.nextLine();
+            this.scan.nextLine();
         } while (choice !=1 && choice != 2 && choice !=3);
 
         switch (choice) {
             case 1 :
-                Partie.getInstance().initialiserPartie();
+                this.input = 1;
                 break;
             case 2 :
                 try {
@@ -45,7 +53,7 @@ public abstract class Console {
                     Desktop.getDesktop().browse(uri);
                 }
                 catch(Exception ex) {}
-                Console.showMenu();
+                this.showMenu();
                 break;
             case 3 :
                 System.exit(0);
@@ -229,7 +237,7 @@ public abstract class Console {
         System.out.println("Le gagnant de la partie est " + winner.toString() + " !");
     }
 
-    public static void endOfGame() throws InterruptedException {
+    public void endOfGame() throws InterruptedException {
         System.out.println("(1) --- Retourner au menu\n(2) --- Quitter");
         Scanner sc = new Scanner(System.in);
         int choice = 0;
@@ -246,12 +254,48 @@ public abstract class Console {
         } while (choice !=1 && choice != 2);
         switch (choice) {
             case 1 :
-                Console.showMenu();
+                this.showMenu();
                 break;
             case 2 :
                 System.exit(0);
                 break;
         }
     }
-    
+
+
+    //Partie producer
+
+    @Override
+    public void run() {
+        try {
+            this.process();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void process() throws InterruptedException {
+
+        if (Partie.getInstance().isStarted() == false){
+            this.welcomeMessage();
+
+            this.showMenu();
+        }
+        System.out.println("bb");
+        if (Partie.getInstance().isStarted() == true && Partie.getInstance().isSetup() == false) {
+            this.demanderNombreJoueurs();
+            this.demanderNombreJoueurs();
+            //this.demanderStrategie();
+            this.demanderVariante();
+        }
+        this.queue.put(input); //on ajoute dans la queue l'input (si il vaut -1 ca fait rien)
+        System.out.println("L'input " + this.input +  " a été envoyé par la console");
+        Thread.sleep(500);
+    }
+
+
+    @Override
+    public void update(Observable o, Object arg) {
+        run();
+    }
 }

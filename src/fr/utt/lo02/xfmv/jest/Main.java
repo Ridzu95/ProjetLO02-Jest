@@ -15,9 +15,20 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        GUI guiFrame = new GUI();
-        Thread gui = new Thread(guiFrame);
-        gui.start();
+        Partie.getInstance();
+
+
+        GUI gui = new GUI(Partie.getInstance().getQueue());
+
+        Console console = new Console(Partie.getInstance().getQueue());
+
+        Thread consoleThread = new Thread(console);
+        Thread guiThread = new Thread(gui);
+        Thread partieThread = new Thread(Partie.getInstance());
+
+        consoleThread.start();
+        guiThread.start();
+        partieThread.start();
 
     }
 }

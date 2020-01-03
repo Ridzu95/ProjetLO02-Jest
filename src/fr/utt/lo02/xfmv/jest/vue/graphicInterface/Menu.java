@@ -7,6 +7,7 @@ package fr.utt.lo02.xfmv.jest.vue.graphicInterface;
 import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.BlockingQueue;
 import javax.swing.*;
 
 import fr.utt.lo02.xfmv.jest.controller.MenuController;
@@ -18,9 +19,11 @@ import net.miginfocom.swing.*;
  */
 public class Menu extends JPanel {
 
-    public Menu() {
+    private BlockingQueue<Integer> queue;
+
+    public Menu(BlockingQueue<Integer> queue) {
         initComponents();
-        MenuController menuController = new MenuController(this);
+        MenuController menuController = new MenuController(this, this.queue);
         this.setVisible(true);
     }
 

@@ -15,6 +15,8 @@ import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GameConfig;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Partie extends Observable implements Runnable {
 
@@ -32,7 +34,9 @@ public class Partie extends Observable implements Runnable {
 	private String gamePhase;
 	private boolean jestingPhasePlayed;
 
-	private Partie() {
+	private BlockingQueue<Integer> queue;
+
+	private Partie(BlockingQueue<Integer> queue) {
 		basePioche = new LinkedList<Carte>();
 		tempPioche = new LinkedList<Carte>();
 		tropheesPartie = new ArrayList<Carte>();
@@ -46,15 +50,19 @@ public class Partie extends Observable implements Runnable {
 		gamePhase = "init";
 		hidingPhasePlayed = false;
 		jestingPhasePlayed = false;
+
+		this.queue = queue;
 	}
-	
-	private static Partie partie = new Partie();
+
+	private static Partie partie = new Partie( new LinkedBlockingQueue<>(2));
 
 	public static Partie getInstance() {
 		return partie;
 	}
 
 	public void initialiserPartie() throws InterruptedException {
+
+		System.out.println("La partie a été initialisée");
 
 		for (Couleurs couleur : Couleurs.values()) {
 			for (Valeurs valeur : Valeurs.values()) {
@@ -65,17 +73,17 @@ public class Partie extends Observable implements Runnable {
 		}
 
 		this.basePioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
-		
+
 		//Création des joueurs
 
 		do {
 			Thread.sleep(500);
 		} while (!this.isSetup());
-		
+
 		for ( int i = 0; i < realPlayerCount ; i++ ) {
 		    this.joueurs.add(new JoueurReel(i, "realPlayer"));
 		}
-		
+
 		for ( int i = 0; i < (playerCount - realPlayerCount) ; i++ ) {
 		    this.joueurs.add(new JoueurVirtuel(i,1));
 		}
@@ -85,7 +93,7 @@ public class Partie extends Observable implements Runnable {
 
 		return;
 	}
-	
+
 	public void distribuerCartes() {
 
 		if (this.tour == 1) {
@@ -290,9 +298,9 @@ public class Partie extends Observable implements Runnable {
 	}
 
 	public void declarerVainqueur() { //est appellé en fin de partie
-		
+
 	}
-	
+
 	public boolean checkCardsStates() {
 		if (this.gamePhase == "sélection de la carte à cacher") {
 			for (Joueur player : joueurs) {
@@ -309,7 +317,7 @@ public class Partie extends Observable implements Runnable {
 		}
 		return false;
 	}
-	
+
 	/* getter setter */
 
 	public int getTour() {
@@ -327,7 +335,7 @@ public class Partie extends Observable implements Runnable {
 	public LinkedList<Carte> getBasePioche() {
 		return basePioche;
 	}
-	
+
 	public LinkedList<Carte> getTempPioche() {
 		return tempPioche;
 	}
@@ -394,13 +402,34 @@ public class Partie extends Observable implements Runnable {
 
 	@Override
 	public void run() {
-		this.isStarted = true;
-		this.setChanged();
-		this.notifyObservers();
-		try {
-			this.initialiserPartie();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+
+		while (true){ //le thread tourne en boucle pour reçevoir des informations
+			try {
+				Integer input = queue.take();
+				this.process(input);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
+
+	public void process(Integer input) throws InterruptedException {
+
+		if (this.isStarted == false){
+			if ( input == 1){
+				this.isStarted = true;
+				this.setChanged();
+				this.notifyObservers();
+				this.initialiserPartie();
+			}
+		}
+		//si on est dans tel état
+		//si l'input vaut tel
+
+	}
+
+	public BlockingQueue<Integer> getQueue() {
+		return queue;
+	}
+	//partie consumer
 }
