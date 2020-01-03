@@ -282,12 +282,12 @@ public class Console implements Runnable, Observer {
             this.showMenu();
         }
         System.out.println("bb");
-        if (Partie.getInstance().isStarted() == true && Partie.getInstance().isSetup() == false) {
+        /* if (Partie.getInstance().isStarted() == true && Partie.getInstance().isSetup() == false) {
             this.demanderNombreJoueurs();
             this.demanderNombreJoueurs();
             //this.demanderStrategie();
             this.demanderVariante();
-        }
+        } */
         this.queue.put(input); //on ajoute dans la queue l'input (si il vaut -1 ca fait rien)
         System.out.println("L'input " + this.input +  " a été envoyé par la console");
         Thread.sleep(500);
