@@ -16,10 +16,9 @@ import java.util.Observer;
 /**
  * @author unknown
  */
-public class Game extends JPanel implements Observer {
+public class Game extends JPanel{
     public Game() {
         initComponents();
-        Partie.getInstance().addObserver(this);
         GameController gameController = new GameController(this);
     }
 
@@ -257,8 +256,5 @@ public class Game extends JPanel implements Observer {
         this.nextPhase = nextPhase;
     }
 
-    @Override
-    public void update(Observable observable, Object o) {
-        this.revalidate();
-    }
+    
 }

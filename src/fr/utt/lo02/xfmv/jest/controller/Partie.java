@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class Partie extends Observable implements Runnable {
+public class Partie implements Runnable {
 
 	private Variante variante;
 	private LinkedList<Carte> basePioche;
@@ -36,6 +36,7 @@ public class Partie extends Observable implements Runnable {
 	private String gamePhase;
 	private boolean jestingPhasePlayed;
 
+	//attribut communication
 	private BlockingQueue<Message> queue;
 	private GUI gui;
 	private Console console;
@@ -161,9 +162,6 @@ public class Partie extends Observable implements Runnable {
 
 			this.gamePhase = "sélection de la carte à cacher";
 
-			this.setChanged();
-			this.notifyObservers();
-
 			// Console.showTurn(this.tour);
 			// this.choisirCarteCachee();
 			// Console.displayPlayerCards(joueurs);
@@ -176,9 +174,6 @@ public class Partie extends Observable implements Runnable {
 
 			this.gamePhase = "sélection de la carte à mettre dans le Jest";
 			Collections.sort(joueurs);
-
-			this.setChanged();
-			this.notifyObservers();
 
 			do {
 				Thread.sleep(500);
@@ -424,7 +419,6 @@ public class Partie extends Observable implements Runnable {
 		if (msg.getKey() == "menu"){
 			if ( (int) msg.getValue() == 1){
 				this.isStarted = true;
-				this.setChanged();
 				new Thread(this.gui).start();
 				new Thread(this.console).start();
 

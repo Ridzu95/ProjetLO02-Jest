@@ -17,7 +17,7 @@ import java.util.concurrent.BlockingQueue;
 /**
  * @author unknown
  */
-public class GUI extends JFrame implements Runnable, Observer {
+public class GUI extends JFrame implements Runnable {
 
     private BlockingQueue<Message> queue;
 
@@ -25,7 +25,6 @@ public class GUI extends JFrame implements Runnable, Observer {
     public GUI(BlockingQueue<Message> queue) {
         this.queue = queue;
         initComponents();
-        Partie.getInstance().addObserver(this);
     }
 
     private void initComponents() {
@@ -64,14 +63,6 @@ public class GUI extends JFrame implements Runnable, Observer {
             this.getContentPane().add(new Game());
             this.pack();
         }
-
-    }
-
-    @Override
-    public void update(Observable observable, Object o) {
-        System.out.println("GUI a été notifié");
-        run();
-
 
     }
 

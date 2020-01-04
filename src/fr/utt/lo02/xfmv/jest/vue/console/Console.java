@@ -12,14 +12,13 @@ import fr.utt.lo02.xfmv.jest.model.joueurs.Joueur;
 import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
 import fr.utt.lo02.xfmv.jest.vue.Message;
 
-public class Console implements Runnable, Observer {
+public class Console implements Runnable {
 
     private final BlockingQueue<Message> queue;
     private Scanner scan;
 
     public Console(BlockingQueue<Message> queue){
         this.queue = queue;
-        Partie.getInstance().addObserver(this);
     }
 
     public static void welcomeMessage() {
@@ -293,16 +292,6 @@ public class Console implements Runnable, Observer {
             //this.demanderStrategie();
             this.demanderVariante();
         } */
-
-    }
-
-
-    @Override
-    public void update(Observable o, Object arg) {
-        System.out.println("La console a été notifiée");
-        run();
-        System.out.println("aa");
-
 
     }
 }
