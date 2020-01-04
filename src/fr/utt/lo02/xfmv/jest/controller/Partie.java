@@ -90,7 +90,9 @@ public class Partie implements Runnable {
 		}
 
 		Collections.shuffle(this.basePioche);
-		this.jouerPartie();
+		//this.jouerPartie();
+
+		this.distribuerCartes(); // à retirer car déjà dans jouer
 
 		return;
 	}
@@ -402,9 +404,6 @@ public class Partie implements Runnable {
 	@Override
 	public void run() {
 
-
-		this.console.majAffichage();
-
 		while (true){ //le thread tourne en boucle pour reçevoir des informations
 			try {
 				Message msg = queue.take();
@@ -462,7 +461,9 @@ public class Partie implements Runnable {
 			this.isSetup = true;
 			new Thread(this.gui).start();
 			this.initialiserPartie();
+			this.console.majAffichage();
 		}
+
 
 		this.run(); // on retourne dans la boucle
 

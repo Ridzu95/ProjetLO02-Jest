@@ -76,40 +76,7 @@ public class Console implements Runnable {
 
     // permet de récupérer le choix du joueur pour la variante
 
-    public static void demanderVariante() throws InterruptedException {
 
-        Scanner sc = new Scanner(System.in);
-        int choice = 0;
-
-        System.out.println("Choisissez une variante pour la partie");
-        System.out.println("(1) -- Variante de base : les trophées sont assignés selon les règles classiques");
-        System.out.println("(2) -- Variante 1 : les trophées sont assignés aléatoirement");
-        System.out.println("(3) -- Variante 2 : les trophées sont assignés selon les règles classiques mais sont inconnus");
-        System.out.println("");
-
-        do {
-            try {
-                System.out.print("Votre choix : ");
-                choice = sc.nextInt();
-                System.out.println("");
-            } catch (InputMismatchException e) {
-                System.out.println("Format invalide.");
-            }
-            sc.nextLine();
-        } while (choice != 1 && choice != 2 && choice != 3);
-
-        switch (choice) {
-            case 1:
-                Partie.getInstance().getQueue().put(new Message("variante", "Normal"));
-                break;
-            case 2:
-                Partie.getInstance().getQueue().put(new Message("variante", "Aléatoire"));
-                break;
-            case 3:
-                Partie.getInstance().getQueue().put(new Message("variante", "Caché"));
-                break;
-        }
-    }
 
     public Message demanderNombreJoueurs() throws InterruptedException {
 
@@ -315,7 +282,7 @@ public class Console implements Runnable {
             System.out.println("(1) --- Jouer\n(2) --- Lire les règles\n(3) --- Quitter");
         }
 
-        if(partie.isStarted()==true&&partie.isSetup()==false) {
+        if(partie.isStarted()==true && partie.isSetup()==false && (partie.getPlayerCount() == -1 || partie.getRealPlayerCount() == -1 || partie.getVariante() == null) ) {
             if (partie.getPlayerCount() == -1) {
                 System.out.println("Voulez-vous jouer à 3 ou 4 joueurs ?");
 
@@ -331,7 +298,7 @@ public class Console implements Runnable {
         }
 
         if(partie.isSetup()==true&&partie.isStarted()==true) {
-            System.out.println("blabla");
+            System.out.println("Choisir la carte à cacher :");
         }
 
         System.out.println("Votre choix : ");
@@ -341,7 +308,7 @@ public class Console implements Runnable {
 
 
     public void process() throws InterruptedException {
-
+        this.majAffichage();
         this.scan = new Scanner(System.in);
         Message msg = null;
 
@@ -383,6 +350,7 @@ public class Console implements Runnable {
 
 
         Partie.getInstance().getQueue().put(msg);
+        Thread.sleep(100);
         run();
     }
 }

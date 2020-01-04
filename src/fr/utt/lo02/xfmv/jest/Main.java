@@ -33,5 +33,6 @@ public class Main {
         //il faut lancer une première fois les thread de gui et console
         new Thread(Partie.getInstance().getConsole()).start();
         new Thread(Partie.getInstance().getGUI()).start();
+
     }
 }
