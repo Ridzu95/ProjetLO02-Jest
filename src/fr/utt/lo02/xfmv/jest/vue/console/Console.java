@@ -10,6 +10,9 @@ import fr.utt.lo02.xfmv.jest.controller.Partie;
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 import fr.utt.lo02.xfmv.jest.model.joueurs.Joueur;
 import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
+import fr.utt.lo02.xfmv.jest.model.variantes.Variante1;
+import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
+import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
 import fr.utt.lo02.xfmv.jest.vue.Message;
 
 public class Console implements Runnable {
@@ -19,6 +22,7 @@ public class Console implements Runnable {
 
     public Console(BlockingQueue<Message> queue){
         this.queue = queue;
+        this.scan = new Scanner(System.in);
     }
 
     public static void welcomeMessage() {
@@ -27,7 +31,7 @@ public class Console implements Runnable {
 
     public void showMenu() throws InterruptedException {
         System.out.println("(1) --- Jouer\n(2) --- Lire les règles\n(3) --- Quitter");
-        this.scan = new Scanner(System.in);
+
         int choice = 0;
         do {
             try {
@@ -44,8 +48,6 @@ public class Console implements Runnable {
         switch (choice) {
             case 1 :
                 Partie.getInstance().getQueue().put(new Message("menu", 1));
-
-                System.out.println("Un input a été envoyé par la console");
                 break;
             case 2 :
                 try {
@@ -71,7 +73,7 @@ public class Console implements Runnable {
     
     // permet de récupérer le choix du joueur pour la variante
     
-    public static int demanderVariante() {
+    public static void demanderVariante() throws InterruptedException {
 
         Scanner sc = new Scanner(System.in);
     	int choice = 0;
@@ -93,13 +95,23 @@ public class Console implements Runnable {
             }
             sc.nextLine();
         } while (choice !=1 && choice != 2 && choice !=3);
-        
-        
-        return choice;
+
+        switch (choice){
+            case 1:
+                Partie.getInstance().getQueue().put(new Message("variante", "Normal"));
+            break;
+            case 2:
+                Partie.getInstance().getQueue().put(new Message("variante", "Aléatoire"));
+            break;
+            case 3:
+                Partie.getInstance().getQueue().put(new Message("variante", "Caché"));
+            break;
+        }
     }
     
-    public static int demanderNombreJoueurs() {
-    	Scanner sc = new Scanner(System.in);
+    public void demanderNombreJoueurs() throws InterruptedException {
+
+        this.scan = new Scanner(System.in);
     	int choice = 0;
     	
     	System.out.println("Voulez-vous jouer à 3 ou 4 joueurs ?");
@@ -108,21 +120,21 @@ public class Console implements Runnable {
     	do {
             try {
                 System.out.print("Votre choix : ");
-                choice = sc.nextInt();
+                choice = scan.nextInt();
                 System.out.println("");
             }
             catch (InputMismatchException e){
                 System.out.println("Format invalide.");
             }
-            sc.nextLine();
+            scan.nextLine();
         } while (choice !=3 && choice != 4);
-        
-        
-        return choice;
+
+
+        Partie.getInstance().getQueue().put(new Message("nbplayer", choice)); //envoie le message
     }
     
-    public static int demanderJoueursReels(int nombreJoueurs) {
-    	Scanner sc = new Scanner(System.in);
+    public void demanderJoueursReels(int nombreJoueurs) throws InterruptedException {
+    	this.scan = new Scanner(System.in);
     	int choice = 0;
     	
     	System.out.println("Combien y a-t-il de joueurs réels ?");
@@ -131,17 +143,17 @@ public class Console implements Runnable {
     	do {
             try {
                 System.out.print("Votre choix : ");
-                choice = sc.nextInt();
+                choice = scan.nextInt();
                 System.out.println("");
             }
             catch (InputMismatchException e){
                 System.out.println("Format invalide.");
             }
-            sc.nextLine();
+            scan.nextLine();
         } while ( choice < -1 || choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
-        
-        
-        return choice;
+
+
+        Partie.getInstance().getQueue().put(new Message("nbrealplayer", choice));
     }
     
     public static int demanderStrategie(int id) {
@@ -276,22 +288,30 @@ public class Console implements Runnable {
 
     public void process() throws InterruptedException {
 
-        if (Partie.getInstance().isStarted() == false){
+        if (Partie.getInstance().isStarted() == false){ //menu
             this.welcomeMessage();
-
             this.showMenu();
         }
 
-        if (Partie.getInstance().isStarted() == true && Partie.getInstance().isSetup() == false){
-            this.demanderNombreJoueurs();
-        }
-        System.out.println("DEBUG Console:286 : Un message a été envoyé par la console");
-        /* if (Partie.getInstance().isStarted() == true && Partie.getInstance().isSetup() == false) {
-            this.demanderNombreJoueurs();
-            this.demanderNombreJoueurs();
-            //this.demanderStrategie();
-            this.demanderVariante();
-        } */
 
+        if (Partie.getInstance().isStarted() == true && Partie.getInstance().isSetup() == false){ //setup de la partie
+            if (Partie.getInstance().getPlayerCount() == -1 && Partie.getInstance().isSetup() == false ){
+                this.demanderNombreJoueurs();
+            } else if (Partie.getInstance().getRealPlayerCount() == - 1 && Partie.getInstance().isSetup() == false){
+                this.demanderJoueursReels(Partie.getInstance().getPlayerCount());
+            } else if (Partie.getInstance().getVariante() == null && Partie.getInstance().isSetup() == false){
+                this.demanderVariante();
+            } //demander stratégie ?
+        }
+
+
+        if (Partie.getInstance().isStarted() == true && Partie.getInstance().isSetup() == true){ //setup de la partie
+
+
+        }
+
+    }
+
+    public void interrupt() {
     }
 }

@@ -256,5 +256,4 @@ public class Game extends JPanel{
         this.nextPhase = nextPhase;
     }
 
-    
 }

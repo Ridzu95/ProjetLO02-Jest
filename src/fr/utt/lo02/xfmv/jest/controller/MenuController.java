@@ -22,7 +22,6 @@ public class MenuController {
 
             public void actionPerformed(ActionEvent e) {
                 try {
-                    System.out.println("DEBUG MenuController:25 : Un message a été envoyé par le Menu");
                     Partie.getInstance().getQueue().put(new Message("menu", 1 ));
 
                 } catch (InterruptedException ex) {

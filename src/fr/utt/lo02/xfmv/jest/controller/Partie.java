@@ -50,13 +50,14 @@ public class Partie implements Runnable {
 		this.tour = 1;
 		isStarted = false;
 		isSetup = false;
-		playerCount = 0;
-		realPlayerCount = 0;
+		playerCount = -1;
+		realPlayerCount = -1;
 		gamePhase = "init";
 		hidingPhasePlayed = false;
 		jestingPhasePlayed = false;
 
 		this.queue = queue;
+		variante = null;
 	}
 
 	private static Partie partie = new Partie( new LinkedBlockingQueue<>(2));
@@ -67,8 +68,6 @@ public class Partie implements Runnable {
 
 	public void initialiserPartie() throws InterruptedException {
 
-		System.out.println("La partie a été initialisée");
-
 		for (Couleurs couleur : Couleurs.values()) {
 			for (Valeurs valeur : Valeurs.values()) {
 				if (couleur != Couleurs.Joker && valeur != Valeurs.Joker) {
@@ -78,10 +77,6 @@ public class Partie implements Runnable {
 		}
 
 		this.basePioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
-
-		}
-
-	public void créerPartie() throws InterruptedException {
 
 		for ( int i = 0; i < realPlayerCount ; i++ ) {
 		    this.joueurs.add(new JoueurReel(i, "realPlayer"));
@@ -400,8 +395,6 @@ public class Partie implements Runnable {
 	@Override
 	public void run() {
 
-		System.out.println("Recherche de message ...");
-
 		while (true){ //le thread tourne en boucle pour reçevoir des informations
 			try {
 				Message msg = queue.take();
@@ -413,28 +406,26 @@ public class Partie implements Runnable {
 	}
 
 	public void process(Message msg) throws InterruptedException {
-
-		System.out.println("DEBUG Partie:418 : Un message vient d'être receptionné par la partie, traitement en cours");
+		System.out.println("message reçu par partie");
 
 		if (msg.getKey() == "menu"){
 			if ( (int) msg.getValue() == 1){
 				this.isStarted = true;
+				this.console.interrupt();
 				new Thread(this.gui).start();
-				new Thread(this.console).start();
-
-				this.initialiserPartie();
+				new Thread(this.console).start(); //relancer des threads : maj les affichages
 
 			}
 		}
 
 		if (msg.getKey() == "nbplayer"){
 			this.playerCount = (int) msg.getValue();
-			System.out.println(this.playerCount);
+			new Thread(this.console).start();
 		}
 
 		if (msg.getKey() == "nbrealplayer"){
 			this.realPlayerCount = (int) msg.getValue();
-			System.out.println(this.realPlayerCount);
+			new Thread(this.console).start();
 		}
 
 		if (msg.getKey() == "variante"){
@@ -448,6 +439,14 @@ public class Partie implements Runnable {
 				case "Caché":
 					this.variante = new Variante2();
 			}
+			new Thread(this.console).start();
+		}
+
+		if ( this.variante != null && this.realPlayerCount != -1 && this.playerCount != -1){
+			this.isSetup = true;
+			new Thread(this.gui).start();
+			new Thread(this.console).start();
+			this.initialiserPartie();
 		}
 
 		this.run(); // on retourne dans la boucle
@@ -466,4 +465,6 @@ public class Partie implements Runnable {
 		this.console = console;
 	}
 	//partie consumer
+
+
 }
