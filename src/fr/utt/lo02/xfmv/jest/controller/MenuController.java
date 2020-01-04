@@ -34,17 +34,23 @@ public class MenuController {
 
             public void actionPerformed(ActionEvent e) {
                 try {
-                    URI uri = new URI("https://puu.sh/EKl29/655216593a.png");
-                    Desktop.getDesktop().browse(uri);
+                    Partie.getInstance().getQueue().put(new Message("menu", 2 ));
+
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
                 }
-                catch(Exception ex) {}
             }
         });
 
         menu.getQuitButton().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                try {
+                    Partie.getInstance().getQueue().put(new Message("menu", 3 ));
+
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 

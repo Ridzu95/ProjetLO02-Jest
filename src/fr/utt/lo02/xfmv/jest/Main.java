@@ -21,14 +21,17 @@ public class Main {
         GUI gui = new GUI(Partie.getInstance().getQueue());
         Partie.getInstance().setGUI(gui);
 
+
+
         Console console = new Console(Partie.getInstance().getQueue());
         Partie.getInstance().setCons(console);
 
-        new Thread(gui).start();
-        new Thread(console).start();
 
         Thread partieThread = new Thread(Partie.getInstance());
         partieThread.start();
 
+        //il faut lancer une première fois les thread de gui et console
+        new Thread(Partie.getInstance().getConsole()).start();
+        new Thread(Partie.getInstance().getGUI()).start();
     }
 }

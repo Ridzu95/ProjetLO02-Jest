@@ -19,17 +19,20 @@ public class Console implements Runnable {
 
     private final BlockingQueue<Message> queue;
     private Scanner scan;
+    private Partie partie;
 
-    public Console(BlockingQueue<Message> queue){
+    public Console(BlockingQueue<Message> queue) {
         this.queue = queue;
-        this.scan = new Scanner(System.in);
+        this.partie = Partie.getInstance();
     }
-
+    /*
     public static void welcomeMessage() {
         System.out.println("--- Jeu de Jest inventé par Brett J. Gilbert ---");
     }
 
     public void showMenu() throws InterruptedException {
+
+
         System.out.println("(1) --- Jouer\n(2) --- Lire les règles\n(3) --- Quitter");
 
         int choice = 0;
@@ -43,8 +46,8 @@ public class Console implements Runnable {
                 System.out.println("Format invalide.");
             }
             this.scan.nextLine();
-        } while (choice !=1 && choice != 2 && choice !=3);
-
+        } while (Partie.getInstance().isStarted() == false);
+        System.out.println("Ok annulation du scanner");
         switch (choice) {
             case 1 :
                 Partie.getInstance().getQueue().put(new Message("menu", 1));
@@ -62,7 +65,7 @@ public class Console implements Runnable {
                 break;
         }
 
-    }
+    } */
 
     public static String playerUsernameChoice(int id) {
         Scanner sc = new Scanner(System.in);
@@ -70,115 +73,110 @@ public class Console implements Runnable {
         String username = sc.nextLine();
         return username;
     }
-    
+
     // permet de récupérer le choix du joueur pour la variante
-    
+
     public static void demanderVariante() throws InterruptedException {
 
         Scanner sc = new Scanner(System.in);
-    	int choice = 0;
-    	
-    	System.out.println("Choisissez une variante pour la partie");
-    	System.out.println("(1) -- Variante de base : les trophées sont assignés selon les règles classiques" );
-    	System.out.println("(2) -- Variante 1 : les trophées sont assignés aléatoirement" );
-    	System.out.println("(3) -- Variante 2 : les trophées sont assignés selon les règles classiques mais sont inconnus" );
-    	System.out.println("");
-    	
-    	do {
+        int choice = 0;
+
+        System.out.println("Choisissez une variante pour la partie");
+        System.out.println("(1) -- Variante de base : les trophées sont assignés selon les règles classiques");
+        System.out.println("(2) -- Variante 1 : les trophées sont assignés aléatoirement");
+        System.out.println("(3) -- Variante 2 : les trophées sont assignés selon les règles classiques mais sont inconnus");
+        System.out.println("");
+
+        do {
             try {
                 System.out.print("Votre choix : ");
                 choice = sc.nextInt();
                 System.out.println("");
-            }
-            catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("Format invalide.");
             }
             sc.nextLine();
-        } while (choice !=1 && choice != 2 && choice !=3);
+        } while (choice != 1 && choice != 2 && choice != 3);
 
-        switch (choice){
+        switch (choice) {
             case 1:
                 Partie.getInstance().getQueue().put(new Message("variante", "Normal"));
-            break;
+                break;
             case 2:
                 Partie.getInstance().getQueue().put(new Message("variante", "Aléatoire"));
-            break;
+                break;
             case 3:
                 Partie.getInstance().getQueue().put(new Message("variante", "Caché"));
-            break;
+                break;
         }
     }
-    
-    public void demanderNombreJoueurs() throws InterruptedException {
 
-        this.scan = new Scanner(System.in);
-    	int choice = 0;
-    	
-    	System.out.println("Voulez-vous jouer à 3 ou 4 joueurs ?");
-    	System.out.println("");
-    	
-    	do {
+    public Message demanderNombreJoueurs() throws InterruptedException {
+
+        int choice = 0;
+
+        System.out.println("Voulez-vous jouer à 3 ou 4 joueurs ?");
+        System.out.println("");
+
+        do {
             try {
                 System.out.print("Votre choix : ");
                 choice = scan.nextInt();
                 System.out.println("");
-            }
-            catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("Format invalide.");
             }
             scan.nextLine();
-        } while (choice !=3 && choice != 4);
+        } while (choice != 3 && choice != 4);
 
 
-        Partie.getInstance().getQueue().put(new Message("nbplayer", choice)); //envoie le message
+        return (new Message("nbplayer", choice)); //envoie le message
     }
-    
-    public void demanderJoueursReels(int nombreJoueurs) throws InterruptedException {
-    	this.scan = new Scanner(System.in);
-    	int choice = 0;
-    	
-    	System.out.println("Combien y a-t-il de joueurs réels ?");
-    	System.out.println("");
-    	
-    	do {
+
+    public Message demanderJoueursReels(int nombreJoueurs) throws InterruptedException {
+
+        int choice = 0;
+
+        System.out.println("Combien y a-t-il de joueurs réels ?");
+        System.out.println("");
+
+        do {
             try {
                 System.out.print("Votre choix : ");
                 choice = scan.nextInt();
                 System.out.println("");
-            }
-            catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("Format invalide.");
             }
             scan.nextLine();
-        } while ( choice < -1 || choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
+        } while (choice < -1 || choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
 
 
-        Partie.getInstance().getQueue().put(new Message("nbrealplayer", choice));
+        return (new Message("nbrealplayer", choice));
     }
-    
+
     public static int demanderStrategie(int id) {
 
         Scanner sc = new Scanner(System.in);
-    	int choice = 0;
-    	
-    	System.out.println("Choisissez la stratégie utilisée par le bot n°" + (id + 1));
-    	System.out.println("(1) -- Stratégie de base : le bot choisis aléatoirement une carte à chaque tour de jeu" );
-    	System.out.println("(2) -- Stratégie avancée : le bot choisis la carte avec la valeur la plus haute" );
-    	System.out.println("");
-    	
-    	do {
+        int choice = 0;
+
+        System.out.println("Choisissez la stratégie utilisée par le bot n°" + (id + 1));
+        System.out.println("(1) -- Stratégie de base : le bot choisis aléatoirement une carte à chaque tour de jeu");
+        System.out.println("(2) -- Stratégie avancée : le bot choisis la carte avec la valeur la plus haute");
+        System.out.println("");
+
+        do {
             try {
                 System.out.print("Votre choix : ");
                 choice = sc.nextInt();
                 System.out.println("");
-            }
-            catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("Format invalide.");
             }
             sc.nextLine();
-        } while (choice !=1 && choice != 2);
-        
-        
+        } while (choice != 1 && choice != 2);
+
+
         return choice;
     }
 
@@ -209,7 +207,7 @@ public class Console implements Runnable {
     public static void displaySelectCards(ArrayList<Carte> selectCards, Joueur joueur) {
 
         System.out.println(joueur + " choisis la carte à mettre dans ton Jest :");
-        for (int i = 0; i < selectCards.size(); i++ ) {
+        for (int i = 0; i < selectCards.size(); i++) {
             System.out.println("(" + (i + 1) + ") --- " + selectCards.get(i).toString());
         }
 
@@ -244,7 +242,7 @@ public class Console implements Runnable {
         }
         System.out.println("");
     }
-    
+
     public static void showWinner(Joueur winner) {
         System.out.println("Le gagnant de la partie est " + winner.toString() + " !");
     }
@@ -258,34 +256,21 @@ public class Console implements Runnable {
                 System.out.print("Votre choix : ");
                 choice = sc.nextInt();
                 System.out.println("");
-            }
-            catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("Format invalide.");
             }
             sc.nextLine();
-        } while (choice !=1 && choice != 2);
+        } while (choice != 1 && choice != 2);
         switch (choice) {
-            case 1 :
-                this.showMenu();
+            case 1:
+                //this.showMenu();
                 break;
-            case 2 :
+            case 2:
                 System.exit(0);
                 break;
         }
     }
-
-
-    //Partie producer
-
-    @Override
-    public void run() {
-        try {
-            this.process();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
+    /*
     public void process() throws InterruptedException {
 
         if (Partie.getInstance().isStarted() == false){ //menu
@@ -310,8 +295,94 @@ public class Console implements Runnable {
 
         }
 
+    }  */
+
+
+    //Partie producer
+
+    @Override
+    public void run() {
+        try {
+            this.process();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void interrupt() {
+    public void majAffichage() {
+        System.out.println("");
+        if (partie.isStarted() == false) {
+            System.out.println("(1) --- Jouer\n(2) --- Lire les règles\n(3) --- Quitter");
+        }
+
+        if(partie.isStarted()==true&&partie.isSetup()==false) {
+            if (partie.getPlayerCount() == -1) {
+                System.out.println("Voulez-vous jouer à 3 ou 4 joueurs ?");
+
+            } else if (partie.getRealPlayerCount() == -1) {
+                System.out.println("Combien y a-t-il de joueurs réels dans la partie ?");
+
+            } else if (partie.getVariante() == null) {
+                System.out.println("Choisissez une variante pour la partie :\n" +
+                        "(1) -- Variante de base : les trophées sont assignés selon les règles classiques\n" +
+                        "(2) -- Variante 1 : les trophées sont assignés aléatoirement\n" +
+                        "(3) -- Variante 2 : les trophées sont assignés selon les règles classiques mais sont inconnus");
+            }
+        }
+
+        if(partie.isSetup()==true&&partie.isStarted()==true) {
+            System.out.println("blabla");
+        }
+
+        System.out.println("Votre choix : ");
+    }
+
+
+
+
+    public void process() throws InterruptedException {
+
+        this.scan = new Scanner(System.in);
+        Message msg = null;
+
+        int choice = this.scan.nextInt();
+
+        //traitement du choice :
+
+        if (partie.isStarted() == false){
+            switch (choice) {
+                case 1 :
+                    msg = (new Message("menu", 1));
+                    break;
+                case 2 :
+                    try {
+                        URI uri = new URI("https://puu.sh/EKl29/655216593a.png");
+                        Desktop.getDesktop().browse(uri);
+                    }
+                    catch(Exception ex) {}
+                    //this.showMenu();
+                    break;
+                case 3 :
+                    System.exit(0);
+                    break;
+            }
+        }
+        if (partie.isStarted() == true && partie.isSetup() == false){
+            if (partie.getPlayerCount() == -1){
+                msg = new Message("nbplayer", choice);
+            } else if (partie.getRealPlayerCount() == -1){
+                msg = new Message("nbrealplayer", choice);
+            } else if (partie.getVariante() == null){
+                msg = new Message("variante", choice);
+            }
+
+        }
+        if (partie.isSetup() == true && partie.isStarted() == true){
+            msg = new Message("cardchoice", choice);
+        }
+
+
+        Partie.getInstance().getQueue().put(msg);
+        run();
     }
 }

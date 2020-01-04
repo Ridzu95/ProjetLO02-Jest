@@ -15,7 +15,10 @@ import fr.utt.lo02.xfmv.jest.vue.console.Console;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GUI;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GameConfig;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Array;
+import java.net.URI;
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -392,8 +395,15 @@ public class Partie implements Runnable {
 		this.hidingPhasePlayed = hidingPhasePlayed;
 	}
 
+	public Console getConsole(){
+		return this.console;
+	}
+
 	@Override
 	public void run() {
+
+
+		this.console.majAffichage();
 
 		while (true){ //le thread tourne en boucle pour reçevoir des informations
 			try {
@@ -405,47 +415,52 @@ public class Partie implements Runnable {
 		}
 	}
 
-	public void process(Message msg) throws InterruptedException {
-		System.out.println("message reçu par partie");
+	public void process(Message msg) throws InterruptedException { //traitement du message
 
 		if (msg.getKey() == "menu"){
-			if ( (int) msg.getValue() == 1){
-				this.isStarted = true;
-				this.console.interrupt();
-				new Thread(this.gui).start();
-				new Thread(this.console).start(); //relancer des threads : maj les affichages
-
+			switch ((int) msg.getValue()) {
+				case 1 :
+					this.isStarted = true;
+					new Thread(gui).start();
+					break;
+				case 2 :
+					try {
+						URI uri = new URI("https://puu.sh/EKl29/655216593a.png");
+						Desktop.getDesktop().browse(uri);
+					}
+					catch(Exception ex) {}
+					//this.showMenu();
+					break;
+				case 3 :
+					System.exit(0);
+					break;
 			}
 		}
 
 		if (msg.getKey() == "nbplayer"){
 			this.playerCount = (int) msg.getValue();
-			new Thread(this.console).start();
 		}
 
 		if (msg.getKey() == "nbrealplayer"){
 			this.realPlayerCount = (int) msg.getValue();
-			new Thread(this.console).start();
 		}
 
 		if (msg.getKey() == "variante"){
-			switch ((String) msg.getValue()){
-				case "Normal":
+			switch ((int) msg.getValue()){
+				case 1:
 					this.variante = new Variantebase();
 					break;
-				case "Aléatoire":
+				case 2:
 					this.variante = new Variante1();
 					break;
-				case "Caché":
+				case 3:
 					this.variante = new Variante2();
 			}
-			new Thread(this.console).start();
 		}
 
 		if ( this.variante != null && this.realPlayerCount != -1 && this.playerCount != -1){
 			this.isSetup = true;
 			new Thread(this.gui).start();
-			new Thread(this.console).start();
 			this.initialiserPartie();
 		}
 
@@ -463,6 +478,10 @@ public class Partie implements Runnable {
 
 	public void setCons(Console console){
 		this.console = console;
+	}
+
+	public GUI getGUI(){
+		return this.gui;
 	}
 	//partie consumer
 
