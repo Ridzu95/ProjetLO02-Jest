@@ -40,6 +40,7 @@ public class Partie implements Runnable {
 
 	private int message;
 	private Console console;
+	private Joueur currentPlaying;
 
 	public Console getConsole() {
 		return console;
@@ -171,9 +172,6 @@ public class Partie implements Runnable {
 		}
 	}
 
-	public void setMessage(int message) {
-		this.message = message;
-	}
 
 	public void jouerPartie() throws InterruptedException {
 
@@ -182,36 +180,41 @@ public class Partie implements Runnable {
 			this.distribuerCartes();
 
 			this.gamePhase = "sélection de la carte à cacher";
-
+			System.out.println("Phase de " + this.gamePhase);
 			// Console.showTurn(this.tour);
 			// this.choisirCarteCachee();
 			// Console.displayPlayerCards(joueurs);
-			Thread.sleep(1000);
 
 			for (Joueur joueur : joueurs) {
 				if (joueur instanceof JoueurReel){
-					System.out.println("Choisir la carte pour le joueur réel n° : " + ( joueur.getId()) );
+					this.currentPlaying = joueur;
 					while (this.message == -1){
 						Thread.sleep(2000);
 					}
 					message -= 1;
 					joueur.getMain().get(this.message).setVisible(true);
-					System.out.println("\nLe joueur " + joueur.getId() + " a mis " + joueur.getMain().get(this.message) + " en cachée");
+					System.out.println("\nLe joueur " + joueur + " a caché une carte");
 					this.message = -1;
 				} else {
-					//random pour joeur virtuel, pas besoin de loop pour attendre un message
+					int random = (int) (Math.random() + 0.5);
+					joueur.getMain().get(random).setVisible(true);
 				}
 			}
-
 			this.gamePhase = "sélection de la carte à mettre dans le Jest";
+			System.out.println("Phase de " + this.gamePhase);
 
-			this.choisirCarteCachee();
+
+			while (this.gamePhase !="gg" ){
+
+			}
+
 
 			do {
 				Thread.sleep(500);
 			} while (this.gamePhase == "sélection de la carte à mettre dans le Jest");
 
-			this.gamePhase = "sélection de la carte à mettre dans le Jest";
+
+
 			Collections.sort(joueurs);
 
 			do {
@@ -318,24 +321,7 @@ public class Partie implements Runnable {
 
 	}
 
-	// méthode qui permet à chaque joueur de cacher une carte de sa main
-
-	public void choisirCarteCachee() {
-
-		for(Joueur joueur : joueurs) {
-			joueur.setHasPlayed(false);
-			if (joueur instanceof JoueurVirtuel) {
-				joueur.getMain().get(joueur.faireOffre()).setVisible(true);
-			}
-
-		}
-
-		return;
-	}
-
-	public void declarerVainqueur() { //est appellé en fin de partie
-
-	}
+	//méthode qui permet de savoir si tout les joueurs ont caché une carte
 
 	public boolean checkCardsStates() {
 		if (this.gamePhase == "sélection de la carte à cacher") {
@@ -349,9 +335,9 @@ public class Partie implements Runnable {
 					}
 				}
 			}
-			return true;
+			return true; //tous les joueurs on choisis leurs cartes
 		}
-		return false;
+		return false; //les joueurs n'ont pas tous choisis leurs cartes
 	}
 
 	/* getter setter */
@@ -434,6 +420,14 @@ public class Partie implements Runnable {
 
 	public void setHidingPhasePlayed(boolean hidingPhasePlayed) {
 		this.hidingPhasePlayed = hidingPhasePlayed;
+	}
+
+	public Joueur getCurrentPlaying() {
+		return currentPlaying;
+	}
+
+	public void setCurrentPlaying(Joueur currentPlaying) {
+		this.currentPlaying = currentPlaying;
 	}
 
 	@Override

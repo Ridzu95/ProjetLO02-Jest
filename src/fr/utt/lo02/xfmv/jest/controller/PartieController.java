@@ -92,14 +92,21 @@ public class PartieController implements Runnable{
         }
 
         if ( this.partie.getGamePhase() == "sélection de la carte à cacher"){
-            this.partie.setMessage(msg);
+            if (msg == 1 || msg == 2){
+                this.partie.setMessage(msg);
+            } else {
+                System.out.println("Format incorrecte");
+            }
         }
 
         if ( this.partie.getVariante() != null && this.partie.getRealPlayerCount() != -1 && this.partie.getPlayerCount() != -1 && this.partie.getGamePhase() == "init"){
             this.partie.setSetup(true);
-            new Thread(Partie.getInstance()).start();
+            new Thread(Partie.getInstance()).start(); //lancement du moteur de jeu
             new Thread(this.gui).start();
-            Thread.sleep(100);
+        }
+
+        if (Partie.getInstance().getGamePhase() == "sélection de la carte à cacher" && Partie.getInstance().checkCardsStates()) {
+            Partie.getInstance().setHidingPhasePlayed(true); //passage à la phase de jest
         }
 
         this.run(); // on retourne dans la boucle

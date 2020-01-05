@@ -20,6 +20,8 @@ public class Console implements Runnable {
     private Scanner scan;
     private Partie partie;
 
+    private Joueur joueur;
+
     public Console(BlockingQueue<Integer> queue) {
         this.queue = queue;
         this.partie = Partie.getInstance();
@@ -275,7 +277,7 @@ public class Console implements Runnable {
         }
     }
 
-    public void majAffichage() {
+    public void majAffichage() throws InterruptedException {
         System.out.println("");
         if (partie.isStarted() == false) {
             System.out.println("(1) --- Jouer\n(2) --- Lire les règles\n(3) --- Quitter");
@@ -296,20 +298,28 @@ public class Console implements Runnable {
             }
         }
 
-        if (this.partie.getGamePhase() == "sélection de la carte à cacher"){
-            System.out.println("Mains des joueurs : \n"
+        if (this.partie.getGamePhase() == "sélection de la carte à cacher" && Partie.getInstance().checkCardsStates() == false){
+            System.out.println("## Mains des joueurs : \n"
                     + Partie.getInstance().getJoueurs().get(0) + " possèdes : " + Partie.getInstance().getJoueurs().get(0).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(0).getMain().get(1) + "\n"
                     + Partie.getInstance().getJoueurs().get(1) + " possèdes : " + Partie.getInstance().getJoueurs().get(1).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(1).getMain().get(1) + "\n"
-                    + Partie.getInstance().getJoueurs().get(2) + " possèdes : " + Partie.getInstance().getJoueurs().get(2).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(2).getMain().get(1)
+                    + Partie.getInstance().getJoueurs().get(2) + " possèdes : " + Partie.getInstance().getJoueurs().get(2).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(2).getMain().get(1) + "\n"
             );
             if ( Partie.getInstance().getPlayerCount() == 4 ){
                 System.out.println(Partie.getInstance().getJoueurs().get(3) + " possèdes : " + Partie.getInstance().getJoueurs().get(3).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(3).getMain().get(1)
                 );
+
             }
+            if (Partie.getInstance().getRealPlayerCount() == 0){
+                System.out.println("Tapez 1 pour passer à la phase suivante");
+            } else {
+                System.out.println("Choisir la carte à cacher pour le joueur " + Partie.getInstance().getCurrentPlaying());
+            }
+        }
 
-
+        if (this.partie.getGamePhase() == "sélection de la carte à mettre dans le Jest"){
 
         }
+
 
         System.out.println("Votre choix : ");
     }
@@ -322,35 +332,22 @@ public class Console implements Runnable {
         this.scan = new Scanner(System.in);
         int msg = -1;
 
-        int choice = this.scan.nextInt();
+        msg = this.scan.nextInt();
 
         //traitement du choice :
 
-        if (partie.isStarted() == false){
-            switch (choice) {
-                case 1 :
-                    msg = (1);
-                    break;
-                case 2 :
-                    try {
-                        URI uri = new URI("https://puu.sh/EKl29/655216593a.png");
-                        Desktop.getDesktop().browse(uri);
-                    }
-                    catch(Exception ex) {}
-                    //this.showMenu();
-                    break;
-                case 3 :
-                    System.exit(0);
-                    break;
-            }
-        }
-        else {
-            msg = choice;
-        }
 
 
         this.queue.put(msg);
-        Thread.sleep(100);
+        Thread.sleep(2000);
         run();
+    }
+
+    public Joueur getJoueur() {
+        return joueur;
+    }
+
+    public void setJoueur(Joueur joueur) {
+        this.joueur = joueur;
     }
 }

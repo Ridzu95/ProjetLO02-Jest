@@ -59,7 +59,11 @@ public class GameConfigController {
                     ex.printStackTrace();
                 }
 
-                Partie.getInstance().getConsole().majAffichage();
+                try {
+                    Partie.getInstance().getConsole().majAffichage();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
