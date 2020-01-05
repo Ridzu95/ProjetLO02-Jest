@@ -6,24 +6,21 @@ package fr.utt.lo02.xfmv.jest.vue.graphicInterface;
 
 import javax.swing.*;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import fr.utt.lo02.xfmv.jest.controller.Partie;
 import net.miginfocom.swing.*;
 
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.BlockingQueue;
 
 /**
  * @author unknown
  */
-public class GUI extends JFrame implements Runnable {
-
-    private BlockingQueue<Integer> queue;
-
-
-    public GUI(BlockingQueue<Integer> queue) {
-        this.queue = queue;
+public class GUI extends JFrame implements Runnable, Observer {
+    public GUI() {
         initComponents();
+        Partie.getInstance().addObserver(this);
     }
 
     private void initComponents() {
@@ -48,24 +45,26 @@ public class GUI extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        this.setVisible(true); //maj l'affichage
+        FlatLightLaf.install();
+        this.setVisible(true);
         this.getContentPane().add(new Menu());
         this.pack();
+    }
 
-        if (Partie.getInstance().isStarted() && !Partie.getInstance().isSetup()) {
+    @Override
+    public void update(Observable observable, Object o) {
+
+        if (observable instanceof Partie && ((Partie) observable).isStarted() && !((Partie) observable).isSetup()) {
             this.getContentPane().removeAll();
             this.getContentPane().add(new GameConfig());
             this.pack();
         }
-        if (Partie.getInstance().isStarted() && Partie.getInstance().isSetup()) {
-
+        if (observable instanceof Partie && ((Partie) observable).isStarted() && ((Partie) observable).isSetup()) {
             this.getContentPane().removeAll();
             this.getContentPane().add(new Game());
             this.pack();
         }
-
     }
-
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
