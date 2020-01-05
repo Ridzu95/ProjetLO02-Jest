@@ -7,6 +7,7 @@ package fr.utt.lo02.xfmv.jest.vue.graphicInterface;
 import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.BlockingQueue;
 import javax.swing.*;
 
 import fr.utt.lo02.xfmv.jest.controller.MenuController;
@@ -17,6 +18,8 @@ import net.miginfocom.swing.*;
  * @author unknown
  */
 public class Menu extends JPanel {
+
+
 
     public Menu() {
         initComponents();

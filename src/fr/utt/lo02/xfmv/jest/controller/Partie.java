@@ -11,12 +11,18 @@ import fr.utt.lo02.xfmv.jest.model.variantes.Variante1;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
 import fr.utt.lo02.xfmv.jest.vue.console.Console;
+import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GUI;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GameConfig;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Array;
+import java.net.URI;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-public class Partie extends Observable implements Runnable {
+public class Partie implements Runnable {
 
 	private Variante variante;
 	private LinkedList<Carte> basePioche;
@@ -32,6 +38,29 @@ public class Partie extends Observable implements Runnable {
 	private String gamePhase;
 	private boolean jestingPhasePlayed;
 
+	private int message;
+	private Console console;
+	private Joueur currentPlaying;
+
+	public Console getConsole() {
+		return console;
+	}
+
+	public void setConsole(Console console) {
+		this.console = console;
+	}
+
+	public BlockingQueue<Integer> getQueue() {
+		return queue;
+	}
+
+	public void setQueue(BlockingQueue<Integer> queue) {
+		this.queue = queue;
+	}
+
+	private BlockingQueue<Integer> queue;
+
+
 	private Partie() {
 		basePioche = new LinkedList<Carte>();
 		tempPioche = new LinkedList<Carte>();
@@ -41,13 +70,16 @@ public class Partie extends Observable implements Runnable {
 		this.tour = 1;
 		isStarted = false;
 		isSetup = false;
-		playerCount = 0;
-		realPlayerCount = 0;
+		playerCount = -1;
+		realPlayerCount = -1;
 		gamePhase = "init";
 		hidingPhasePlayed = false;
 		jestingPhasePlayed = false;
+		variante = null;
+
+		message = -1;
 	}
-	
+
 	private static Partie partie = new Partie();
 
 	public static Partie getInstance() {
@@ -55,6 +87,8 @@ public class Partie extends Observable implements Runnable {
 	}
 
 	public void initialiserPartie() throws InterruptedException {
+
+		System.out.println("\nLa partie a commencé \n");
 
 		for (Couleurs couleur : Couleurs.values()) {
 			for (Valeurs valeur : Valeurs.values()) {
@@ -65,27 +99,22 @@ public class Partie extends Observable implements Runnable {
 		}
 
 		this.basePioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
-		
-		//Création des joueurs
 
-		do {
-			Thread.sleep(500);
-		} while (!this.isSetup());
-		
 		for ( int i = 0; i < realPlayerCount ; i++ ) {
-		    this.joueurs.add(new JoueurReel(i, "realPlayer"));
+		    this.joueurs.add(new JoueurReel(i, "realPlayer " + i));
 		}
-		
+
 		for ( int i = 0; i < (playerCount - realPlayerCount) ; i++ ) {
 		    this.joueurs.add(new JoueurVirtuel(i,1));
 		}
 
 		Collections.shuffle(this.basePioche);
-		this.jouerPartie();
 
+
+		this.jouerPartie();
 		return;
 	}
-	
+
 	public void distribuerCartes() {
 
 		if (this.tour == 1) {
@@ -143,41 +172,52 @@ public class Partie extends Observable implements Runnable {
 		}
 	}
 
+
 	public void jouerPartie() throws InterruptedException {
+
 
 		do {
 
 			this.distribuerCartes();
 
 			this.gamePhase = "sélection de la carte à cacher";
+			System.out.println("Phase de " + this.gamePhase);
+			this.console.showTurn(this.tour);
 
-			this.setChanged();
-			this.notifyObservers();
 
-			// Console.showTurn(this.tour);
-			// Console.displayPlayerCards(joueurs);
+			for (Joueur joueur : joueurs) {
+				//maj le gui pour passer à la sélection des cartes : premier joueur
+				//==> le gui a juste à envoyer Partie.getInstance().getQueue.put(1) ou 2 pour le choix de la carte
+				//c'est ça qui est bien
+				if (joueur instanceof JoueurReel){
+					this.currentPlaying = joueur;
+					while (this.message == -1) { //si c'est un joueur le thread tourne en boucle jusqu'à reçevoir un message
+						//qui va lui indiquer que a été le choix
+						Thread.sleep(2000);
+					}
+					message -= 1; //on enlève -1 pour passez de 1 à 0 et 2 à 1
+					joueur.getMain().get(this.message).setVisible(true); //Plus besoin de faire player.faireOffre() en fait ._.
+					//sinon on peut faire jouer.faireOffre(this.message) et faire la mm chose
+					System.out.println("\nLe joueur " + joueur + " a caché une carte");
+					this.message = -1; //on réinitialise le message à une valeur par défaut
+				} else {
+					int random = (int) (Math.random() + 0.5);
+					joueur.getMain().get(random).setVisible(true); //là c'est fait random
+				}
+				//maj le gui pour passer au joueur suivant
+			}
 
-			/**
-			do {
-				Thread.sleep(500);
-			} while (!this.hidingPhasePlayed);
-			**/
-
-			this.choisirCarteCachee();
-
+			//une fois sortis du for tous les joueurs on choisis donc passage à la phase Jest
 			this.gamePhase = "sélection de la carte à mettre dans le Jest";
+			System.out.println("Phase de " + this.gamePhase);
+
 			Collections.sort(joueurs);
 
-			this.setChanged();
-			this.notifyObservers();
+			while (this.gamePhase !="gg" ) {
 
-			this.controlOffers();
+			}
 
-			/**
-			do {
-				Thread.sleep(500);
-			} while (!this.jestingPhasePlayed);
-			 **/
+			this.controlOffers(); //là j'ai pas fait
 
 
 			this.tour++;
@@ -187,14 +227,14 @@ public class Partie extends Observable implements Runnable {
 		    joueur.getJest().add(joueur.getMain().poll());
         }
 
-		Console.showJests();
+		this.console.showJests();
 		CompteurVarianteBase compteur = new CompteurVarianteBase();
 
 		for (Joueur joueur : joueurs) {
 			joueur.accept(compteur);
 		}
 
-		Console.showScores();
+		this.console.showScores();
 		this.terminerPartie();
 		// Console.endOfGame();
 
@@ -283,35 +323,8 @@ public class Partie extends Observable implements Runnable {
 
 	}
 
-	// méthode qui permet à chaque joueur de cacher une carte de sa main
+	//méthode qui permet de savoir si tout les joueurs ont caché une carte
 
-	public void choisirCarteCachee() {
-
-		for(Joueur joueur : joueurs) {
-			if (!hidingPhasePlayed && joueur instanceof JoueurReel) {
-				joueur.getMain().get(joueur.faireOffre()).setVisible(false);
-				joueur.setHasPlayed(true);
-				this.setChanged();
-				this.notifyObservers();
-			}
-		}
-
-		for (Joueur joueur : joueurs) {
-			if (joueur instanceof JoueurVirtuel) {
-				joueur.getMain().get(joueur.faireOffre()).setVisible(true);
-				joueur.setHasPlayed(true);
-				this.setChanged();
-				this.notifyObservers();
-			}
-		}
-
-		return;
-	}
-
-	public void declarerVainqueur() { //est appellé en fin de partie
-		
-	}
-	
 	public boolean checkCardsStates() {
 		if (this.gamePhase == "sélection de la carte à cacher") {
 			for (Joueur player : joueurs) {
@@ -324,11 +337,11 @@ public class Partie extends Observable implements Runnable {
 					}
 				}
 			}
-			return true;
+			return true; //tous les joueurs on choisis leurs cartes
 		}
-		return false;
+		return false; //les joueurs n'ont pas tous choisis leurs cartes
 	}
-	
+
 	/* getter setter */
 
 	public int getTour() {
@@ -346,7 +359,7 @@ public class Partie extends Observable implements Runnable {
 	public LinkedList<Carte> getBasePioche() {
 		return basePioche;
 	}
-	
+
 	public LinkedList<Carte> getTempPioche() {
 		return tempPioche;
 	}
@@ -387,12 +400,12 @@ public class Partie extends Observable implements Runnable {
 		this.realPlayerCount = realPlayerCount;
 	}
 
-	public Variante getVariante() {
-		return variante;
-	}
-
 	public void setVariante(Variante variante) {
 		this.variante = variante;
+	}
+
+	public Variante getVariante() {
+		return variante;
 	}
 
 	public String getGamePhase() {
@@ -411,15 +424,27 @@ public class Partie extends Observable implements Runnable {
 		this.hidingPhasePlayed = hidingPhasePlayed;
 	}
 
+	public Joueur getCurrentPlaying() {
+		return currentPlaying;
+	}
+
+	public void setCurrentPlaying(Joueur currentPlaying) {
+		this.currentPlaying = currentPlaying;
+	}
+
+	public void setMessage(int message) {
+		this.message = message;
+	}
+
 	@Override
 	public void run() {
-		this.isStarted = true;
-		this.setChanged();
-		this.notifyObservers();
+
 		try {
-			this.initialiserPartie();
+			this.initialiserPartie(); //lancer le thread = initialiser et jouer la partie
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
+
+
 }

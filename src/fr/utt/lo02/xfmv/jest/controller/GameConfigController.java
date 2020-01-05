@@ -18,23 +18,52 @@ public class GameConfigController {
 
             public void actionPerformed(ActionEvent e) {
 
-                Partie.getInstance().setPlayerCount(((Integer) gameConfig.getPlayersCount().getValue()).intValue());
-                Partie.getInstance().setRealPlayerCount(((Integer) gameConfig.getRealPlayersCount().getValue()).intValue());
+
+                try {
+                    Partie.getInstance().getQueue().put(((Integer) gameConfig.getPlayersCount().getValue()).intValue() );
+                    Partie.getInstance().getQueue().put(((Integer) gameConfig.getRealPlayersCount().getValue()).intValue() );
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
 
                 switch ((String) gameConfig.getVarianteSelect().getValue()) {
                     case "Normal":
-                        Partie.getInstance().setVariante(new Variantebase());
+                        try {
+                            Partie.getInstance().getQueue().put(1);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
                         break;
                     case "Aléatoire":
-                        Partie.getInstance().setVariante(new Variante1());
+                        try {
+                            Partie.getInstance().getQueue().put(2);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+
                         break;
                     case "Caché":
-                        Partie.getInstance().setVariante(new Variante2());
+                        try {
+                            Partie.getInstance().getQueue().put(3);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+
                         break;
                 }
 
-                Partie.getInstance().setSetup(true);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
 
+                try {
+                    Partie.getInstance().getConsole().majAffichage();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 

@@ -11,14 +11,19 @@ import net.miginfocom.swing.*;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.BlockingQueue;
 
 /**
  * @author unknown
  */
-public class GUI extends JFrame implements Runnable, Observer {
-    public GUI() {
+public class GUI extends JFrame implements Runnable {
+
+    private BlockingQueue<Integer> queue;
+
+
+    public GUI(BlockingQueue<Integer> queue) {
+        this.queue = queue;
         initComponents();
-        Partie.getInstance().addObserver(this);
     }
 
     private void initComponents() {
@@ -43,25 +48,24 @@ public class GUI extends JFrame implements Runnable, Observer {
 
     @Override
     public void run() {
-        this.setVisible(true);
+        this.setVisible(true); //maj l'affichage
         this.getContentPane().add(new Menu());
         this.pack();
-    }
 
-    @Override
-    public void update(Observable observable, Object o) {
-
-        if (observable instanceof Partie && ((Partie) observable).isStarted() && !((Partie) observable).isSetup()) {
+        if (Partie.getInstance().isStarted() && !Partie.getInstance().isSetup()) {
             this.getContentPane().removeAll();
             this.getContentPane().add(new GameConfig());
             this.pack();
         }
-        if (observable instanceof Partie && ((Partie) observable).isStarted() && ((Partie) observable).isSetup()) {
+        if (Partie.getInstance().isStarted() && Partie.getInstance().isSetup()) {
+
             this.getContentPane().removeAll();
             this.getContentPane().add(new Game());
             this.pack();
         }
+
     }
+
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
