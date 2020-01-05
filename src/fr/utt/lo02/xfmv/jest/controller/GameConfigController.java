@@ -3,7 +3,6 @@ package fr.utt.lo02.xfmv.jest.controller;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante1;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
-import fr.utt.lo02.xfmv.jest.vue.Message;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GameConfig;
 
 import java.awt.*;
@@ -19,9 +18,10 @@ public class GameConfigController {
 
             public void actionPerformed(ActionEvent e) {
 
+
                 try {
-                    Partie.getInstance().getQueue().put(new Message("nbplayer", ((Integer) gameConfig.getPlayersCount().getValue()).intValue() ) );
-                    Partie.getInstance().getQueue().put(new Message("nbrealplayer", ((Integer) gameConfig.getRealPlayersCount().getValue()).intValue() ));
+                    Partie.getInstance().getQueue().put(((Integer) gameConfig.getPlayersCount().getValue()).intValue() );
+                    Partie.getInstance().getQueue().put(((Integer) gameConfig.getRealPlayersCount().getValue()).intValue() );
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -30,14 +30,14 @@ public class GameConfigController {
                 switch ((String) gameConfig.getVarianteSelect().getValue()) {
                     case "Normal":
                         try {
-                            Partie.getInstance().getQueue().put(new Message("variante", 1));
+                            Partie.getInstance().getQueue().put(1);
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         }
                         break;
                     case "Aléatoire":
                         try {
-                            Partie.getInstance().getQueue().put(new Message("variante", 2));
+                            Partie.getInstance().getQueue().put(2);
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         }
@@ -45,7 +45,7 @@ public class GameConfigController {
                         break;
                     case "Caché":
                         try {
-                            Partie.getInstance().getQueue().put(new Message("variante", 3));
+                            Partie.getInstance().getQueue().put(3);
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         }
@@ -53,8 +53,13 @@ public class GameConfigController {
                         break;
                 }
 
-                //Partie.getInstance().setSetup(true);
-                //à faire dans Partie
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                Partie.getInstance().getConsole().majAffichage();
             }
         });
 

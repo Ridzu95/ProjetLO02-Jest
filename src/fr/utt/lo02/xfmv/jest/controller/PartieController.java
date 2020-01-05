@@ -3,7 +3,6 @@ package fr.utt.lo02.xfmv.jest.controller;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante1;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
-import fr.utt.lo02.xfmv.jest.vue.Message;
 import fr.utt.lo02.xfmv.jest.vue.console.Console;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GUI;
 
@@ -16,7 +15,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class PartieController implements Runnable{
 
     private Partie partie;
-    private BlockingQueue<Message> queue;
+    private BlockingQueue<Integer> queue;
     private GUI gui;
     private Console console;
 
@@ -29,7 +28,7 @@ public class PartieController implements Runnable{
 
         while (true){ //le thread tourne en boucle pour reçevoir des informations
             try {
-                Message msg = queue.take();
+                int msg = queue.take();
                 this.process(msg);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -37,10 +36,10 @@ public class PartieController implements Runnable{
         }
     }
 
-    public void process(Message msg) throws InterruptedException { //traitement du message
+    public void process(int msg) throws InterruptedException { //traitement du message
 
-        if (msg.getKey() == "menu"){
-            switch ((int) msg.getValue()) {
+        if (this.partie.isStarted() == false){
+            switch (msg) {
                 case 1 :
                     this.partie.setStarted(true);
                     new Thread(gui).start();
@@ -56,19 +55,29 @@ public class PartieController implements Runnable{
                 case 3 :
                     System.exit(0);
                     break;
+                default :
+                    System.out.println("Format incorrecte");
             }
         }
 
-        if (msg.getKey() == "nbplayer"){
-            this.partie.setPlayerCount((int) msg.getValue());
+        else if (this.partie.getPlayerCount() == -1){
+            if (msg == 4 || msg == 3){
+                this.partie.setPlayerCount(msg);
+            } else {
+                System.out.println("Format incorrecte");
+            }
         }
 
-        if (msg.getKey() == "nbrealplayer"){
-            this.partie.setRealPlayerCount((int) msg.getValue());
+        else if (this.partie.getRealPlayerCount() == -1){
+            if (msg > Partie.getInstance().getPlayerCount() || msg < 0){
+                System.out.println("Format incorrecte");
+            } else {
+                this.partie.setRealPlayerCount(msg);
+            }
         }
 
-        if (msg.getKey() == "variante"){
-            switch ((int) msg.getValue()){
+        else if (this.partie.getVariante() == null){
+            switch (msg){
                 case 1:
                     this.partie.setVariante(new Variantebase());
                     break;
@@ -77,16 +86,21 @@ public class PartieController implements Runnable{
                     break;
                 case 3:
                     this.partie.setVariante(new Variante2());
+                default:
+                    System.out.println("Format incorrecte");
             }
         }
 
-        if ( this.partie.getVariante() != null && this.partie.getRealPlayerCount() != -1 && this.partie.getPlayerCount() != -1){
-            this.partie.setSetup(true);
-            new Thread(this.gui).start();
-            new Thread(this.partie);
-            this.console.majAffichage();
+        if ( this.partie.getGamePhase() == "sélection de la carte à cacher"){
+            this.partie.setMessage(msg);
         }
 
+        if ( this.partie.getVariante() != null && this.partie.getRealPlayerCount() != -1 && this.partie.getPlayerCount() != -1 && this.partie.getGamePhase() == "init"){
+            this.partie.setSetup(true);
+            new Thread(Partie.getInstance()).start();
+            new Thread(this.gui).start();
+            Thread.sleep(100);
+        }
 
         this.run(); // on retourne dans la boucle
 
@@ -117,11 +131,11 @@ public class PartieController implements Runnable{
         this.gui = gui;
     }
 
-    public BlockingQueue<Message> getQueue() {
+    public BlockingQueue<Integer> getQueue() {
         return queue;
     }
 
-    public void setQueue(BlockingQueue<Message> queue) {
+    public void setQueue(BlockingQueue<Integer> queue) {
         this.queue = queue;
     }
 

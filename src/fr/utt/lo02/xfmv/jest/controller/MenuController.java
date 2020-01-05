@@ -1,6 +1,4 @@
 package fr.utt.lo02.xfmv.jest.controller;
-
-import fr.utt.lo02.xfmv.jest.vue.Message;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.Menu;
 
 import javax.management.openmbean.TabularData;
@@ -22,7 +20,8 @@ public class MenuController {
 
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Partie.getInstance().getQueue().put(new Message("menu", 1 ));
+                    Partie.getInstance().getQueue().put(1);
+                    Partie.getInstance().getConsole().majAffichage();
 
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
@@ -34,7 +33,7 @@ public class MenuController {
 
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Partie.getInstance().getQueue().put(new Message("menu", 2 ));
+                    Partie.getInstance().getQueue().put(2);
 
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
@@ -46,7 +45,7 @@ public class MenuController {
 
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Partie.getInstance().getQueue().put(new Message("menu", 3 ));
+                    Partie.getInstance().getQueue().put(3);
 
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();

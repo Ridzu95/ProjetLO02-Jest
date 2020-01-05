@@ -27,6 +27,7 @@ public class Main {
 
         Console console = new Console(partieController.getQueue());
         partieController.setConsole(console);
+        Partie.getInstance().setConsole(console);
 
 
         Thread partieControllerThread = new Thread(partieController);

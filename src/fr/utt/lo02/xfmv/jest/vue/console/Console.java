@@ -13,15 +13,14 @@ import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante1;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
-import fr.utt.lo02.xfmv.jest.vue.Message;
 
 public class Console implements Runnable {
 
-    private final BlockingQueue<Message> queue;
+    private final BlockingQueue<Integer> queue;
     private Scanner scan;
     private Partie partie;
 
-    public Console(BlockingQueue<Message> queue) {
+    public Console(BlockingQueue<Integer> queue) {
         this.queue = queue;
         this.partie = Partie.getInstance();
     }
@@ -78,7 +77,7 @@ public class Console implements Runnable {
 
 
 
-    public Message demanderNombreJoueurs() throws InterruptedException {
+    public int demanderNombreJoueurs() throws InterruptedException {
 
         int choice = 0;
 
@@ -97,10 +96,10 @@ public class Console implements Runnable {
         } while (choice != 3 && choice != 4);
 
 
-        return (new Message("nbplayer", choice)); //envoie le message
+        return choice; //envoie le message
     }
 
-    public Message demanderJoueursReels(int nombreJoueurs) throws InterruptedException {
+    public int demanderJoueursReels(int nombreJoueurs) throws InterruptedException {
 
         int choice = 0;
 
@@ -119,7 +118,7 @@ public class Console implements Runnable {
         } while (choice < -1 || choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
 
 
-        return (new Message("nbrealplayer", choice));
+        return choice;
     }
 
     public static int demanderStrategie(int id) {
@@ -297,8 +296,19 @@ public class Console implements Runnable {
             }
         }
 
-        if(partie.isSetup()==true&&partie.isStarted()==true) {
-            System.out.println("Choisir la carte à cacher :");
+        if (this.partie.getGamePhase() == "sélection de la carte à cacher"){
+            System.out.println("Mains des joueurs : \n"
+                    + Partie.getInstance().getJoueurs().get(0) + " possèdes : " + Partie.getInstance().getJoueurs().get(0).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(0).getMain().get(1) + "\n"
+                    + Partie.getInstance().getJoueurs().get(1) + " possèdes : " + Partie.getInstance().getJoueurs().get(1).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(1).getMain().get(1) + "\n"
+                    + Partie.getInstance().getJoueurs().get(2) + " possèdes : " + Partie.getInstance().getJoueurs().get(2).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(2).getMain().get(1)
+            );
+            if ( Partie.getInstance().getPlayerCount() == 4 ){
+                System.out.println(Partie.getInstance().getJoueurs().get(3) + " possèdes : " + Partie.getInstance().getJoueurs().get(3).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(3).getMain().get(1)
+                );
+            }
+
+
+
         }
 
         System.out.println("Votre choix : ");
@@ -310,7 +320,7 @@ public class Console implements Runnable {
     public void process() throws InterruptedException {
         this.majAffichage();
         this.scan = new Scanner(System.in);
-        Message msg = null;
+        int msg = -1;
 
         int choice = this.scan.nextInt();
 
@@ -319,7 +329,7 @@ public class Console implements Runnable {
         if (partie.isStarted() == false){
             switch (choice) {
                 case 1 :
-                    msg = (new Message("menu", 1));
+                    msg = (1);
                     break;
                 case 2 :
                     try {
@@ -334,18 +344,8 @@ public class Console implements Runnable {
                     break;
             }
         }
-        if (partie.isStarted() == true && partie.isSetup() == false){
-            if (partie.getPlayerCount() == -1){
-                msg = new Message("nbplayer", choice);
-            } else if (partie.getRealPlayerCount() == -1){
-                msg = new Message("nbrealplayer", choice);
-            } else if (partie.getVariante() == null){
-                msg = new Message("variante", choice);
-            }
-
-        }
-        if (partie.isSetup() == true && partie.isStarted() == true){
-            msg = new Message("cardchoice", choice);
+        else {
+            msg = choice;
         }
 
 

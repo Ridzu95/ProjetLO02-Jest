@@ -7,7 +7,6 @@ package fr.utt.lo02.xfmv.jest.vue.graphicInterface;
 import javax.swing.*;
 
 import fr.utt.lo02.xfmv.jest.controller.Partie;
-import fr.utt.lo02.xfmv.jest.vue.Message;
 import net.miginfocom.swing.*;
 
 import java.util.Observable;
@@ -19,10 +18,10 @@ import java.util.concurrent.BlockingQueue;
  */
 public class GUI extends JFrame implements Runnable {
 
-    private BlockingQueue<Message> queue;
+    private BlockingQueue<Integer> queue;
 
 
-    public GUI(BlockingQueue<Message> queue) {
+    public GUI(BlockingQueue<Integer> queue) {
         this.queue = queue;
         initComponents();
     }

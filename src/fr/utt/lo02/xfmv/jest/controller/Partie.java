@@ -10,7 +10,6 @@ import fr.utt.lo02.xfmv.jest.model.variantes.Variante;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante1;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
-import fr.utt.lo02.xfmv.jest.vue.Message;
 import fr.utt.lo02.xfmv.jest.vue.console.Console;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GUI;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GameConfig;
@@ -39,15 +38,26 @@ public class Partie implements Runnable {
 	private String gamePhase;
 	private boolean jestingPhasePlayed;
 
-	public BlockingQueue<Message> getQueue() {
+	private int message;
+	private Console console;
+
+	public Console getConsole() {
+		return console;
+	}
+
+	public void setConsole(Console console) {
+		this.console = console;
+	}
+
+	public BlockingQueue<Integer> getQueue() {
 		return queue;
 	}
 
-	public void setQueue(BlockingQueue<Message> queue) {
+	public void setQueue(BlockingQueue<Integer> queue) {
 		this.queue = queue;
 	}
 
-	private BlockingQueue<Message> queue;
+	private BlockingQueue<Integer> queue;
 
 
 	private Partie() {
@@ -65,6 +75,8 @@ public class Partie implements Runnable {
 		hidingPhasePlayed = false;
 		jestingPhasePlayed = false;
 		variante = null;
+
+		message = -1;
 	}
 
 	private static Partie partie = new Partie();
@@ -74,6 +86,8 @@ public class Partie implements Runnable {
 	}
 
 	public void initialiserPartie() throws InterruptedException {
+
+		System.out.println("\nLa partie a commencé \n");
 
 		for (Couleurs couleur : Couleurs.values()) {
 			for (Valeurs valeur : Valeurs.values()) {
@@ -94,10 +108,9 @@ public class Partie implements Runnable {
 		}
 
 		Collections.shuffle(this.basePioche);
-		//this.jouerPartie();
 
-		this.distribuerCartes(); // à retirer car déjà dans jouer
 
+		this.jouerPartie();
 		return;
 	}
 
@@ -158,6 +171,10 @@ public class Partie implements Runnable {
 		}
 	}
 
+	public void setMessage(int message) {
+		this.message = message;
+	}
+
 	public void jouerPartie() throws InterruptedException {
 
 		do {
@@ -169,12 +186,30 @@ public class Partie implements Runnable {
 			// Console.showTurn(this.tour);
 			// this.choisirCarteCachee();
 			// Console.displayPlayerCards(joueurs);
+			Thread.sleep(1000);
+
+			for (Joueur joueur : joueurs) {
+				if (joueur instanceof JoueurReel){
+					System.out.println("Choisir la carte pour le joueur réel n° : " + ( joueur.getId()) );
+					while (this.message == -1){
+						Thread.sleep(2000);
+					}
+					message -= 1;
+					joueur.getMain().get(this.message).setVisible(true);
+					System.out.println("\nLe joueur " + joueur.getId() + " a mis " + joueur.getMain().get(this.message) + " en cachée");
+					this.message = -1;
+				} else {
+					//random pour joeur virtuel, pas besoin de loop pour attendre un message
+				}
+			}
+
+			this.gamePhase = "sélection de la carte à mettre dans le Jest";
+
+			this.choisirCarteCachee();
 
 			do {
 				Thread.sleep(500);
-			} while (!this.hidingPhasePlayed);
-
-			this.choisirCarteCachee();
+			} while (this.gamePhase == "sélection de la carte à mettre dans le Jest");
 
 			this.gamePhase = "sélection de la carte à mettre dans le Jest";
 			Collections.sort(joueurs);
