@@ -26,141 +26,16 @@ public class Console implements Runnable {
         this.queue = queue;
         this.partie = Partie.getInstance();
     }
-    /*
-    public static void welcomeMessage() {
-        System.out.println("--- Jeu de Jest inventé par Brett J. Gilbert ---");
-    }
 
-    public void showMenu() throws InterruptedException {
-
-
-        System.out.println("(1) --- Jouer\n(2) --- Lire les règles\n(3) --- Quitter");
-
-        int choice = 0;
-        do {
-            try {
-                System.out.print("Votre choix : ");
-                choice = this.scan.nextInt();
-                System.out.println("");
-            }
-            catch (InputMismatchException e){
-                System.out.println("Format invalide.");
-            }
-            this.scan.nextLine();
-        } while (Partie.getInstance().isStarted() == false);
-        System.out.println("Ok annulation du scanner");
-        switch (choice) {
-            case 1 :
-                Partie.getInstance().getQueue().put(new Message("menu", 1));
-                break;
-            case 2 :
-                try {
-                    URI uri = new URI("https://puu.sh/EKl29/655216593a.png");
-                    Desktop.getDesktop().browse(uri);
-                }
-                catch(Exception ex) {}
-                this.showMenu();
-                break;
-            case 3 :
-                System.exit(0);
-                break;
-        }
-
-    } */
-
-    public static String playerUsernameChoice(int id) {
+    public String playerUsernameChoice(int id) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Entrez le pseudo du joueur n° " + id);
         String username = sc.nextLine();
         return username;
     }
 
-    // permet de récupérer le choix du joueur pour la variante
 
-
-
-    public int demanderNombreJoueurs() throws InterruptedException {
-
-        int choice = 0;
-
-        System.out.println("Voulez-vous jouer à 3 ou 4 joueurs ?");
-        System.out.println("");
-
-        do {
-            try {
-                System.out.print("Votre choix : ");
-                choice = scan.nextInt();
-                System.out.println("");
-            } catch (InputMismatchException e) {
-                System.out.println("Format invalide.");
-            }
-            scan.nextLine();
-        } while (choice != 3 && choice != 4);
-
-
-        return choice; //envoie le message
-    }
-
-    public int demanderJoueursReels(int nombreJoueurs) throws InterruptedException {
-
-        int choice = 0;
-
-        System.out.println("Combien y a-t-il de joueurs réels ?");
-        System.out.println("");
-
-        do {
-            try {
-                System.out.print("Votre choix : ");
-                choice = scan.nextInt();
-                System.out.println("");
-            } catch (InputMismatchException e) {
-                System.out.println("Format invalide.");
-            }
-            scan.nextLine();
-        } while (choice < -1 || choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
-
-
-        return choice;
-    }
-
-    public static int demanderStrategie(int id) {
-
-        Scanner sc = new Scanner(System.in);
-        int choice = 0;
-
-        System.out.println("Choisissez la stratégie utilisée par le bot n°" + (id + 1));
-        System.out.println("(1) -- Stratégie de base : le bot choisis aléatoirement une carte à chaque tour de jeu");
-        System.out.println("(2) -- Stratégie avancée : le bot choisis la carte avec la valeur la plus haute");
-        System.out.println("");
-
-        do {
-            try {
-                System.out.print("Votre choix : ");
-                choice = sc.nextInt();
-                System.out.println("");
-            } catch (InputMismatchException e) {
-                System.out.println("Format invalide.");
-            }
-            sc.nextLine();
-        } while (choice != 1 && choice != 2);
-
-
-        return choice;
-    }
-
-    public static void cardChoice(Joueur joueur) {
-
-        System.out.println("");
-        System.out.println(joueur + " choisis la carte à cacher :");
-
-        System.out.println("(1) --- " + joueur.getMain().get(0));
-        System.out.println("(2) --- " + joueur.getMain().get(1));
-
-        return;
-    }
-
-
-    public static void displayPlayerCards(ArrayList<Joueur> joueurs) {
+    public void displayPlayerCards(ArrayList<Joueur> joueurs) {
 
         for (Joueur joueur : joueurs) {
             System.out.print(joueur.toString() + " --- ");
@@ -172,7 +47,7 @@ public class Console implements Runnable {
 
     }
 
-    public static void displaySelectCards(ArrayList<Carte> selectCards, Joueur joueur) {
+    public void displaySelectCards(ArrayList<Carte> selectCards, Joueur joueur) {
 
         System.out.println(joueur + " choisis la carte à mettre dans ton Jest :");
         for (int i = 0; i < selectCards.size(); i++) {
@@ -182,7 +57,7 @@ public class Console implements Runnable {
 
     }
 
-    public static void showTurn(int tour) {
+    public void showTurn(int tour) {
         System.out.println("");
         System.out.println("*********");
         System.out.println(" TOUR " + tour);
@@ -190,7 +65,7 @@ public class Console implements Runnable {
         System.out.println("");
     }
 
-    public static void showJests() {
+    public void showJests() {
         System.out.println("Révélez vos Jests !");
         for (Joueur joueur : Partie.getInstance().getJoueurs()) {
             System.out.print(joueur.toString() + ": ");
@@ -238,32 +113,6 @@ public class Console implements Runnable {
                 break;
         }
     }
-    /*
-    public void process() throws InterruptedException {
-
-        if (Partie.getInstance().isStarted() == false){ //menu
-            this.welcomeMessage();
-            this.showMenu();
-        }
-
-
-        if (Partie.getInstance().isStarted() == true && Partie.getInstance().isSetup() == false){ //setup de la partie
-            if (Partie.getInstance().getPlayerCount() == -1 && Partie.getInstance().isSetup() == false ){
-                this.demanderNombreJoueurs();
-            } else if (Partie.getInstance().getRealPlayerCount() == - 1 && Partie.getInstance().isSetup() == false){
-                this.demanderJoueursReels(Partie.getInstance().getPlayerCount());
-            } else if (Partie.getInstance().getVariante() == null && Partie.getInstance().isSetup() == false){
-                this.demanderVariante();
-            } //demander stratégie ?
-        }
-
-
-        if (Partie.getInstance().isStarted() == true && Partie.getInstance().isSetup() == true){ //setup de la partie
-
-
-        }
-
-    }  */
 
 
     //Partie producer
@@ -324,27 +173,16 @@ public class Console implements Runnable {
         System.out.println("Votre choix : ");
     }
 
-
-
-
     public void process() throws InterruptedException {
         this.majAffichage();
         this.scan = new Scanner(System.in);
         int msg = -1;
 
-        msg = this.scan.nextInt();
-
-        //traitement du choice :
-
-
+        msg = this.scan.nextInt(); //le thread reste bloqué ici s'il n'y a pas d'input
 
         this.queue.put(msg);
         Thread.sleep(2000);
         run();
-    }
-
-    public Joueur getJoueur() {
-        return joueur;
     }
 
     public void setJoueur(Joueur joueur) {

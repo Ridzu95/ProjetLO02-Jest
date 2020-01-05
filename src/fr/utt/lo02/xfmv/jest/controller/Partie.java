@@ -203,25 +203,15 @@ public class Partie implements Runnable {
 			this.gamePhase = "sélection de la carte à mettre dans le Jest";
 			System.out.println("Phase de " + this.gamePhase);
 
+			Collections.sort(joueurs);
 
-			while (this.gamePhase !="gg" ){
+			while (this.gamePhase !="gg" ) {
 
 			}
 
-
-			do {
-				Thread.sleep(500);
-			} while (this.gamePhase == "sélection de la carte à mettre dans le Jest");
-
-
-
-			Collections.sort(joueurs);
-
-			do {
-				Thread.sleep(500);
-			} while (!this.jestingPhasePlayed);
-
 			this.controlOffers();
+
+
 			this.tour++;
 		} while (basePioche.size() != 0);
 
@@ -229,14 +219,14 @@ public class Partie implements Runnable {
 		    joueur.getJest().add(joueur.getMain().poll());
         }
 
-		Console.showJests();
+		this.console.showJests();
 		CompteurVarianteBase compteur = new CompteurVarianteBase();
 
 		for (Joueur joueur : joueurs) {
 			joueur.accept(compteur);
 		}
 
-		Console.showScores();
+		this.console.showScores();
 		this.terminerPartie();
 		// Console.endOfGame();
 
@@ -398,12 +388,12 @@ public class Partie implements Runnable {
 		this.realPlayerCount = realPlayerCount;
 	}
 
-	public Variante getVariante() {
-		return variante;
-	}
-
 	public void setVariante(Variante variante) {
 		this.variante = variante;
+	}
+
+	public Variante getVariante() {
+		return variante;
 	}
 
 	public String getGamePhase() {
@@ -428,6 +418,10 @@ public class Partie implements Runnable {
 
 	public void setCurrentPlaying(Joueur currentPlaying) {
 		this.currentPlaying = currentPlaying;
+	}
+
+	public void setMessage(int message) {
+		this.message = message;
 	}
 
 	@Override
