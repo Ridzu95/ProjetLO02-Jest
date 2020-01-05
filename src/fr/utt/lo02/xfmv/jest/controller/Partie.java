@@ -39,12 +39,18 @@ public class Partie implements Runnable {
 	private String gamePhase;
 	private boolean jestingPhasePlayed;
 
-	//attribut communication
-	private BlockingQueue<Message> queue;
-	private GUI gui;
-	private Console console;
+	public BlockingQueue<Message> getQueue() {
+		return queue;
+	}
 
-	private Partie(BlockingQueue<Message> queue) {
+	public void setQueue(BlockingQueue<Message> queue) {
+		this.queue = queue;
+	}
+
+	private BlockingQueue<Message> queue;
+
+
+	private Partie() {
 		basePioche = new LinkedList<Carte>();
 		tempPioche = new LinkedList<Carte>();
 		tropheesPartie = new ArrayList<Carte>();
@@ -58,12 +64,10 @@ public class Partie implements Runnable {
 		gamePhase = "init";
 		hidingPhasePlayed = false;
 		jestingPhasePlayed = false;
-
-		this.queue = queue;
 		variante = null;
 	}
 
-	private static Partie partie = new Partie( new LinkedBlockingQueue<>(2));
+	private static Partie partie = new Partie();
 
 	public static Partie getInstance() {
 		return partie;
@@ -397,94 +401,15 @@ public class Partie implements Runnable {
 		this.hidingPhasePlayed = hidingPhasePlayed;
 	}
 
-	public Console getConsole(){
-		return this.console;
-	}
-
 	@Override
 	public void run() {
 
-		while (true){ //le thread tourne en boucle pour reçevoir des informations
-			try {
-				Message msg = queue.take();
-				this.process(msg);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public void process(Message msg) throws InterruptedException { //traitement du message
-
-		if (msg.getKey() == "menu"){
-			switch ((int) msg.getValue()) {
-				case 1 :
-					this.isStarted = true;
-					new Thread(gui).start();
-					break;
-				case 2 :
-					try {
-						URI uri = new URI("https://puu.sh/EKl29/655216593a.png");
-						Desktop.getDesktop().browse(uri);
-					}
-					catch(Exception ex) {}
-					//this.showMenu();
-					break;
-				case 3 :
-					System.exit(0);
-					break;
-			}
-		}
-
-		if (msg.getKey() == "nbplayer"){
-			this.playerCount = (int) msg.getValue();
-		}
-
-		if (msg.getKey() == "nbrealplayer"){
-			this.realPlayerCount = (int) msg.getValue();
-		}
-
-		if (msg.getKey() == "variante"){
-			switch ((int) msg.getValue()){
-				case 1:
-					this.variante = new Variantebase();
-					break;
-				case 2:
-					this.variante = new Variante1();
-					break;
-				case 3:
-					this.variante = new Variante2();
-			}
-		}
-
-		if ( this.variante != null && this.realPlayerCount != -1 && this.playerCount != -1){
-			this.isSetup = true;
-			new Thread(this.gui).start();
+		try {
 			this.initialiserPartie();
-			this.console.majAffichage();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-
-
-		this.run(); // on retourne dans la boucle
-
 	}
-
-	public BlockingQueue<Message> getQueue() {
-		return queue;
-	}
-
-	public void setGUI(GUI gui){
-		this.gui = gui;
-	}
-
-	public void setCons(Console console){
-		this.console = console;
-	}
-
-	public GUI getGUI(){
-		return this.gui;
-	}
-	//partie consumer
 
 
 }

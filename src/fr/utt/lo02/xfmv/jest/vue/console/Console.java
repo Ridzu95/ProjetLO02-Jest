@@ -349,7 +349,7 @@ public class Console implements Runnable {
         }
 
 
-        Partie.getInstance().getQueue().put(msg);
+        this.queue.put(msg);
         Thread.sleep(100);
         run();
     }
