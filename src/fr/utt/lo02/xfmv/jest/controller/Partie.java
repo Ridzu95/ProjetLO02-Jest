@@ -101,7 +101,7 @@ public class Partie implements Runnable {
 		this.basePioche.add(new Carte(Valeurs.Joker, Couleurs.Joker));
 
 		for ( int i = 0; i < realPlayerCount ; i++ ) {
-		    this.joueurs.add(new JoueurReel(i, "realPlayer"));
+		    this.joueurs.add(new JoueurReel(i, "realPlayer " + i));
 		}
 
 		for ( int i = 0; i < (playerCount - realPlayerCount) ; i++ ) {
@@ -175,31 +175,39 @@ public class Partie implements Runnable {
 
 	public void jouerPartie() throws InterruptedException {
 
+
 		do {
 
 			this.distribuerCartes();
 
 			this.gamePhase = "sélection de la carte à cacher";
 			System.out.println("Phase de " + this.gamePhase);
-			// Console.showTurn(this.tour);
-			// this.choisirCarteCachee();
-			// Console.displayPlayerCards(joueurs);
+			this.console.showTurn(this.tour);
+
 
 			for (Joueur joueur : joueurs) {
+				//maj le gui pour passer à la sélection des cartes : premier joueur
+				//==> le gui a juste à envoyer Partie.getInstance().getQueue.put(1) ou 2 pour le choix de la carte
+				//c'est ça qui est bien
 				if (joueur instanceof JoueurReel){
 					this.currentPlaying = joueur;
-					while (this.message == -1){
+					while (this.message == -1) { //si c'est un joueur le thread tourne en boucle jusqu'à reçevoir un message
+						//qui va lui indiquer que a été le choix
 						Thread.sleep(2000);
 					}
-					message -= 1;
-					joueur.getMain().get(this.message).setVisible(true);
+					message -= 1; //on enlève -1 pour passez de 1 à 0 et 2 à 1
+					joueur.getMain().get(this.message).setVisible(true); //Plus besoin de faire player.faireOffre() en fait ._.
+					//sinon on peut faire jouer.faireOffre(this.message) et faire la mm chose
 					System.out.println("\nLe joueur " + joueur + " a caché une carte");
-					this.message = -1;
+					this.message = -1; //on réinitialise le message à une valeur par défaut
 				} else {
 					int random = (int) (Math.random() + 0.5);
-					joueur.getMain().get(random).setVisible(true);
+					joueur.getMain().get(random).setVisible(true); //là c'est fait random
 				}
+				//maj le gui pour passer au joueur suivant
 			}
+
+			//une fois sortis du for tous les joueurs on choisis donc passage à la phase Jest
 			this.gamePhase = "sélection de la carte à mettre dans le Jest";
 			System.out.println("Phase de " + this.gamePhase);
 
@@ -209,7 +217,7 @@ public class Partie implements Runnable {
 
 			}
 
-			this.controlOffers();
+			this.controlOffers(); //là j'ai pas fait
 
 
 			this.tour++;
@@ -428,7 +436,7 @@ public class Partie implements Runnable {
 	public void run() {
 
 		try {
-			this.initialiserPartie();
+			this.initialiserPartie(); //lancer le thread = initialiser et jouer la partie
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

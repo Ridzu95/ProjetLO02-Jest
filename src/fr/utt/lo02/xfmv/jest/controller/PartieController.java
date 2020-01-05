@@ -12,7 +12,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class PartieController implements Runnable{
+public class PartieController implements Runnable{ //Consumer
 
     private Partie partie;
     private BlockingQueue<Integer> queue;
@@ -28,8 +28,8 @@ public class PartieController implements Runnable{
 
         while (true){ //le thread tourne en boucle pour reçevoir des informations
             try {
-                int msg = queue.take();
-                this.process(msg);
+                int msg = queue.take(); //fait rien sauf si un message est présent
+                this.process(msg); //dans ce cas on envoie le message dans process pour le traiter
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

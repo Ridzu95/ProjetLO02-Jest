@@ -20,7 +20,8 @@ public class Console implements Runnable {
     private Scanner scan;
     private Partie partie;
 
-    private Joueur joueur;
+    private Joueur joueur; //faire majAfficher() avec partie en passant un joueur pour pouvoir
+    //prendre des infos sur lui et les afficher
 
     public Console(BlockingQueue<Integer> queue) {
         this.queue = queue;
@@ -180,8 +181,8 @@ public class Console implements Runnable {
 
         msg = this.scan.nextInt(); //le thread reste bloqué ici s'il n'y a pas d'input
 
-        this.queue.put(msg);
-        Thread.sleep(2000);
+        this.queue.put(msg); //on envoit le msg dès qu'il y a un input
+        Thread.sleep(2000); //besoin d'attentre que la partie aie finit ses manips pour maj l'affichage sinon cv pas
         run();
     }
 
