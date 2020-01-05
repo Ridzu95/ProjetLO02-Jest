@@ -33,14 +33,11 @@ public class GUI extends JFrame implements Runnable {
         //======== this ========
         var contentPane = getContentPane();
         contentPane.setLayout(new MigLayout(
-            "hidemode 3",
+            "hidemode 3,align left top",
             // columns
-            "[fill]" +
-            "[fill]",
+            "0[fill]0",
             // rows
-            "[]" +
-            "[]" +
-            "[]"));
+            "0[]0"));
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents

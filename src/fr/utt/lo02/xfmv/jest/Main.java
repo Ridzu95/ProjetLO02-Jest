@@ -1,5 +1,6 @@
 package fr.utt.lo02.xfmv.jest;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import fr.utt.lo02.xfmv.jest.controller.Partie;
 import fr.utt.lo02.xfmv.jest.controller.PartieController;
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
@@ -15,6 +16,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
+
+        FlatLightLaf.install(); // installation du Look and Feel FlatLaf
 
         Partie.getInstance();
         PartieController partieController = new PartieController(Partie.getInstance());
