@@ -21,6 +21,7 @@ import java.net.URI;
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Partie implements Runnable {
 
@@ -180,9 +181,9 @@ public class Partie implements Runnable {
 
 			this.distribuerCartes();
 
+			this.console.showTurn(this.tour);
 			this.gamePhase = "sélection de la carte à cacher";
 			System.out.println("Phase de " + this.gamePhase);
-			this.console.showTurn(this.tour);
 
 
 			for (Joueur joueur : joueurs) {
@@ -202,11 +203,11 @@ public class Partie implements Runnable {
 					this.message = -1; //on réinitialise le message à une valeur par défaut
 				} else {
 					int random = (int) (Math.random() + 0.5);
-					joueur.getMain().get(random).setVisible(true); //là c'est fait random
+					joueur.getMain().get(random).setVisible(true); //là c'est fait randomy
+
 				}
 				//maj le gui pour passer au joueur suivant
 			}
-
 			//une fois sortis du for tous les joueurs on choisis donc passage à la phase Jest
 			this.gamePhase = "sélection de la carte à mettre dans le Jest";
 			System.out.println("Phase de " + this.gamePhase);
