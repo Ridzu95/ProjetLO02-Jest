@@ -31,6 +31,7 @@ public class GUI extends JFrame implements Runnable {
         // Generated using JFormDesigner Evaluation license - unknown
 
         //======== this ========
+        setTitle("Jest");
         var contentPane = getContentPane();
         contentPane.setLayout(new MigLayout(
             "hidemode 3,align left top",

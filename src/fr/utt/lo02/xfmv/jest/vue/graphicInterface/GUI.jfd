@@ -9,8 +9,9 @@ new FormModel {
 			"$rowConstraints": "0[]0"
 		} ) {
 			name: "this"
+			"title": "Jest"
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 5, 0 )
+			"location": new java.awt.Point( 10, 0 )
 			"size": new java.awt.Dimension( 800, 600 )
 		} )
 	}
