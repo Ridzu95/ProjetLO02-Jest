@@ -9,6 +9,8 @@ import javax.swing.*;
 
 import fr.utt.lo02.xfmv.jest.controller.GameController;
 import fr.utt.lo02.xfmv.jest.controller.Partie;
+import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
+import fr.utt.lo02.xfmv.jest.model.cartes.Trophees;
 import net.miginfocom.swing.*;
 
 import java.util.Observable;
@@ -79,7 +81,7 @@ public class Game extends JPanel{
         add(header, "cell 0 0 6 1");
 
         //---- labelTurn ----
-        labelTurn.setText("Tour 1");
+        labelTurn.setText("Tour " + Partie.getInstance().getTour());
         labelTurn.setFont(new Font("Ubuntu Light", Font.BOLD, 22));
         add(labelTurn, "cell 0 1 2 1,alignx center,growx 0");
 
@@ -88,15 +90,15 @@ public class Game extends JPanel{
         add(pioche, "cell 2 1 2 1,alignx center,growx 0");
 
         //---- trophy1 ----
-        trophy1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/4Pique.png"));
+        trophy1.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getTropheesPartie().get(0))));
         add(trophy1, "cell 4 1,alignx right,growx 0");
 
         //---- trophy2 ----
-        trophy2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/3Carreau.png"));
+        trophy2.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getTropheesPartie().get(1))));
         add(trophy2, "cell 5 1,alignx left,growx 0");
 
         //---- labelPioche ----
-        labelPioche.setText("9 cartes dans la pioche");
+        labelPioche.setText(Partie.getInstance().getBasePioche().size() + " cartes dans la pioche");
         labelPioche.setFont(new Font("Ubuntu Light", Font.BOLD | Font.ITALIC, 10));
         add(labelPioche, "cell 2 2 2 1,alignx center,growx 0");
 
@@ -106,37 +108,37 @@ public class Game extends JPanel{
         add(labelTrophies, "cell 4 2 2 1,alignx center,growx 0");
 
         //---- labelWhosPlaying ----
-        labelWhosPlaying.setText("C'est \u00e0 Player 1 de jouer !");
+        labelWhosPlaying.setText("C'est \u00e0" + Partie.getInstance().getCurrentPlaying() + " de jouer !");
         labelWhosPlaying.setFont(new Font("Ubuntu Light", Font.BOLD, 16));
         add(labelWhosPlaying, "cell 1 3 4 1,align center bottom,grow 0 0");
 
         //---- labelPhase ----
-        labelPhase.setText("Clique sur la carte que tu souhaites cacher.");
+        labelPhase.setText(this.displayPhase(Partie.getInstance().getGamePhase()));
         labelPhase.setFont(new Font("Ubuntu Light", Font.BOLD | Font.ITALIC, 16));
         add(labelPhase, "cell 1 4 4 1,alignx center,growx 0");
 
         //---- player1Card1 ----
-        player1Card1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/2Pique.png"));
+        player1Card1.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(0).getMain().get(0))));
         add(player1Card1, "cell 0 5,alignx right,growx 0");
 
         //---- player1Card2 ----
-        player1Card2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/APique.png"));
+        player1Card2.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(0).getMain().get(1))));
         add(player1Card2, "cell 1 5,alignx left,growx 0");
 
         //---- player2Card1 ----
-        player2Card1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        player2Card1.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(1).getMain().get(0))));
         add(player2Card1, "cell 2 5,alignx right,growx 0");
 
         //---- player2Card2 ----
-        player2Card2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        player2Card2.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(1).getMain().get(1))));
         add(player2Card2, "cell 3 5,alignx left,growx 0");
 
         //---- player3Card1 ----
-        player3Card1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        player3Card1.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(2).getMain().get(0))));
         add(player3Card1, "cell 4 5,alignx right,growx 0");
 
         //---- player3Card2 ----
-        player3Card2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        player3Card2.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(2).getMain().get(1))));
         add(player3Card2, "cell 5 5,alignx left,growx 0");
 
         //---- player1Label ----
@@ -153,7 +155,65 @@ public class Game extends JPanel{
         //GEN-END:initComponents
     }
 
+    public String displayPhase(String phase) {
+        switch (phase) {
+            case "hiding":
+                return "Clique sur la carte que tu souhaites cacher.";
+            case "jesting":
+                return "CLique sur la carte que tu souhaites mettre dans ton Jest.";
+            default :
+                return "En attente.";
+        }
+    }
 
+
+    public String displayCards(Carte card) {
+
+        if (card.isVisible()) {
+            switch (card.toString()) {
+                case "2♥":
+                    return "../../../../resources/2Coeur.png";
+                case "4♥":
+                    return "../../../../resources/4Coeur.png";
+                case "3♥":
+                    return "../../../../resources/3Coeur.png";
+                case "1♥":
+                    return "../../../../resources/ACoeur.png";
+                case "2♦":
+                    return "../../../../resources/2Carreau.png";
+                case "3♦":
+                    return "../../../../resources/3Carreau.png";
+                case "4♦":
+                    return "../../../../resources/4Carreau.png";
+                case "1♦":
+                    return "../../../../resources/ACarreau.png";
+                case "2♣":
+                    return "../../../../resources/2Trefle.png";
+                case "3♣":
+                    return "../../../../resources/3Trefle.png";
+                case "4♣":
+                    return "../../../../resources/4Trefle.png";
+                case "1♣":
+                    return "../../../../resources/ATrefle.png";
+                case "2♠":
+                    return "../../../../resources/2Pique.png";
+                case "3♠":
+                    return "../../../../resources/3Pique.png";
+                case "4♠":
+                    return "../../../../resources/4Pique.png";
+                case "1♠":
+                    return "../../../../resources/APique.png";
+                case "★":
+                    return "../../../../resources/Joker.png";
+                default:
+                    return "../../../../resources/CardBack.png";
+            }
+        }
+        else {
+            return "../../../../resources/CardBack.png";
+        }
+        
+    }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
