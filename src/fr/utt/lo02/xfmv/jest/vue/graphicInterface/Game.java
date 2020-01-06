@@ -332,7 +332,7 @@ public class Game extends JPanel{
     }
 
     public void guiUpdate() {
-        System.out.println("gui a été mis à jour");
+        
         labelPioche.setText(Partie.getInstance().getBasePioche().size() + " cartes dans la pioche");
         labelWhosPlaying.setText("C'est \u00e0 " + Partie.getInstance().getCurrentPlaying() + " de jouer !");
         labelPhase.setText(this.displayPhase(Partie.getInstance().getGamePhase()));

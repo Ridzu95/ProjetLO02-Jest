@@ -191,12 +191,11 @@ public class Partie implements Runnable {
 			this.gamePhase = "hiding";
 			System.out.println("Phase de " + this.gamePhase);
 			this.console.showTurn(this.tour);
-
+			int iteratorJoueur = 0;
+			this.currentPlaying = joueurs.get(0);
 
 			for (Joueur joueur : joueurs) {
-
 				if (joueur instanceof JoueurReel){
-					this.currentPlaying = joueur;
 					while (this.message <= 0 || this.message > 2) {
 
 						if (this.message != -1){ //traite les mauvais unput
@@ -204,7 +203,7 @@ public class Partie implements Runnable {
 							this.console.majAffichage();
 							this.message = -1;
 						}
-						Thread.sleep(2000);
+						Thread.sleep(1000);
 					}
 					message -= 1;
 					joueur.getMain().get(this.message).setVisible(false);
@@ -212,11 +211,15 @@ public class Partie implements Runnable {
 					this.message = -1;
 				} else {
 					int random = (int) (Math.random() + 0.5);
-					joueur.getMain().get(random).setVisible(false);
+					joueur.getMain().get(random).setVisible(true);
+					this.message = -1;
 				}
 
 				System.out.println("\nLe joueur " + joueur + " a caché une carte");
-
+				iteratorJoueur++;
+				if (iteratorJoueur < this.playerCount) {
+					this.currentPlaying = joueurs.get(iteratorJoueur);
+				}
 				this.game.guiUpdate();
 			}
 
