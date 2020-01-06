@@ -90,6 +90,11 @@ public class Console implements Runnable {
     public static void showWinner(Joueur winner) {
         System.out.println("Le gagnant de la partie est " + winner.toString() + " !");
     }
+    
+    public static void showTropheeWinner(Joueur joueur, Carte trophee) {
+    	System.out.println(joueur + " a remporté le trophée : " + trophee.getTrophee().getDescription());
+		System.out.println("");
+    }
 
     public void endOfGame() throws InterruptedException {
         System.out.println("(1) --- Retourner au menu\n(2) --- Quitter");
@@ -112,6 +117,19 @@ public class Console implements Runnable {
             case 2:
                 System.exit(0);
                 break;
+        }
+    }
+
+    public void showHands(){
+        System.out.println("## Mains des joueurs : \n"
+                + Partie.getInstance().getJoueurs().get(0) + " possède : " + Partie.getInstance().getJoueurs().get(0).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(0).getMain().get(1) + "\n"
+                + Partie.getInstance().getJoueurs().get(1) + " possède : " + Partie.getInstance().getJoueurs().get(1).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(1).getMain().get(1) + "\n"
+                + Partie.getInstance().getJoueurs().get(2) + " possède : " + Partie.getInstance().getJoueurs().get(2).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(2).getMain().get(1) + "\n"
+        );
+        if ( Partie.getInstance().getPlayerCount() == 4 ){
+            System.out.println(Partie.getInstance().getJoueurs().get(3) + " possèdes : " + Partie.getInstance().getJoueurs().get(3).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(3).getMain().get(1)
+            );
+
         }
     }
 
@@ -148,17 +166,8 @@ public class Console implements Runnable {
             }
         }
 
-        if (this.partie.getGamePhase() == "hiding" && Partie.getInstance().checkCardsStates() == false){
-            System.out.println("## Mains des joueurs : \n"
-                    + Partie.getInstance().getJoueurs().get(0) + " possède : " + Partie.getInstance().getJoueurs().get(0).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(0).getMain().get(1) + "\n"
-                    + Partie.getInstance().getJoueurs().get(1) + " possède : " + Partie.getInstance().getJoueurs().get(1).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(1).getMain().get(1) + "\n"
-                    + Partie.getInstance().getJoueurs().get(2) + " possède : " + Partie.getInstance().getJoueurs().get(2).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(2).getMain().get(1) + "\n"
-            );
-            if ( Partie.getInstance().getPlayerCount() == 4 ){
-                System.out.println(Partie.getInstance().getJoueurs().get(3) + " possèdes : " + Partie.getInstance().getJoueurs().get(3).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(3).getMain().get(1)
-                );
-
-            }
+        if (this.partie.getGamePhase() == "hiding"){
+            this.showHands();
             if (Partie.getInstance().getRealPlayerCount() == 0){
                 System.out.println("Tapez 1 pour passer à la phase suivante");
             } else {
@@ -167,7 +176,15 @@ public class Console implements Runnable {
         }
 
         if (this.partie.getGamePhase() == "jesting"){
+            if (Partie.getInstance().getCurrentPlaying() instanceof JoueurReel){
+                System.out.println("Le joueur " + Partie.getInstance().getCurrentPlaying() + " dois choisir une carte à mettre dans son Jest parmi :");
+                for (Carte carte: Partie.getInstance().getSelectCards()){
+                    System.out.println("-- " + carte);
+                }
 
+            } else {
+                System.out.println("Le bot " + Partie.getInstance().getCurrentPlaying() + " choisis une carte à mettre dans son Jest ...");
+            }
         }
 
 

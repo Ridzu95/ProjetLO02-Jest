@@ -64,13 +64,13 @@ public class PartieController implements Runnable{ //Consumer
             if (msg == 4 || msg == 3){
                 this.partie.setPlayerCount(msg);
             } else {
-                System.out.println("Format incorrect");
+                System.out.println("Format incorrect dd");
             }
         }
 
         else if (this.partie.getRealPlayerCount() == -1){
             if (msg > Partie.getInstance().getPlayerCount() || msg < 0){
-                System.out.println("Format incorrect");
+                System.out.println("Format incorrect cc");
             } else {
                 this.partie.setRealPlayerCount(msg);
             }
@@ -87,7 +87,7 @@ public class PartieController implements Runnable{ //Consumer
                 case 3:
                     this.partie.setVariante(new Variante2());
                 default:
-                    System.out.println("Format incorrecte");
+                    System.out.println("Format incorrecte aa");
             }
         }
 
@@ -95,7 +95,7 @@ public class PartieController implements Runnable{ //Consumer
             if (msg == 1 || msg == 2){
                 this.partie.setMessage(msg);
             } else {
-                System.out.println("Format incorrect");
+                System.out.println("Format incorrect bb");
             }
         }
 
@@ -108,6 +108,11 @@ public class PartieController implements Runnable{ //Consumer
         if (Partie.getInstance().getGamePhase() == "hiding" && Partie.getInstance().checkCardsStates()) {
             Partie.getInstance().setHidingPhasePlayed(true); //passage à la phase de jest
         }
+
+        if (Partie.getInstance().getGamePhase() == "jesting"){
+            Partie.getInstance().setMessage(msg);
+        }
+
 
         this.run(); // on retourne dans la boucle
 
