@@ -6,6 +6,7 @@ package fr.utt.lo02.xfmv.jest.vue.graphicInterface;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.*;
 
 import fr.utt.lo02.xfmv.jest.controller.GameController;
 import fr.utt.lo02.xfmv.jest.controller.Partie;
@@ -26,8 +27,14 @@ public class Game extends JPanel{
 
     public Game() {
         initComponents();
-        GameController gameController = new GameController(this);
         Partie.getInstance().getJoueurs().get(0).getGuiCards().add(this.player1Card1);
+        Partie.getInstance().getJoueurs().get(0).getGuiCards().add(this.player1Card2);
+        Partie.getInstance().getJoueurs().get(1).getGuiCards().add(this.player2Card1);
+        Partie.getInstance().getJoueurs().get(1).getGuiCards().add(this.player2Card2);
+        Partie.getInstance().getJoueurs().get(2).getGuiCards().add(this.player3Card1);
+        Partie.getInstance().getJoueurs().get(2).getGuiCards().add(this.player3Card2);
+        GameController gameController = new GameController(this);
+        this.guiUpdate();
     }
 
     private void initComponents() {
@@ -56,13 +63,11 @@ public class Game extends JPanel{
         setMaximumSize(new Dimension(800, 600));
         setMinimumSize(new Dimension(800, 600));
         setPreferredSize(new Dimension(800, 600));
-        setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax
-        . swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e", javax. swing
-        . border. TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .
-        Font ("D\u0069al\u006fg" ,java .awt .Font .BOLD ,12 ), java. awt. Color. red
-        ) , getBorder( )) );  addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override
-        public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062or\u0064er" .equals (e .getPropertyName (
-        ) )) throw new RuntimeException( ); }} );
+        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(
+        0,0,0,0), "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e",javax.swing.border.TitledBorder.CENTER,javax.swing.border.TitledBorder
+        .BOTTOM,new java.awt.Font("D\u0069al\u006fg",java.awt.Font.BOLD,12),java.awt.Color.
+        red), getBorder())); addPropertyChangeListener(new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.
+        beans.PropertyChangeEvent e){if("\u0062or\u0064er".equals(e.getPropertyName()))throw new RuntimeException();}});
         setLayout(new MigLayout(
             "hidemode 3",
             // columns
@@ -83,7 +88,7 @@ public class Game extends JPanel{
             "[]"));
 
         //---- header ----
-        header.setIcon(new ImageIcon(getClass().getResource("/Rules.png")));
+        header.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/Rules.png"));
         add(header, "cell 0 0 6 1");
 
         //---- labelTurn ----
@@ -92,15 +97,15 @@ public class Game extends JPanel{
         add(labelTurn, "cell 0 1 2 1,alignx center,growx 0");
 
         //---- pioche ----
-        pioche.setIcon(new ImageIcon(getClass().getResource("/CardBack.png")));
+        pioche.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
         add(pioche, "cell 2 1 2 1,alignx center,growx 0");
 
         //---- trophy1 ----
-        trophy1.setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getTropheesPartie().get(0)))));
+        trophy1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/4Pique.png"));
         add(trophy1, "cell 4 1,alignx right,growx 0");
 
         //---- trophy2 ----
-        trophy2.setIcon(new ImageIcon(getClass().getResource("/3Carreau.png")));
+        trophy2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/3Carreau.png"));
         add(trophy2, "cell 5 1,alignx left,growx 0");
 
         //---- labelPioche ----
@@ -125,38 +130,46 @@ public class Game extends JPanel{
 
         //---- player1Card1 ----
         player1Card1.setBorder(null);
+        player1Card1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        player1Card1.setMargin(new Insets(0, 0, 0, 0));
+        player1Card1.setHorizontalAlignment(SwingConstants.RIGHT);
+        player1Card1.setIconTextGap(0);
         player1Card1.setBorderPainted(false);
-        player1Card1.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(0).getMain().get(0))));
         add(player1Card1, "cell 0 5,alignx right,growx 0");
 
         //---- player1Card2 ----
         player1Card2.setBorder(null);
         player1Card2.setBorderPainted(false);
-        player1Card2.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(0).getMain().get(1))));
+        player1Card2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        player1Card2.setHorizontalAlignment(SwingConstants.LEFT);
         add(player1Card2, "cell 1 5,alignx left,growx 0");
 
         //---- player2Card1 ----
         player2Card1.setBorder(null);
         player2Card1.setBorderPainted(false);
-        player2Card1.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(1).getMain().get(0))));
+        player2Card1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        player2Card1.setHorizontalAlignment(SwingConstants.RIGHT);
         add(player2Card1, "cell 2 5,alignx right,growx 0");
 
         //---- player2Card2 ----
         player2Card2.setBorder(null);
         player2Card2.setBorderPainted(false);
-        player2Card2.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(1).getMain().get(1))));
+        player2Card2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        player2Card2.setHorizontalAlignment(SwingConstants.LEFT);
         add(player2Card2, "cell 3 5,alignx left,growx 0");
 
         //---- player3Card1 ----
         player3Card1.setBorder(null);
         player3Card1.setBorderPainted(false);
-        player3Card1.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(2).getMain().get(0))));
+        player3Card1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        player3Card1.setHorizontalAlignment(SwingConstants.RIGHT);
         add(player3Card1, "cell 4 5,alignx right,growx 0");
 
         //---- player3Card2 ----
         player3Card2.setBorder(null);
         player3Card2.setBorderPainted(false);
-        player3Card2.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(2).getMain().get(1))));
+        player3Card2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        player3Card2.setHorizontalAlignment(SwingConstants.LEFT);
         add(player3Card2, "cell 5 5,alignx left,growx 0");
 
         //---- player1Label ----
@@ -173,11 +186,49 @@ public class Game extends JPanel{
         //GEN-END:initComponents
     }
 
-    public void updateCards() {
-        for (Joueur joueur : Partie.getInstance().getJoueurs()) {
-            if (Partie.getInstance().getGamePhase() == "hiding") {
-                if (joueur == Partie.getInstance().getCurrentPlaying()) {
+    public void guiUpdate() {
+        this.updateCards();
+        this.revalidate();
+    }
 
+    public void updateCards() {
+
+        if (Partie.getInstance().getGamePhase() == "hiding") {
+
+            for (Joueur joueur : Partie.getInstance().getJoueurs()) {
+
+                joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(0)))));
+                joueur.getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(1)))));
+
+                if (joueur == Partie.getInstance().getCurrentPlaying()) {
+                    joueur.getGuiCards().get(0).setEnabled(true);
+                    joueur.getGuiCards().get(1).setEnabled(true);
+                } else {
+                    joueur.getGuiCards().get(0).setEnabled(false);
+                    joueur.getGuiCards().get(1).setEnabled(false);
+                }
+
+            }
+
+        }
+        else if (Partie.getInstance().getGamePhase() == "jesting") {
+
+            for (Carte carte : Partie.getInstance().getSelectCards()) {
+                for (Joueur joueur : Partie.getInstance().getJoueurs()) {
+                    if (joueur.getMain().get(0) == carte) {
+                        joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(0)))));
+                        joueur.getGuiCards().get(0).setEnabled(true);
+                    }
+                    else if (joueur.getMain().get(1) == carte) {
+                        joueur.getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(1)))));
+                        joueur.getGuiCards().get(1).setEnabled(true);
+                    }
+                    else {
+                        joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(0)))));
+                        joueur.getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(1)))));
+                        joueur.getGuiCards().get(0).setEnabled(false);
+                        joueur.getGuiCards().get(1).setEnabled(false);
+                    }
                 }
             }
 
@@ -189,7 +240,7 @@ public class Game extends JPanel{
             case "hiding":
                 return "Clique sur la carte que tu souhaites cacher.";
             case "jesting":
-                return "CLique sur la carte que tu souhaites mettre dans ton Jest.";
+                return "Clique sur la carte que tu souhaites mettre dans ton Jest.";
             default :
                 return "En attente.";
         }

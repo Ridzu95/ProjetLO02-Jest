@@ -74,8 +74,11 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "player1Card1"
 				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
-				"borderPainted": false
 				"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 1, "/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png" )
+				"margin": new java.awt.Insets( 0, 0, 0, 0 )
+				"horizontalAlignment": 4
+				"iconTextGap": 0
+				"borderPainted": false
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 0 5,alignx right,growx 0"
 			} )
@@ -84,6 +87,7 @@ new FormModel {
 				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
 				"borderPainted": false
 				"icon": #SwingIcon0
+				"horizontalAlignment": 2
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 1 5,alignx left,growx 0"
 			} )
@@ -92,6 +96,7 @@ new FormModel {
 				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
 				"borderPainted": false
 				"icon": #SwingIcon0
+				"horizontalAlignment": 4
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 2 5,alignx right,growx 0"
 			} )
@@ -100,6 +105,7 @@ new FormModel {
 				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
 				"borderPainted": false
 				"icon": #SwingIcon0
+				"horizontalAlignment": 2
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 3 5,alignx left,growx 0"
 			} )
@@ -108,6 +114,7 @@ new FormModel {
 				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
 				"borderPainted": false
 				"icon": #SwingIcon0
+				"horizontalAlignment": 4
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 4 5,alignx right,growx 0"
 			} )
@@ -116,6 +123,7 @@ new FormModel {
 				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
 				"borderPainted": false
 				"icon": #SwingIcon0
+				"horizontalAlignment": 2
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 5 5,alignx left,growx 0"
 			} )
