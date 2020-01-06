@@ -215,7 +215,7 @@ public class Game extends JPanel{
         else {
             //---- header ----
             header.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/Rules.png"));
-            add(header, "cell 0 0 6 1, alignx center");
+            add(header, "cell 0 0 6 1, alignx center, growx 0");
 
             //---- labelTurn ----
             labelTurn.setText("Tour 1");
@@ -245,7 +245,7 @@ public class Game extends JPanel{
 
             //---- trophy1 ----
             trophy1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/4Pique.png"));
-            add(trophy1, "cell 4 2,alignx right,growx 0");
+            add(trophy1, "cell 4 2 2 1,alignx center,growx 0");
 
             //---- player1Label ----
             player1Label.setText("Player 1");
@@ -370,32 +370,42 @@ public class Game extends JPanel{
         }
         else if (Partie.getInstance().getGamePhase() == "jesting") {
 
-            for (Carte carte : Partie.getInstance().getSelectCards()) {
-                for (Joueur joueur : Partie.getInstance().getJoueurs()) {
-                    if (joueur.getMain().size() == 2) {
-                        if (joueur.getMain().get(0) == carte) {
-                            joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(0)))));
-                            joueur.getGuiCards().get(0).setEnabled(true);
-                        }
-                        else if (joueur.getMain().get(1) == carte) {
-                            joueur.getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(1)))));
-                            joueur.getGuiCards().get(1).setEnabled(true);
-                        }
-                        else {
-                            joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(0)))));
-                            joueur.getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(1)))));
-                            joueur.getGuiCards().get(0).setEnabled(false);
-                            joueur.getGuiCards().get(1).setEnabled(false);
-                        }
-                    }
-                    else {
-                        joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource("/BackCard.png")));
-                        joueur.getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource("/BackCard.png")));
-                        joueur.getGuiCards().get(0).setEnabled(false);
-                        joueur.getGuiCards().get(1).setEnabled(false);
-                    }
-
-                }
+            for (Joueur joueur : Partie.getInstance().getJoueurs()) {
+                joueur.getGuiCards().get(0).setEnabled(false);
+                joueur.getGuiCards().get(1).setEnabled(false);
+                joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource("/CardBack.png")));
+                joueur.getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource("/CardBack.png")));
+            }
+            this.revalidate();
+            if (Partie.getInstance().getSelectCards().size() == 2) {
+                Partie.getInstance().getSelectJoueurs().get(0).getGuiCards().get(0).setEnabled(true);
+                Partie.getInstance().getSelectJoueurs().get(0).getGuiCards().get(1).setEnabled(true);
+                Partie.getInstance().getSelectJoueurs().get(0).getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getSelectJoueurs().get(0).getMain().get(0)))));
+                Partie.getInstance().getSelectJoueurs().get(0).getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getSelectJoueurs().get(0).getMain().get(1)))));
+            }
+            else if (Partie.getInstance().getSelectCards().size() == 4) {
+                Partie.getInstance().getSelectJoueurs().get(0).getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getSelectJoueurs().get(0).getMain().get(0)))));
+                Partie.getInstance().getSelectJoueurs().get(0).getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getSelectJoueurs().get(0).getMain().get(1)))));
+                Partie.getInstance().getSelectJoueurs().get(0).getGuiCards().get(0).setEnabled(true);
+                Partie.getInstance().getSelectJoueurs().get(0).getGuiCards().get(1).setEnabled(true);
+                Partie.getInstance().getSelectJoueurs().get(2).getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getSelectJoueurs().get(2).getMain().get(0)))));
+                Partie.getInstance().getSelectJoueurs().get(2).getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getSelectJoueurs().get(2).getMain().get(1)))));
+                Partie.getInstance().getSelectJoueurs().get(2).getGuiCards().get(0).setEnabled(true);
+                Partie.getInstance().getSelectJoueurs().get(2).getGuiCards().get(1).setEnabled(true);
+            }
+            else if (Partie.getInstance().getSelectCards().size() == 6) {
+                Partie.getInstance().getSelectJoueurs().get(0).getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getSelectJoueurs().get(0).getMain().get(0)))));
+                Partie.getInstance().getSelectJoueurs().get(0).getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getSelectJoueurs().get(0).getMain().get(1)))));
+                Partie.getInstance().getSelectJoueurs().get(0).getGuiCards().get(0).setEnabled(true);
+                Partie.getInstance().getSelectJoueurs().get(0).getGuiCards().get(1).setEnabled(true);
+                Partie.getInstance().getSelectJoueurs().get(2).getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getSelectJoueurs().get(2).getMain().get(0)))));
+                Partie.getInstance().getSelectJoueurs().get(2).getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getSelectJoueurs().get(2).getMain().get(1)))));
+                Partie.getInstance().getSelectJoueurs().get(2).getGuiCards().get(0).setEnabled(true);
+                Partie.getInstance().getSelectJoueurs().get(2).getGuiCards().get(1).setEnabled(true);
+                Partie.getInstance().getSelectJoueurs().get(4).getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getSelectJoueurs().get(4).getMain().get(0)))));
+                Partie.getInstance().getSelectJoueurs().get(4).getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getSelectJoueurs().get(4).getMain().get(1)))));
+                Partie.getInstance().getSelectJoueurs().get(4).getGuiCards().get(0).setEnabled(true);
+                Partie.getInstance().getSelectJoueurs().get(4).getGuiCards().get(1).setEnabled(true);
             }
 
         }
