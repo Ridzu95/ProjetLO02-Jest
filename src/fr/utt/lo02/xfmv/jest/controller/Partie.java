@@ -12,6 +12,7 @@ import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
 import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
 import fr.utt.lo02.xfmv.jest.vue.console.Console;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GUI;
+import fr.utt.lo02.xfmv.jest.vue.graphicInterface.Game;
 import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GameConfig;
 
 import java.awt.*;
@@ -38,10 +39,14 @@ public class Partie implements Runnable {
 	private String gamePhase;
 	private boolean jestingPhasePlayed;
 	private ArrayList<Carte> selectCards;
+	private ArrayList<Joueur> selectJoueurs;
+
+	private boolean ready;
 
 	private int message;
 	private Console console;
 	private Joueur currentPlaying;
+	private Game game;
 
 	public Console getConsole() {
 		return console;
@@ -77,6 +82,7 @@ public class Partie implements Runnable {
 		hidingPhasePlayed = false;
 		jestingPhasePlayed = false;
 		variante = null;
+		ready = true;
 
 		message = -1;
 	}
@@ -84,7 +90,7 @@ public class Partie implements Runnable {
 	private static Partie partie = new Partie();
 
 	public static Partie getInstance() {
-		return partie;
+	 	return partie;
 	}
 
 	public void initialiserPartie() throws InterruptedException {
@@ -134,12 +140,12 @@ public class Partie implements Runnable {
 			for (Joueur i : joueurs) {
 				i.getMain().add(this.basePioche.poll());
 				i.getMain().add(this.basePioche.poll());
-				/*
+
 				if (i instanceof JoueurVirtuel) {
 					for (Carte card : i.getMain()) {
 						card.setVisible(false);
 					}
-				} */
+				}
 			}
 
 			return ;
@@ -203,13 +209,22 @@ public class Partie implements Runnable {
 						Thread.sleep(2000);
 					}
 					message -= 1; //on enlève -1 pour passez de 1 à 0 et 2 à 1
-					joueur.getMain().get(this.message).setVisible(true); //Plus besoin de faire player.faireOffre() en fait ._.
+					joueur.getMain().get(this.message).setVisible(false); //Plus besoin de faire player.faireOffre() en fait ._.
 					//sinon on peut faire jouer.faireOffre(this.message) et faire la mm chose
-					System.out.println("\nLe joueur " + joueur + " a caché une carte");
+
 					this.message = -1; //on réinitialise le message à une valeur par défaut
 				} else {
 					int random = (int) (Math.random() + 0.5);
-					joueur.getMain().get(random).setVisible(true); //là c'est fait random
+					joueur.getMain().get(random).setVisible(false); //là c'est fait random
+				}
+
+				System.out.println("\nLe joueur " + joueur + " a caché une carte");
+
+				this.ready = false; //on attends que gui soit à jour pour jouer la partie
+				this.game.guiUpdate();
+				while (this.ready == false) {
+					System.out.println("Partie en attente");
+					Thread.sleep(500);
 				}
 				//maj le gui pour passer au joueur suivant
 			}
@@ -463,6 +478,30 @@ public class Partie implements Runnable {
 
 	public void setSelectCards(ArrayList<Carte> selectCards) {
 		this.selectCards = selectCards;
+	}
+
+	public ArrayList<Joueur> getSelectJoueurs() {
+		return selectJoueurs;
+	}
+
+	public void setSelectJoueurs(ArrayList<Joueur> selectJoueurs) {
+		this.selectJoueurs = selectJoueurs;
+	}
+
+	public boolean isReady() {
+		return ready;
+	}
+
+	public void setReady(boolean ready) {
+		this.ready = ready;
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
 	}
 
 	@Override

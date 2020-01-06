@@ -187,14 +187,16 @@ public class Game extends JPanel{
     }
 
     public void guiUpdate() {
+        System.out.println("gui a été mis à jour");
         this.updateCards();
         this.revalidate();
+
+        Partie.getInstance().setReady(true);
     }
 
     public void updateCards() {
 
         if (Partie.getInstance().getGamePhase() == "hiding") {
-
             for (Joueur joueur : Partie.getInstance().getJoueurs()) {
 
                 joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(0)))));
@@ -290,7 +292,7 @@ public class Game extends JPanel{
             }
         }
         else {
-            return "/resources/CardBack.png";
+            return "/CardBack.png";
         }
 
     }
