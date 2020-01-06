@@ -105,10 +105,6 @@ public class PartieController implements Runnable{ //Consumer
             new Thread(this.gui).start();
         }
 
-        if (Partie.getInstance().getGamePhase() == "hiding" && Partie.getInstance().checkCardsStates()) {
-            Partie.getInstance().setHidingPhasePlayed(true); //passage à la phase de jest
-        }
-
         if (Partie.getInstance().getGamePhase() == "jesting"){
             this.partie.setMessage(msg);
         }

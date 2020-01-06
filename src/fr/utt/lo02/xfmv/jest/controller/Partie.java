@@ -142,11 +142,6 @@ public class Partie implements Runnable {
 				i.getMain().add(this.basePioche.poll());
 				i.getMain().add(this.basePioche.poll());
 
-				if (i instanceof JoueurVirtuel) {
-					for (Carte card : i.getMain()) {
-						card.setVisible(false);
-					}
-				}
 			}
 
 			return ;
@@ -214,8 +209,9 @@ public class Partie implements Runnable {
 
 					this.message = -1;
 				} else {
+
 					int random = (int) (Math.random() + 0.5);
-					joueur.getMain().get(random).setVisible(true);
+					joueur.getMain().get(random).setVisible(false);
 					this.message = -1;
 				}
 
@@ -355,25 +351,6 @@ public class Partie implements Runnable {
 
 		System.out.println("Phase de jesting terminée");
 
-	}
-
-	//méthode qui permet de savoir si tout les joueurs ont caché une carte
-
-	public boolean checkCardsStates() {
-		if (this.gamePhase == "hiding") {
-			for (Joueur player : joueurs) {
-				if (player instanceof JoueurReel) {
-					if (player.getMain().get(0).isVisible() && player.getMain().get(1).isVisible()) {
-						return false;
-					}
-					else if (!player.getMain().get(0).isVisible() && !player.getMain().get(1).isVisible()) {
-						return false;
-					}
-				}
-			}
-			return true; //tous les joueurs on choisis leurs cartes
-		}
-		return false; //les joueurs n'ont pas tous choisis leurs cartes
 	}
 
 	/* getter setter */

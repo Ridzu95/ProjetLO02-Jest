@@ -87,7 +87,7 @@ public class GameConfig extends JPanel {
         add(labelRealPlayers, "cell 1 2,align left center,grow 0 0");
 
         //---- spinnerRealPlayers ----
-        spinnerRealPlayers.setModel(new SpinnerNumberModel(1, 0, 4, 1));
+        spinnerRealPlayers.setModel(new SpinnerNumberModel(1, 1, 4, 1));
         add(spinnerRealPlayers, "cell 2 2,aligny center,growy 0");
 
         //---- labelVariante ----
