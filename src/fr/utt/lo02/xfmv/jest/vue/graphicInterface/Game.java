@@ -332,7 +332,7 @@ public class Game extends JPanel{
     }
 
     public void guiUpdate() {
-        
+
         labelPioche.setText(Partie.getInstance().getBasePioche().size() + " cartes dans la pioche");
         labelWhosPlaying.setText("C'est \u00e0 " + Partie.getInstance().getCurrentPlaying() + " de jouer !");
         labelPhase.setText(this.displayPhase(Partie.getInstance().getGamePhase()));
@@ -367,20 +367,29 @@ public class Game extends JPanel{
 
             for (Carte carte : Partie.getInstance().getSelectCards()) {
                 for (Joueur joueur : Partie.getInstance().getJoueurs()) {
-                    if (joueur.getMain().get(0) == carte) {
-                        joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(0)))));
-                        joueur.getGuiCards().get(0).setEnabled(true);
-                    }
-                    else if (joueur.getMain().get(1) == carte) {
-                        joueur.getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(1)))));
-                        joueur.getGuiCards().get(1).setEnabled(true);
+                    if (joueur.getMain().size() == 2) {
+                        if (joueur.getMain().get(0) == carte) {
+                            joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(0)))));
+                            joueur.getGuiCards().get(0).setEnabled(true);
+                        }
+                        else if (joueur.getMain().get(1) == carte) {
+                            joueur.getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(1)))));
+                            joueur.getGuiCards().get(1).setEnabled(true);
+                        }
+                        else {
+                            joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(0)))));
+                            joueur.getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(1)))));
+                            joueur.getGuiCards().get(0).setEnabled(false);
+                            joueur.getGuiCards().get(1).setEnabled(false);
+                        }
                     }
                     else {
-                        joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(0)))));
-                        joueur.getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource(this.displayCards(joueur.getMain().get(1)))));
+                        joueur.getGuiCards().get(0).setIcon(new ImageIcon(getClass().getResource("/BackCard.png")));
+                        joueur.getGuiCards().get(1).setIcon(new ImageIcon(getClass().getResource("/BackCard.png")));
                         joueur.getGuiCards().get(0).setEnabled(false);
                         joueur.getGuiCards().get(1).setEnabled(false);
                     }
+
                 }
             }
 
