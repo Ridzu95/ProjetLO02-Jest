@@ -150,9 +150,9 @@ public class Console implements Runnable {
 
         if (this.partie.getGamePhase() == "sélection de la carte à cacher" && Partie.getInstance().checkCardsStates() == false){
             System.out.println("## Mains des joueurs : \n"
-                    + Partie.getInstance().getJoueurs().get(0) + " possèdes : " + Partie.getInstance().getJoueurs().get(0).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(0).getMain().get(1) + "\n"
-                    + Partie.getInstance().getJoueurs().get(1) + " possèdes : " + Partie.getInstance().getJoueurs().get(1).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(1).getMain().get(1) + "\n"
-                    + Partie.getInstance().getJoueurs().get(2) + " possèdes : " + Partie.getInstance().getJoueurs().get(2).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(2).getMain().get(1) + "\n"
+                    + Partie.getInstance().getJoueurs().get(0) + " possède : " + Partie.getInstance().getJoueurs().get(0).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(0).getMain().get(1) + "\n"
+                    + Partie.getInstance().getJoueurs().get(1) + " possède : " + Partie.getInstance().getJoueurs().get(1).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(1).getMain().get(1) + "\n"
+                    + Partie.getInstance().getJoueurs().get(2) + " possède : " + Partie.getInstance().getJoueurs().get(2).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(2).getMain().get(1) + "\n"
             );
             if ( Partie.getInstance().getPlayerCount() == 4 ){
                 System.out.println(Partie.getInstance().getJoueurs().get(3) + " possèdes : " + Partie.getInstance().getJoueurs().get(3).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(3).getMain().get(1)

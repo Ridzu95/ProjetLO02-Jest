@@ -4,6 +4,7 @@
 
 package fr.utt.lo02.xfmv.jest.vue.graphicInterface;
 
+import java.awt.*;
 import javax.swing.*;
 
 import fr.utt.lo02.xfmv.jest.controller.GameController;
@@ -25,110 +26,130 @@ public class Game extends JPanel{
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
-        label3 = new JLabel();
-        label2 = new JLabel();
-        phaseTextLabel = new JLabel();
-        player1Card1 = new JButton();
-        player1Card2 = new JButton();
-        player2Card1 = new JButton();
-        player2Card2 = new JButton();
-        player3Card1 = new JButton();
-        player3Card2 = new JButton();
+        header = new JLabel();
+        labelTurn = new JLabel();
+        pioche = new JLabel();
+        trophy1 = new JLabel();
+        trophy2 = new JLabel();
+        labelPioche = new JLabel();
+        labelTrophies = new JLabel();
+        labelWhosPlaying = new JLabel();
+        labelPhase = new JLabel();
+        player1Card1 = new JLabel();
+        player1Card2 = new JLabel();
+        player2Card1 = new JLabel();
+        player2Card2 = new JLabel();
+        player3Card1 = new JLabel();
+        player3Card2 = new JLabel();
         player1Label = new JLabel();
         player2Label = new JLabel();
-        player2Label2 = new JLabel();
-        nextPhase = new JButton();
+        player3Label = new JLabel();
 
         //======== this ========
-        setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border.
-                EmptyBorder( 0, 0, 0, 0) , "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax. swing. border. TitledBorder. CENTER, javax. swing
-                . border. TitledBorder. BOTTOM, new java .awt .Font ("Dia\u006cog" ,java .awt .Font .BOLD ,12 ),
-                java. awt. Color. red) , getBorder( )) );  addPropertyChangeListener (new java. beans. PropertyChangeListener( )
-        { @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062ord\u0065r" .equals (e .getPropertyName () ))
-            throw new RuntimeException( ); }} );
+        setMaximumSize(new Dimension(800, 600));
+        setMinimumSize(new Dimension(800, 600));
+        setPreferredSize(new Dimension(800, 600));
+        setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax . swing. border
+        .EmptyBorder ( 0, 0 ,0 , 0) ,  "JFor\u006dDesi\u0067ner \u0045valu\u0061tion" , javax. swing .border . TitledBorder. CENTER ,javax
+        . swing. border .TitledBorder . BOTTOM, new java. awt .Font ( "Dia\u006cog", java .awt . Font. BOLD ,
+        12 ) ,java . awt. Color .red ) , getBorder () ) );  addPropertyChangeListener( new java. beans
+        .PropertyChangeListener ( ){ @Override public void propertyChange (java . beans. PropertyChangeEvent e) { if( "bord\u0065r" .equals ( e.
+        getPropertyName () ) )throw new RuntimeException( ) ;} } );
         setLayout(new MigLayout(
-                "hidemode 3",
-                // columns
-                "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]" +
-                        "[fill]",
-                // rows
-                "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]"));
+            "hidemode 3",
+            // columns
+            "0[grow,sizegroup 1,fill]" +
+            "[grow,sizegroup 1,fill]" +
+            "[grow,sizegroup 1,fill]" +
+            "[grow,sizegroup 1,fill]" +
+            "[grow,sizegroup 1,fill]" +
+            "[127,grow,sizegroup 1,fill]0",
+            // rows
+            "0[]20" +
+            "[]" +
+            "[]" +
+            "[44]" +
+            "[]" +
+            "[]" +
+            "[16]" +
+            "[]"));
 
-        //---- label3 ----
-        label3.setText("Tour " + Partie.getInstance().getTour());
-        add(label3, "cell 5 1 8 1,alignx center,growx 0");
+        //---- header ----
+        header.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/Rules.png"));
+        add(header, "cell 0 0 6 1");
 
-        //---- phaseTextLabel ----
-        phaseTextLabel.setText("Phase : " + Partie.getInstance().getGamePhase());
-        add(phaseTextLabel, "cell 5 3 8 1,alignx center,growx 0");
+        //---- labelTurn ----
+        labelTurn.setText("Tour 1");
+        labelTurn.setFont(new Font("Ubuntu Light", Font.BOLD, 22));
+        add(labelTurn, "cell 0 1 2 1,alignx center,growx 0");
 
-        //---- label2 ----
-        label2.setText(Partie.getInstance().getBasePioche().size() + " cartes dans la pioche");
-        add(label2, "cell 5 2 8 1,alignx center,growx 0");
+        //---- pioche ----
+        pioche.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        add(pioche, "cell 2 1 2 1,alignx center,growx 0");
+
+        //---- trophy1 ----
+        trophy1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/4Pique.png"));
+        add(trophy1, "cell 4 1,alignx right,growx 0");
+
+        //---- trophy2 ----
+        trophy2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/3Carreau.png"));
+        add(trophy2, "cell 5 1,alignx left,growx 0");
+
+        //---- labelPioche ----
+        labelPioche.setText("9 cartes dans la pioche");
+        labelPioche.setFont(new Font("Ubuntu Light", Font.BOLD | Font.ITALIC, 10));
+        add(labelPioche, "cell 2 2 2 1,alignx center,growx 0");
+
+        //---- labelTrophies ----
+        labelTrophies.setText("Troph\u00e9es de la partie");
+        labelTrophies.setFont(new Font("Ubuntu Light", Font.BOLD | Font.ITALIC, 10));
+        add(labelTrophies, "cell 4 2 2 1,alignx center,growx 0");
+
+        //---- labelWhosPlaying ----
+        labelWhosPlaying.setText("C'est \u00e0 Player 1 de jouer !");
+        labelWhosPlaying.setFont(new Font("Ubuntu Light", Font.BOLD, 16));
+        add(labelWhosPlaying, "cell 1 3 4 1,align center bottom,grow 0 0");
+
+        //---- labelPhase ----
+        labelPhase.setText("Clique sur la carte que tu souhaites cacher.");
+        labelPhase.setFont(new Font("Ubuntu Light", Font.BOLD | Font.ITALIC, 16));
+        add(labelPhase, "cell 1 4 4 1,alignx center,growx 0");
 
         //---- player1Card1 ----
-        player1Card1.setText(Partie.getInstance().getJoueurs().get(0).getMain().get(0).toString());
-        add(player1Card1, "cell 5 4");
+        player1Card1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/2Pique.png"));
+        add(player1Card1, "cell 0 5,alignx right,growx 0");
 
         //---- player1Card2 ----
-        player1Card2.setText(Partie.getInstance().getJoueurs().get(0).getMain().get(1).toString());
-        add(player1Card2, "cell 6 4");
+        player1Card2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/APique.png"));
+        add(player1Card2, "cell 1 5,alignx left,growx 0");
 
         //---- player2Card1 ----
-        player2Card1.setText(Partie.getInstance().getJoueurs().get(1).getMain().get(0).toString());
-        add(player2Card1, "cell 8 4");
+        player2Card1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        add(player2Card1, "cell 2 5,alignx right,growx 0");
 
         //---- player2Card2 ----
-        player2Card2.setText(Partie.getInstance().getJoueurs().get(1).getMain().get(1).toString());
-        add(player2Card2, "cell 9 4");
+        player2Card2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        add(player2Card2, "cell 3 5,alignx left,growx 0");
 
         //---- player3Card1 ----
-        player3Card1.setText(Partie.getInstance().getJoueurs().get(2).getMain().get(0).toString());
-        add(player3Card1, "cell 11 4");
+        player3Card1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        add(player3Card1, "cell 4 5,alignx right,growx 0");
 
         //---- player3Card2 ----
-        player3Card2.setText(Partie.getInstance().getJoueurs().get(2).getMain().get(1).toString());
-        add(player3Card2, "cell 12 4");
+        player3Card2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        add(player3Card2, "cell 5 5,alignx left,growx 0");
 
         //---- player1Label ----
-        player1Label.setText(Partie.getInstance().getJoueurs().get(0).toString());
-        add(player1Label, "cell 5 5 2 1,alignx center,growx 0");
+        player1Label.setText("Player 1");
+        add(player1Label, "cell 0 6 2 1,alignx center,growx 0");
 
         //---- player2Label ----
-        player2Label.setText(Partie.getInstance().getJoueurs().get(1).toString());
-        add(player2Label, "cell 8 5 2 1,alignx center,growx 0");
+        player2Label.setText("Player 2");
+        add(player2Label, "cell 2 6 2 1,alignx center,growx 0");
 
-        //---- player2Label2 ----
-        player2Label2.setText(Partie.getInstance().getJoueurs().get(2).toString());
-        add(player2Label2, "cell 11 5 2 1,alignx center,growx 0");
-
-        //---- button5 ----
-        nextPhase.setText("Phase suivante");
-        add(nextPhase, "cell 8 8 2 1");
+        //---- player3Label ----
+        player3Label.setText("Player 3");
+        add(player3Label, "cell 4 6 2 1,alignx center,growx 0");
         //GEN-END:initComponents
     }
 
@@ -136,124 +157,27 @@ public class Game extends JPanel{
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
-    private JLabel label3;
-    private JLabel label2;
-    private JLabel phaseTextLabel;
-    private JButton player1Card1;
-    private JButton player1Card2;
-    private JButton player2Card1;
-    private JButton player2Card2;
-    private JButton player3Card1;
-    private JButton player3Card2;
+    private JLabel header;
+    private JLabel labelTurn;
+    private JLabel pioche;
+    private JLabel trophy1;
+    private JLabel trophy2;
+    private JLabel labelPioche;
+    private JLabel labelTrophies;
+    private JLabel labelWhosPlaying;
+    private JLabel labelPhase;
+    private JLabel player1Card1;
+    private JLabel player1Card2;
+    private JLabel player2Card1;
+    private JLabel player2Card2;
+    private JLabel player3Card1;
+    private JLabel player3Card2;
     private JLabel player1Label;
     private JLabel player2Label;
-    private JLabel player2Label2;
-    private JButton nextPhase;
+    private JLabel player3Label;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
 
-    public JLabel getLabel3() {
-        return label3;
-    }
 
-    public void setLabel3(JLabel label3) {
-        this.label3 = label3;
-    }
-
-    public JLabel getPhaseTextLabel() {
-        return phaseTextLabel;
-    }
-
-    public void setPhaseTextLabel(JLabel phaseTextLabel) {
-        this.phaseTextLabel = phaseTextLabel;
-    }
-
-    public JLabel getLabel2() {
-        return label2;
-    }
-
-    public void setLabel2(JLabel label2) {
-        this.label2 = label2;
-    }
-
-    public JButton getPlayer1Card1() {
-        return player1Card1;
-    }
-
-    public void setPlayer1Card1(JButton player1Card1) {
-        this.player1Card1 = player1Card1;
-    }
-
-    public JButton getPlayer1Card2() {
-        return player1Card2;
-    }
-
-    public void setPlayer1Card2(JButton player1Card2) {
-        this.player1Card2 = player1Card2;
-    }
-
-    public JButton getPlayer2Card1() {
-        return player2Card1;
-    }
-
-    public void setPlayer2Card1(JButton player2Card1) {
-        this.player2Card1 = player2Card1;
-    }
-
-    public JButton getPlayer2Card2() {
-        return player2Card2;
-    }
-
-    public void setPlayer2Card2(JButton player2Card2) {
-        this.player2Card2 = player2Card2;
-    }
-
-    public JButton getPlayer3Card1() {
-        return player3Card1;
-    }
-
-    public void setPlayer3Card1(JButton player3Card1) {
-        this.player3Card1 = player3Card1;
-    }
-
-    public JButton getPlayer3Card2() {
-        return player3Card2;
-    }
-
-    public void setPlayer3Card2(JButton player3Card2) {
-        this.player3Card2 = player3Card2;
-    }
-
-    public JLabel getPlayer1Label() {
-        return player1Label;
-    }
-
-    public void setPlayer1Label(JLabel player1Label) {
-        this.player1Label = player1Label;
-    }
-
-    public JLabel getPlayer2Label() {
-        return player2Label;
-    }
-
-    public void setPlayer2Label(JLabel player2Label) {
-        this.player2Label = player2Label;
-    }
-
-    public JLabel getPlayer2Label2() {
-        return player2Label2;
-    }
-
-    public void setPlayer2Label2(JLabel player2Label2) {
-        this.player2Label2 = player2Label2;
-    }
-
-    public JButton getNextPhase() {
-        return nextPhase;
-    }
-
-    public void setNextPhase(JButton nextPhase) {
-        this.nextPhase = nextPhase;
-    }
 
 }
