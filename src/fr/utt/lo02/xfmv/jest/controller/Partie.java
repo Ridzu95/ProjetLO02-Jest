@@ -300,12 +300,16 @@ public class Partie implements Runnable {
 
 			if (choosingPlayer instanceof JoueurReel){
 				this.currentPlaying = choosingPlayer;
-				while (this.message > this.selectCards.size() || this.message <=  0 ){
+				System.out.println(this.selectCards.size());
+				while (this.message > this.selectCards.size() || this.message <  0 ){
+
 					if (this.message != -1){
 						System.out.println("Format incorrect");
 						this.message = -1;
 					}
+					Thread.sleep(2000);
 				}
+				System.out.println("sorti");
 				this.message -= 1;
 				Thread.sleep(2000);
 				System.out.println("message :" + this.message);
@@ -462,6 +466,10 @@ public class Partie implements Runnable {
 
 	public void setMessage(int message) {
 		this.message = message;
+	}
+
+	public int getMessage() {
+		return message;
 	}
 
 	public ArrayList<Carte> getSelectCards() {

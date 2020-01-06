@@ -89,12 +89,6 @@ public class GameController {
                                 }
                             }
                         }
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
-                        }
-                        game.guiUpdate();
                     }
                 });
 
