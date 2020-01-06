@@ -58,7 +58,12 @@ public class GUI extends JFrame implements Runnable {
         if (Partie.getInstance().isStarted() && Partie.getInstance().isSetup()) {
 
             this.getContentPane().removeAll();
-            Game game = new Game();
+            Game game = null;
+            try {
+                game = new Game();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             this.getContentPane().add(game);
             Partie.getInstance().setGame(game);
             this.pack();

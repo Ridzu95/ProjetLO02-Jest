@@ -275,8 +275,8 @@ public class Partie implements Runnable {
 
 	public void controlOffers() throws InterruptedException {
 
-
 		Joueur choosingPlayer = joueurs.get(0);
+		this.currentPlaying = choosingPlayer;
 		boolean everyonePlayed = false;
 
 		while (everyonePlayed == false) {
@@ -301,6 +301,7 @@ public class Partie implements Runnable {
 			if (choosingPlayer instanceof JoueurReel){
 				this.currentPlaying = choosingPlayer;
 				System.out.println(this.selectCards.size());
+				this.game.guiUpdate();
 				while (this.message > this.selectCards.size() || this.message <  0 ){
 
 					if (this.message != -1){

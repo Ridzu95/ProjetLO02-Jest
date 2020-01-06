@@ -167,12 +167,7 @@ public class Console implements Runnable {
         }
 
         if (this.partie.getGamePhase() == "hiding"){
-            this.showHands();
-            if (Partie.getInstance().getRealPlayerCount() == 0){
-                System.out.println("Tapez 1 pour passer à la phase suivante");
-            } else {
-                System.out.println("Choisir la carte à cacher pour le joueur " + Partie.getInstance().getCurrentPlaying());
-            }
+                System.out.println("Le joueur " + Partie.getInstance().getCurrentPlaying() + " doit choisir une carte à cacher");
         }
 
         if (this.partie.getGamePhase() == "jesting"){
