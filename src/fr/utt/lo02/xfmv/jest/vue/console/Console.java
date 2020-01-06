@@ -184,7 +184,6 @@ public class Console implements Runnable {
             }
         }
 
-        System.out.println(Thread.activeCount() + " a maj ");
         System.out.println("Votre choix : ");
     }
 
@@ -196,7 +195,7 @@ public class Console implements Runnable {
         msg = this.scan.nextInt(); //le thread reste bloqué ici s'il n'y a pas d'input
 
         this.queue.put(msg); //on envoit le msg dès qu'il y a un input
-        Thread.sleep(2000); //besoin d'attentre que la partie aie finit ses manips pour maj l'affichage sinon cv pas
+        Thread.sleep(500); //besoin d'attentre que la partie aie finit ses manips pour maj l'affichage sinon cv pas
         run();
     }
 
