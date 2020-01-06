@@ -27,6 +27,7 @@ public class Game extends JPanel{
     public Game() {
         initComponents();
         GameController gameController = new GameController(this);
+        Partie.getInstance().getJoueurs().get(0).getGuiCards().add(this.player1Card1);
     }
 
     private void initComponents() {
@@ -82,7 +83,7 @@ public class Game extends JPanel{
             "[]"));
 
         //---- header ----
-        header.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/Rules.png"));
+        header.setIcon(new ImageIcon(getClass().getResource("/Rules.png")));
         add(header, "cell 0 0 6 1");
 
         //---- labelTurn ----
@@ -91,15 +92,15 @@ public class Game extends JPanel{
         add(labelTurn, "cell 0 1 2 1,alignx center,growx 0");
 
         //---- pioche ----
-        pioche.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png"));
+        pioche.setIcon(new ImageIcon(getClass().getResource("/CardBack.png")));
         add(pioche, "cell 2 1 2 1,alignx center,growx 0");
 
         //---- trophy1 ----
-        trophy1.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/4Pique.png"));
+        trophy1.setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getTropheesPartie().get(0)))));
         add(trophy1, "cell 4 1,alignx right,growx 0");
 
         //---- trophy2 ----
-        trophy2.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/3Carreau.png"));
+        trophy2.setIcon(new ImageIcon(getClass().getResource("/3Carreau.png")));
         add(trophy2, "cell 5 1,alignx left,growx 0");
 
         //---- labelPioche ----
@@ -200,45 +201,45 @@ public class Game extends JPanel{
         if (card.isVisible()) {
             switch (card.toString()) {
                 case "2♥":
-                    return "../../../../resources/2Coeur.png";
+                    return "/2Coeur.png";
                 case "4♥":
-                    return "../../../../resources/4Coeur.png";
+                    return "/4Coeur.png";
                 case "3♥":
-                    return "../../../../resources/3Coeur.png";
+                    return "/3Coeur.png";
                 case "1♥":
-                    return "../../../../resources/ACoeur.png";
+                    return "/ACoeur.png";
                 case "2♦":
-                    return "../../../../resources/2Carreau.png";
+                    return "/2Carreau.png";
                 case "3♦":
-                    return "../../../../resources/3Carreau.png";
+                    return "/3Carreau.png";
                 case "4♦":
-                    return "../../../../resources/4Carreau.png";
+                    return "/4Carreau.png";
                 case "1♦":
-                    return "../../../../resources/ACarreau.png";
+                    return "/ACarreau.png";
                 case "2♣":
-                    return "../../../../resources/2Trefle.png";
+                    return "/2Trefle.png";
                 case "3♣":
-                    return "../../../../resources/3Trefle.png";
+                    return "/3Trefle.png";
                 case "4♣":
-                    return "../../../../resources/4Trefle.png";
+                    return "/4Trefle.png";
                 case "1♣":
-                    return "../../../../resources/ATrefle.png";
+                    return "/ATrefle.png";
                 case "2♠":
-                    return "../../../../resources/2Pique.png";
+                    return "/2Pique.png";
                 case "3♠":
-                    return "../../../../resources/3Pique.png";
+                    return "/3Pique.png";
                 case "4♠":
-                    return "../../../../resources/4Pique.png";
+                    return "/4Pique.png";
                 case "1♠":
-                    return "../../../../resources/APique.png";
+                    return "/APique.png";
                 case "★":
-                    return "../../../../resources/Joker.png";
+                    return "/Joker.png";
                 default:
-                    return "../../../../resources/CardBack.png";
+                    return "/CardBack.png";
             }
         }
         else {
-            return "../../../../resources/CardBack.png";
+            return "/resources/CardBack.png";
         }
 
     }

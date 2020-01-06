@@ -61,7 +61,7 @@ public class Menu extends JPanel {
             "[]"));
 
         //---- titleImage ----
-        titleImage.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/MainTitle.png"));
+        titleImage.setIcon(new ImageIcon(getClass().getResource("/MainTitle.png")));
         titleImage.setIconTextGap(0);
         add(titleImage, "cell 0 0 2 1,alignx center,growx 0");
 
