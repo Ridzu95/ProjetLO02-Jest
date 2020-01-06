@@ -184,7 +184,7 @@ public class Console implements Runnable {
             }
         }
 
-
+        System.out.println(Thread.activeCount() + " a maj ");
         System.out.println("Votre choix : ");
     }
 

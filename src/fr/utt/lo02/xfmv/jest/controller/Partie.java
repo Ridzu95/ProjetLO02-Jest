@@ -200,7 +200,6 @@ public class Partie implements Runnable {
 
 						if (this.message != -1){ //traite les mauvais unput
 							System.out.println("Format incorrecte \n");
-							this.console.majAffichage();
 							this.message = -1;
 						}
 						Thread.sleep(1000);
@@ -348,7 +347,6 @@ public class Partie implements Runnable {
 
 		}
 
-		this.gamePhase = "hiding";
 		System.out.println("Phase de jesting terminée");
 
 	}

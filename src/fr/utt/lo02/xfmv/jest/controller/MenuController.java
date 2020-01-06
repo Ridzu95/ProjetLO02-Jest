@@ -25,6 +25,11 @@ public class MenuController {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                try {
+                    Partie.getInstance().getConsole().majAffichage();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
