@@ -25,7 +25,7 @@ public class Game extends JPanel{
 
 
 
-    public Game() {
+    public Game() throws InterruptedException {
         initComponents();
         Partie.getInstance().getJoueurs().get(0).getGuiCards().add(this.player1Card1);
         Partie.getInstance().getJoueurs().get(0).getGuiCards().add(this.player1Card2);
@@ -335,7 +335,7 @@ public class Game extends JPanel{
 
     }
 
-    public void guiUpdate() {
+    public void guiUpdate() throws InterruptedException {
 
         labelPioche.setText(Partie.getInstance().getBasePioche().size() + " cartes dans la pioche");
         labelWhosPlaying.setText("C'est \u00e0 " + Partie.getInstance().getCurrentPlaying() + " de jouer !");
@@ -343,6 +343,7 @@ public class Game extends JPanel{
         labelTurn.setText("Tour " + Partie.getInstance().getTour());
         this.updateCards();
         this.revalidate();
+        Partie.getInstance().getConsole().majAffichage();
 
         Partie.getInstance().setReady(true);
     }
