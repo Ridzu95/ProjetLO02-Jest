@@ -28,7 +28,7 @@ public class GameConfigController {
 
 
                     switch ((String) gameConfig.getSpinnerVariante().getValue()) {
-                        case "Normal":
+                        case "Normale":
                             try {
                                 Partie.getInstance().getQueue().put(1);
                             } catch (InterruptedException ex) {
@@ -54,7 +54,7 @@ public class GameConfigController {
                     }
 
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }

@@ -126,37 +126,37 @@ public class Game extends JPanel{
         //---- player1Card1 ----
         player1Card1.setBorder(null);
         player1Card1.setBorderPainted(false);
-        player1Card1.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(0).getMain().get(0))));
+        player1Card1.setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getJoueurs().get(0).getMain().get(0)))));
         add(player1Card1, "cell 0 5,alignx right,growx 0");
 
         //---- player1Card2 ----
         player1Card2.setBorder(null);
         player1Card2.setBorderPainted(false);
-        player1Card2.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(0).getMain().get(1))));
+        player1Card2.setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getJoueurs().get(0).getMain().get(1)))));
         add(player1Card2, "cell 1 5,alignx left,growx 0");
 
         //---- player2Card1 ----
         player2Card1.setBorder(null);
         player2Card1.setBorderPainted(false);
-        player2Card1.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(1).getMain().get(0))));
+        player2Card1.setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getJoueurs().get(1).getMain().get(0)))));
         add(player2Card1, "cell 2 5,alignx right,growx 0");
 
         //---- player2Card2 ----
         player2Card2.setBorder(null);
         player2Card2.setBorderPainted(false);
-        player2Card2.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(1).getMain().get(1))));
+        player2Card2.setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getJoueurs().get(1).getMain().get(1)))));
         add(player2Card2, "cell 3 5,alignx left,growx 0");
 
         //---- player3Card1 ----
         player3Card1.setBorder(null);
         player3Card1.setBorderPainted(false);
-        player3Card1.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(2).getMain().get(0))));
+        player3Card1.setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getJoueurs().get(2).getMain().get(0)))));
         add(player3Card1, "cell 4 5,alignx right,growx 0");
 
         //---- player3Card2 ----
         player3Card2.setBorder(null);
         player3Card2.setBorderPainted(false);
-        player3Card2.setIcon(new ImageIcon(this.displayCards(Partie.getInstance().getJoueurs().get(2).getMain().get(1))));
+        player3Card2.setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getJoueurs().get(2).getMain().get(1)))));
         add(player3Card2, "cell 5 5,alignx left,growx 0");
 
         //---- player1Label ----

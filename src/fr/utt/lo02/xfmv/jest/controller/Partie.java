@@ -37,6 +37,7 @@ public class Partie implements Runnable {
 	private int realPlayerCount;
 	private String gamePhase;
 	private boolean jestingPhasePlayed;
+	private ArrayList<Carte> selectCards;
 
 	private int message;
 	private Console console;
@@ -133,11 +134,12 @@ public class Partie implements Runnable {
 			for (Joueur i : joueurs) {
 				i.getMain().add(this.basePioche.poll());
 				i.getMain().add(this.basePioche.poll());
+				/*
 				if (i instanceof JoueurVirtuel) {
 					for (Carte card : i.getMain()) {
 						card.setVisible(false);
 					}
-				}
+				} */
 			}
 
 			return ;
@@ -191,8 +193,13 @@ public class Partie implements Runnable {
 				//c'est ça qui est bien
 				if (joueur instanceof JoueurReel){
 					this.currentPlaying = joueur;
-					while (this.message == -1) { //si c'est un joueur le thread tourne en boucle jusqu'à reçevoir un message
-						//qui va lui indiquer que a été le choix
+					while (this.message <= 0 || this.message > 2) { //si c'est un joueur le thread tourne en boucle jusqu'à reçevoir un message
+
+						if (this.message != -1){ //traite les mauvais unput
+							System.out.println("Format incorrecte \n");
+							this.console.majAffichage();
+							this.message = -1;
+						}
 						Thread.sleep(2000);
 					}
 					message -= 1; //on enlève -1 pour passez de 1 à 0 et 2 à 1
@@ -209,15 +216,15 @@ public class Partie implements Runnable {
 
 			//une fois sortis du for tous les joueurs on choisis donc passage à la phase Jest
 			this.gamePhase = "jesting";
-			System.out.println("Phase de " + this.gamePhase);
+			System.out.println("\n Phase de " + this.gamePhase +"\n");
 
 			Collections.sort(joueurs);
-
+			this.controlOffers();
 			while (this.gamePhase !="gg" ) {
 
 			}
 
-			this.controlOffers(); //là j'ai pas fait
+			 //là j'ai pas fait
 
 
 			this.tour++;
@@ -259,16 +266,15 @@ public class Partie implements Runnable {
 		this.tropheesPartie.clear();
 	}
 
-	public void controlOffers() {
+	public void controlOffers() throws InterruptedException {
+
 
 		Joueur choosingPlayer = joueurs.get(0);
 		boolean everyonePlayed = false;
 
 		while (everyonePlayed == false) {
 
-			System.out.println();
-
-			ArrayList<Carte> selectCards = new ArrayList<Carte>();
+			this.selectCards = new ArrayList<Carte>();
 			ArrayList<Joueur> selectJoueurs = new ArrayList<Joueur>();
 			for (Joueur joueur : joueurs) {
 				if (joueur.getMain().size() == 2 && joueur != choosingPlayer) {
@@ -285,20 +291,38 @@ public class Partie implements Runnable {
 				}
 			}
 
-			int choice = choosingPlayer.prendreOffre(selectCards);
+			if (choosingPlayer instanceof JoueurReel){
+				this.currentPlaying = choosingPlayer;
+				while (this.message > this.selectCards.size() || this.message <=  0 ){
+					if (this.message != -1){
+						System.out.println("Format incorrect");
+						this.message = -1;
+					}
+				}
+				this.message -= 1;
+				Thread.sleep(2000);
+				System.out.println("message :" + this.message);
 
-			if (choice % 2 == 0) {
-				choosingPlayer.getJest().add(selectJoueurs.get(choice).getMain().pollFirst());
+			} else {
+				this.message = choosingPlayer.prendreOffre(selectCards);
+			}
+
+			//int choice = choosingPlayer.prendreOffre(selectCards);
+			// this.message > selectCards.size()
+			if (this.message % 2 == 0) {
+				choosingPlayer.getJest().add(selectJoueurs.get(this.message).getMain().pollFirst());
 			}
 			else {
-				choosingPlayer.getJest().add(selectJoueurs.get(choice).getMain().pollLast());
+				choosingPlayer.getJest().add(selectJoueurs.get(this.message).getMain().pollLast());
 			}
 
-			System.out.println("Le joueur " + choosingPlayer.toString() + " a mis la carte " + selectCards.get(choice) + " dans son Jest !");
-			System.out.println("");
+
+			System.out.println("Le joueur " + choosingPlayer.toString() + " a mis la carte " + selectCards.get(this.message) + " dans son Jest !");
+			System.out.println(""); //réinitialisation
 
 			choosingPlayer.setHasPlayed(true);
-			choosingPlayer = selectJoueurs.get(choice);
+			choosingPlayer = selectJoueurs.get(this.message);
+			this.message = -1;
 
 			if (choosingPlayer.getHasPlayed() == true) {
 				int a = 0;
@@ -315,7 +339,8 @@ public class Partie implements Runnable {
 
 		}
 
-
+		this.gamePhase = "hiding";
+		System.out.println("Phase de jesting terminée");
 
 	}
 
@@ -430,6 +455,14 @@ public class Partie implements Runnable {
 
 	public void setMessage(int message) {
 		this.message = message;
+	}
+
+	public ArrayList<Carte> getSelectCards() {
+		return selectCards;
+	}
+
+	public void setSelectCards(ArrayList<Carte> selectCards) {
+		this.selectCards = selectCards;
 	}
 
 	@Override
