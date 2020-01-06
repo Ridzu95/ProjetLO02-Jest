@@ -110,7 +110,7 @@ public class PartieController implements Runnable{ //Consumer
         }
 
         if (Partie.getInstance().getGamePhase() == "jesting"){
-            Partie.getInstance().setMessage(msg);
+            this.partie.setMessage(msg);
         }
 
 

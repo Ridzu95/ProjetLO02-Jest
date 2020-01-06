@@ -25,7 +25,7 @@ public class Game extends JPanel{
 
 
 
-    public Game() {
+    public Game() throws InterruptedException {
         initComponents();
         Partie.getInstance().getJoueurs().get(0).getGuiCards().add(this.player1Card1);
         Partie.getInstance().getJoueurs().get(0).getGuiCards().add(this.player1Card2);
@@ -36,8 +36,11 @@ public class Game extends JPanel{
         if (Partie.getInstance().getPlayerCount() == 4) {
             Partie.getInstance().getJoueurs().get(3).getGuiCards().add(this.player4Card1);
             Partie.getInstance().getJoueurs().get(3).getGuiCards().add(this.player4Card2);
+            player4Label.setText(Partie.getInstance().getJoueurs().get(3).toString());
         }
-        GameController gameController = new GameController(this);
+        player1Label.setText(Partie.getInstance().getJoueurs().get(0).toString());
+        player2Label.setText(Partie.getInstance().getJoueurs().get(1).toString());
+        player3Label.setText(Partie.getInstance().getJoueurs().get(2).toString());
         header.setIcon(new ImageIcon(getClass().getResource("/Rules.png")));
         pioche.setIcon(new ImageIcon(getClass().getResource("/CardBack.png")));
         labelPioche.setText(Partie.getInstance().getBasePioche().size() + " cartes dans la pioche");
@@ -46,6 +49,7 @@ public class Game extends JPanel{
         if (Partie.getInstance().getPlayerCount() == 3) {
             trophy2.setIcon(new ImageIcon(getClass().getResource(this.displayCards(Partie.getInstance().getTropheesPartie().get(1)))));
         }
+        GameController gameController = new GameController(this);
         this.guiUpdate();
     }
 
@@ -331,7 +335,7 @@ public class Game extends JPanel{
 
     }
 
-    public void guiUpdate() {
+    public void guiUpdate() throws InterruptedException {
 
         labelPioche.setText(Partie.getInstance().getBasePioche().size() + " cartes dans la pioche");
         labelWhosPlaying.setText("C'est \u00e0 " + Partie.getInstance().getCurrentPlaying() + " de jouer !");
@@ -339,6 +343,7 @@ public class Game extends JPanel{
         labelTurn.setText("Tour " + Partie.getInstance().getTour());
         this.updateCards();
         this.revalidate();
+        Partie.getInstance().getConsole().majAffichage();
 
         Partie.getInstance().setReady(true);
     }

@@ -21,7 +21,6 @@ public class MenuController {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Partie.getInstance().getQueue().put(1);
-                    Partie.getInstance().getConsole().majAffichage();
 
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();

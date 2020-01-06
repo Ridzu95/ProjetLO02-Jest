@@ -275,8 +275,7 @@ public class Partie implements Runnable {
 
 	public void controlOffers() throws InterruptedException {
 
-
-		Joueur choosingPlayer = joueurs.get(0);
+		this.currentPlaying = joueurs.get(0);
 		boolean everyonePlayed = false;
 
 		while (everyonePlayed == false) {
@@ -284,7 +283,7 @@ public class Partie implements Runnable {
 			this.selectCards = new ArrayList<Carte>();
 			ArrayList<Joueur> selectJoueurs = new ArrayList<Joueur>();
 			for (Joueur joueur : joueurs) {
-				if (joueur.getMain().size() == 2 && joueur != choosingPlayer) {
+				if (joueur.getMain().size() == 2 && joueur != currentPlaying) {
 					for (Carte carte : joueur.getMain()) {
 						selectCards.add(carte);
 						selectJoueurs.add(joueur);
@@ -292,46 +291,49 @@ public class Partie implements Runnable {
 				}
 			}
 			if (selectCards.size() == 0) {
-				for (Carte carte : choosingPlayer.getMain()) {
+				for (Carte carte : currentPlaying.getMain()) {
 					selectCards.add(carte);
-					selectJoueurs.add(choosingPlayer);
+					selectJoueurs.add(currentPlaying);
 				}
 			}
 
-			if (choosingPlayer instanceof JoueurReel){
-				this.currentPlaying = choosingPlayer;
-				while (this.message > this.selectCards.size() || this.message <=  0 ){
+			if (currentPlaying instanceof JoueurReel){
+				this.currentPlaying = currentPlaying;
+				System.out.println(this.selectCards.size());
+				this.game.guiUpdate();
+				while (this.message > this.selectCards.size() || this.message <  0 ){
+
 					if (this.message != -1){
 						System.out.println("Format incorrect");
 						this.message = -1;
 					}
+					Thread.sleep(2000);
 				}
 				this.message -= 1;
 				Thread.sleep(2000);
-				System.out.println("message :" + this.message);
 
 			} else {
-				this.message = choosingPlayer.prendreOffre(selectCards);
+				this.message = currentPlaying.prendreOffre(selectCards);
 			}
 
 			//int choice = choosingPlayer.prendreOffre(selectCards);
 			// this.message > selectCards.size()
 			if (this.message % 2 == 0) {
-				choosingPlayer.getJest().add(selectJoueurs.get(this.message).getMain().pollFirst());
+				currentPlaying.getJest().add(selectJoueurs.get(this.message).getMain().pollFirst());
 			}
 			else {
-				choosingPlayer.getJest().add(selectJoueurs.get(this.message).getMain().pollLast());
+				currentPlaying.getJest().add(selectJoueurs.get(this.message).getMain().pollLast());
 			}
 
 
-			System.out.println("Le joueur " + choosingPlayer.toString() + " a mis la carte " + selectCards.get(this.message) + " dans son Jest !");
+			System.out.println("Le joueur " + currentPlaying.toString() + " a mis la carte " + selectCards.get(this.message) + " dans son Jest !");
 			System.out.println(""); //réinitialisation
 
-			choosingPlayer.setHasPlayed(true);
-			choosingPlayer = selectJoueurs.get(this.message);
+			currentPlaying.setHasPlayed(true);
+			currentPlaying = selectJoueurs.get(this.message);
 			this.message = -1;
 
-			if (choosingPlayer.getHasPlayed() == true) {
+			if (currentPlaying.getHasPlayed() == true) {
 				int a = 0;
 				while (a < joueurs.size() && joueurs.get(a).getHasPlayed() == true) {
 					a++;
@@ -340,7 +342,7 @@ public class Partie implements Runnable {
 					everyonePlayed = true;
 				}
 				else {
-					choosingPlayer = joueurs.get(a);
+					currentPlaying = joueurs.get(a);
 				}
 			}
 
@@ -462,6 +464,10 @@ public class Partie implements Runnable {
 
 	public void setMessage(int message) {
 		this.message = message;
+	}
+
+	public int getMessage() {
+		return message;
 	}
 
 	public ArrayList<Carte> getSelectCards() {
