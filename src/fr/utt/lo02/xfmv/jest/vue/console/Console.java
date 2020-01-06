@@ -159,12 +159,13 @@ public class Console implements Runnable {
                 );
 
             }
-            System.out.println("Choisir la carte à cacher pour le joueur " + Partie.getInstance().getCurrentPlaying());
+            if (Partie.getInstance().getRealPlayerCount() == 0){
+                System.out.println("Tapez 1 pour passer à la phase suivante");
+            } else {
+                System.out.println("Choisir la carte à cacher pour le joueur " + Partie.getInstance().getCurrentPlaying());
+            }
+        }
 
-        }
-        if (Partie.getInstance().getGamePhase() == "sélection de la carte à cacher" && Partie.getInstance().getRealPlayerCount() == 0){
-            System.out.println("Les bots ont automatiquement choisis leurs carte");
-        }
         if (this.partie.getGamePhase() == "sélection de la carte à mettre dans le Jest"){
 
         }
