@@ -180,7 +180,7 @@ public class Partie implements Runnable {
 
 			this.distribuerCartes();
 
-			this.gamePhase = "sélection de la carte à cacher";
+			this.gamePhase = "hiding";
 			System.out.println("Phase de " + this.gamePhase);
 			this.console.showTurn(this.tour);
 
@@ -208,7 +208,7 @@ public class Partie implements Runnable {
 			}
 
 			//une fois sortis du for tous les joueurs on choisis donc passage à la phase Jest
-			this.gamePhase = "sélection de la carte à mettre dans le Jest";
+			this.gamePhase = "jesting";
 			System.out.println("Phase de " + this.gamePhase);
 
 			Collections.sort(joueurs);
@@ -322,7 +322,7 @@ public class Partie implements Runnable {
 	//méthode qui permet de savoir si tout les joueurs ont caché une carte
 
 	public boolean checkCardsStates() {
-		if (this.gamePhase == "sélection de la carte à cacher") {
+		if (this.gamePhase == "hiding") {
 			for (Joueur player : joueurs) {
 				if (player instanceof JoueurReel) {
 					if (player.getMain().get(0).isVisible() && player.getMain().get(1).isVisible()) {

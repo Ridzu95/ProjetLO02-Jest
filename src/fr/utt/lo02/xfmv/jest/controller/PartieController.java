@@ -64,13 +64,13 @@ public class PartieController implements Runnable{ //Consumer
             if (msg == 4 || msg == 3){
                 this.partie.setPlayerCount(msg);
             } else {
-                System.out.println("Format incorrecte");
+                System.out.println("Format incorrect");
             }
         }
 
         else if (this.partie.getRealPlayerCount() == -1){
             if (msg > Partie.getInstance().getPlayerCount() || msg < 0){
-                System.out.println("Format incorrecte");
+                System.out.println("Format incorrect");
             } else {
                 this.partie.setRealPlayerCount(msg);
             }
@@ -91,11 +91,11 @@ public class PartieController implements Runnable{ //Consumer
             }
         }
 
-        if ( this.partie.getGamePhase() == "sélection de la carte à cacher"){
+        if ( this.partie.getGamePhase() == "hiding"){
             if (msg == 1 || msg == 2){
                 this.partie.setMessage(msg);
             } else {
-                System.out.println("Format incorrecte");
+                System.out.println("Format incorrect");
             }
         }
 
@@ -105,7 +105,7 @@ public class PartieController implements Runnable{ //Consumer
             new Thread(this.gui).start();
         }
 
-        if (Partie.getInstance().getGamePhase() == "sélection de la carte à cacher" && Partie.getInstance().checkCardsStates()) {
+        if (Partie.getInstance().getGamePhase() == "hiding" && Partie.getInstance().checkCardsStates()) {
             Partie.getInstance().setHidingPhasePlayed(true); //passage à la phase de jest
         }
 

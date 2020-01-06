@@ -148,7 +148,7 @@ public class Console implements Runnable {
             }
         }
 
-        if (this.partie.getGamePhase() == "sélection de la carte à cacher" && Partie.getInstance().checkCardsStates() == false){
+        if (this.partie.getGamePhase() == "hiding" && Partie.getInstance().checkCardsStates() == false){
             System.out.println("## Mains des joueurs : \n"
                     + Partie.getInstance().getJoueurs().get(0) + " possède : " + Partie.getInstance().getJoueurs().get(0).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(0).getMain().get(1) + "\n"
                     + Partie.getInstance().getJoueurs().get(1) + " possède : " + Partie.getInstance().getJoueurs().get(1).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(1).getMain().get(1) + "\n"
@@ -166,7 +166,7 @@ public class Console implements Runnable {
             }
         }
 
-        if (this.partie.getGamePhase() == "sélection de la carte à mettre dans le Jest"){
+        if (this.partie.getGamePhase() == "jesting"){
 
         }
 

@@ -3,6 +3,7 @@ package fr.utt.lo02.xfmv.jest.model.joueurs;
 import fr.utt.lo02.xfmv.jest.controller.Compteur;
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -11,6 +12,7 @@ public abstract class Joueur implements Comparable<Joueur> {
 	protected int id;
 	protected LinkedList<Carte> main;
 	protected LinkedList<Carte> jest;
+	protected LinkedList<JButton> guiCards;
 	protected boolean hasPlayed;
 	protected int score;
 
@@ -20,6 +22,7 @@ public abstract class Joueur implements Comparable<Joueur> {
 		this.hasPlayed = false;
 		this.main = new LinkedList<Carte>();
 		this.jest = new LinkedList<Carte>();
+		this.guiCards = new LinkedList<JButton>();
 	}
 
 	public Joueur(int id) {
@@ -28,6 +31,7 @@ public abstract class Joueur implements Comparable<Joueur> {
 		this.hasPlayed = false;
 		this.main = new LinkedList<Carte>();
 		this.jest = new LinkedList<Carte>();
+		this.guiCards = new LinkedList<JButton>();
 	}
 
 	public LinkedList<Carte> getMain() {
