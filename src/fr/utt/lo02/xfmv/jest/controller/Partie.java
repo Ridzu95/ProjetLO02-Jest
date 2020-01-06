@@ -191,45 +191,38 @@ public class Partie implements Runnable {
 			this.gamePhase = "hiding";
 			System.out.println("Phase de " + this.gamePhase);
 			this.console.showTurn(this.tour);
-
+			int iteratorJoueur = 0;
+			this.currentPlaying = joueurs.get(0);
 
 			for (Joueur joueur : joueurs) {
-				//maj le gui pour passer à la sélection des cartes : premier joueur
-				//==> le gui a juste à envoyer Partie.getInstance().getQueue.put(1) ou 2 pour le choix de la carte
-				//c'est ça qui est bien
 				if (joueur instanceof JoueurReel){
-					this.currentPlaying = joueur;
-					while (this.message <= 0 || this.message > 2) { //si c'est un joueur le thread tourne en boucle jusqu'à reçevoir un message
+					while (this.message <= 0 || this.message > 2) {
 
 						if (this.message != -1){ //traite les mauvais unput
 							System.out.println("Format incorrecte \n");
 							this.console.majAffichage();
 							this.message = -1;
 						}
-						Thread.sleep(2000);
+						Thread.sleep(1000);
 					}
-					message -= 1; //on enlève -1 pour passez de 1 à 0 et 2 à 1
-					joueur.getMain().get(this.message).setVisible(false); //Plus besoin de faire player.faireOffre() en fait ._.
-					//sinon on peut faire jouer.faireOffre(this.message) et faire la mm chose
+					message -= 1;
+					joueur.getMain().get(this.message).setVisible(false);
 
-					this.message = -1; //on réinitialise le message à une valeur par défaut
+					this.message = -1;
 				} else {
 					int random = (int) (Math.random() + 0.5);
-					joueur.getMain().get(random).setVisible(false); //là c'est fait random
+					joueur.getMain().get(random).setVisible(true);
+					this.message = -1;
 				}
 
 				System.out.println("\nLe joueur " + joueur + " a caché une carte");
-
-				this.ready = false; //on attends que gui soit à jour pour jouer la partie
-				this.game.guiUpdate();
-				while (this.ready == false) {
-					System.out.println("Partie en attente");
-					Thread.sleep(500);
+				iteratorJoueur++;
+				if (iteratorJoueur < this.playerCount) {
+					this.currentPlaying = joueurs.get(iteratorJoueur);
 				}
-				//maj le gui pour passer au joueur suivant
+				this.game.guiUpdate();
 			}
 
-			//une fois sortis du for tous les joueurs on choisis donc passage à la phase Jest
 			this.gamePhase = "jesting";
 			System.out.println("\n Phase de " + this.gamePhase +"\n");
 
@@ -239,7 +232,6 @@ public class Partie implements Runnable {
 
 			}
 
-			 //là j'ai pas fait
 
 
 			this.tour++;

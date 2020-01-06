@@ -39,8 +39,8 @@ public class Main {
         //le thread de controller c'est la boucle qui en permanence lit les message qu'elle reçoit
 
         //il faut lancer une première fois les thread de gui et console
-        new Thread(partieController.getConsole()).start();
         new Thread(partieController.getGui()).start();
+        new Thread(partieController.getConsole()).start();
 
     }
 }
