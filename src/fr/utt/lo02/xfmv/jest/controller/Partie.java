@@ -83,7 +83,8 @@ public class Partie implements Runnable {
 		jestingPhasePlayed = false;
 		variante = null;
 		ready = true;
-
+		selectCards = new ArrayList<Carte>();
+		selectJoueurs = new ArrayList<Joueur>();
 		message = -1;
 	}
 
@@ -194,6 +195,10 @@ public class Partie implements Runnable {
 			int iteratorJoueur = 0;
 			this.currentPlaying = joueurs.get(0);
 
+			if (this.tour != 1) {
+				this.game.guiUpdate();
+			}
+
 			for (Joueur joueur : joueurs) {
 				if (joueur instanceof JoueurReel){
 					while (this.message <= 0 || this.message > 2) {
@@ -228,13 +233,9 @@ public class Partie implements Runnable {
 
 			Collections.sort(joueurs);
 			this.controlOffers();
-			while (this.gamePhase !="gg" ) {
-
-			}
-
-
 
 			this.tour++;
+
 		} while (basePioche.size() != 0);
 
 		for (Joueur joueur : joueurs) {
@@ -278,10 +279,14 @@ public class Partie implements Runnable {
 		this.currentPlaying = joueurs.get(0);
 		boolean everyonePlayed = false;
 
+		for (Joueur joueur : joueurs) {
+			joueur.setHasPlayed(false);
+		}
+
 		while (everyonePlayed == false) {
 
-			this.selectCards = new ArrayList<Carte>();
-			ArrayList<Joueur> selectJoueurs = new ArrayList<Joueur>();
+			this.selectCards.clear();
+			this.selectJoueurs.clear();
 			for (Joueur joueur : joueurs) {
 				if (joueur.getMain().size() == 2 && joueur != currentPlaying) {
 					for (Carte carte : joueur.getMain()) {
@@ -307,10 +312,10 @@ public class Partie implements Runnable {
 						System.out.println("Format incorrect");
 						this.message = -1;
 					}
-					Thread.sleep(2000);
+					Thread.sleep(500);
 				}
 				this.message -= 1;
-				Thread.sleep(2000);
+
 
 			} else {
 				this.message = currentPlaying.prendreOffre(selectCards);
@@ -348,7 +353,6 @@ public class Partie implements Runnable {
 
 		}
 
-		this.gamePhase = "hiding";
 		System.out.println("Phase de jesting terminée");
 
 	}

@@ -88,6 +88,56 @@ public class GameController {
                                     }
                                 }
                             }
+                            else if (Partie.getInstance().getSelectCards().size() == 6) {
+                                if (joueur == Partie.getInstance().getSelectJoueurs().get(0)) {
+                                    if (cardButton == joueur.getGuiCards().get(0)) {
+                                        try {
+                                            Partie.getInstance().getQueue().put(1);
+                                        } catch (InterruptedException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }
+                                    else if (cardButton == joueur.getGuiCards().get(1)) {
+                                        try {
+                                            Partie.getInstance().getQueue().put(2);
+                                        } catch (InterruptedException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }
+                                }
+                                else if (joueur == Partie.getInstance().getSelectJoueurs().get(2)) {
+                                    if (cardButton == joueur.getGuiCards().get(0)) {
+                                        try {
+                                            Partie.getInstance().getQueue().put(3);
+                                        } catch (InterruptedException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }
+                                    else if (cardButton == joueur.getGuiCards().get(1)) {
+                                        try {
+                                            Partie.getInstance().getQueue().put(4);
+                                        } catch (InterruptedException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }
+                                }
+                                else if (joueur == Partie.getInstance().getSelectJoueurs().get(4)) {
+                                    if (cardButton == joueur.getGuiCards().get(0)) {
+                                        try {
+                                            Partie.getInstance().getQueue().put(5);
+                                        } catch (InterruptedException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }
+                                    else if (cardButton == joueur.getGuiCards().get(1)) {
+                                        try {
+                                            Partie.getInstance().getQueue().put(6);
+                                        } catch (InterruptedException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 });
