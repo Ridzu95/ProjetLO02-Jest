@@ -168,7 +168,8 @@ public class Console implements Runnable {
 
         if (this.partie.getGamePhase() == "hiding"){
             if (this.partie.getCurrentPlaying() instanceof JoueurReel){
-                System.out.println("Le joueur " + Partie.getInstance().getCurrentPlaying() + " doit choisir une carte à cacher");
+                System.out.println("Le joueur " + Partie.getInstance().getCurrentPlaying() + " doit choisir une carte à cacher parmi "+
+                        Partie.getInstance().getCurrentPlaying().getMain().get(0) + " - " + Partie.getInstance().getCurrentPlaying().getMain().get(1));
             }
         }
 
