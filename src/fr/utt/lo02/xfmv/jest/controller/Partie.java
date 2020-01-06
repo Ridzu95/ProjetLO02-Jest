@@ -249,7 +249,7 @@ public class Partie implements Runnable {
 
 		this.console.showScores();
 		this.terminerPartie();
-		// Console.endOfGame();
+		//Console.endOfGame();
 
 		return;
 	}
@@ -263,7 +263,7 @@ public class Partie implements Runnable {
 			}
 		}
 
-		Console.showWinner(winner);
+		this.console.showWinner(winner);
 
 		this.basePioche.clear();
 		this.tempPioche.clear();
@@ -306,13 +306,13 @@ public class Partie implements Runnable {
 						System.out.println("Format incorrect");
 						this.message = -1;
 					}
-					Thread.sleep(2000);
+					Thread.sleep(500);
 				}
 				this.message -= 1;
-				Thread.sleep(2000);
 
 			} else {
 				this.message = currentPlaying.prendreOffre(selectCards);
+				Thread.sleep(2000);
 			}
 
 			//int choice = choosingPlayer.prendreOffre(selectCards);

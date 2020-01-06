@@ -78,7 +78,7 @@ public class Console implements Runnable {
         }
     }
 
-    public static void showScores() {
+    public void showScores() {
         System.out.println("");
         System.out.println("Voilà les scores !");
         for (Joueur joueur : Partie.getInstance().getJoueurs()) {
@@ -87,7 +87,7 @@ public class Console implements Runnable {
         System.out.println("");
     }
 
-    public static void showWinner(Joueur winner) {
+    public void showWinner(Joueur winner) {
         System.out.println("Le gagnant de la partie est " + winner.toString() + " !");
     }
     
