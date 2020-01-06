@@ -180,8 +180,6 @@ public class Console implements Runnable {
                     System.out.println("-- " + carte);
                 }
 
-            } else {
-                System.out.println("Le bot " + Partie.getInstance().getCurrentPlaying() + " choisis une carte à mettre dans son Jest ...");
             }
         }
 
@@ -190,6 +188,7 @@ public class Console implements Runnable {
 
     public void process() throws InterruptedException {
         this.majAffichage();
+
         this.scan = new Scanner(System.in);
         int msg = -1;
 

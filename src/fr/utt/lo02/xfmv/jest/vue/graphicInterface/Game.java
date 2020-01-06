@@ -343,6 +343,8 @@ public class Game extends JPanel{
         labelTurn.setText("Tour " + Partie.getInstance().getTour());
         this.updateCards();
         this.revalidate();
+
+
         Partie.getInstance().getConsole().majAffichage();
 
         Partie.getInstance().setReady(true);
