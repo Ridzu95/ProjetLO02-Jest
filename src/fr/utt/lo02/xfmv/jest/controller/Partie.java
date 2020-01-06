@@ -224,7 +224,7 @@ public class Partie implements Runnable {
 			}
 
 			this.gamePhase = "jesting";
-			System.out.println("\n Phase de " + this.gamePhase +"\n");
+			System.out.println("Phase de " + this.gamePhase);
 
 			Collections.sort(joueurs);
 			this.controlOffers();
@@ -299,7 +299,6 @@ public class Partie implements Runnable {
 
 			if (currentPlaying instanceof JoueurReel){
 				this.currentPlaying = currentPlaying;
-				System.out.println(this.selectCards.size());
 				this.game.guiUpdate();
 				while (this.message > this.selectCards.size() || this.message <  0 ){
 
@@ -317,8 +316,6 @@ public class Partie implements Runnable {
 				Thread.sleep(2000);
 			}
 
-			//int choice = choosingPlayer.prendreOffre(selectCards);
-			// this.message > selectCards.size()
 			if (this.message % 2 == 0) {
 				currentPlaying.getJest().add(selectJoueurs.get(this.message).getMain().pollFirst());
 			}
