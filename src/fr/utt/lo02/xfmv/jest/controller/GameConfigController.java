@@ -14,55 +14,56 @@ public class GameConfigController {
 
     public GameConfigController(GameConfig gameConfig) {
 
-        gameConfig.getBeginGameButton().addActionListener(new ActionListener() {
+        gameConfig.getButtonStartGame().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
 
+                if (((Integer) gameConfig.getSpinnerPlayers().getValue()).intValue() >= ((Integer) gameConfig.getSpinnerRealPlayers().getValue()).intValue()) {
+                    try {
+                        Partie.getInstance().getQueue().put(((Integer) gameConfig.getSpinnerPlayers().getValue()).intValue());
+                        Partie.getInstance().getQueue().put(((Integer) gameConfig.getSpinnerRealPlayers().getValue()).intValue());
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
 
-                try {
-                    Partie.getInstance().getQueue().put(((Integer) gameConfig.getPlayersCount().getValue()).intValue() );
-                    Partie.getInstance().getQueue().put(((Integer) gameConfig.getRealPlayersCount().getValue()).intValue() );
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
 
+                    switch ((String) gameConfig.getSpinnerVariante().getValue()) {
+                        case "Normal":
+                            try {
+                                Partie.getInstance().getQueue().put(1);
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            }
+                            break;
+                        case "Aléatoire":
+                            try {
+                                Partie.getInstance().getQueue().put(2);
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            }
 
-                switch ((String) gameConfig.getVarianteSelect().getValue()) {
-                    case "Normal":
-                        try {
-                            Partie.getInstance().getQueue().put(1);
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
-                        }
-                        break;
-                    case "Aléatoire":
-                        try {
-                            Partie.getInstance().getQueue().put(2);
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
-                        }
+                            break;
+                        case "Caché":
+                            try {
+                                Partie.getInstance().getQueue().put(3);
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            }
 
-                        break;
-                    case "Caché":
-                        try {
-                            Partie.getInstance().getQueue().put(3);
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
-                        }
+                            break;
+                    }
 
-                        break;
-                }
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
 
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-                try {
-                    Partie.getInstance().getConsole().majAffichage();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
+                    try {
+                        Partie.getInstance().getConsole().majAffichage();
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         });
