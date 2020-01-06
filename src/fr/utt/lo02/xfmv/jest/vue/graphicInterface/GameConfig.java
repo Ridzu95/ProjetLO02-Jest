@@ -69,7 +69,7 @@ public class GameConfig extends JPanel {
             "[]"));
 
         //---- header ----
-        header.setIcon(new ImageIcon("/home/ridzu/dev/ProjetLO02-Jest/resources/GameConfig.png"));
+        header.setIcon(new ImageIcon(getClass().getResource("/GameConfig.png")));
         add(header, "cell 0 0 4 1");
 
         //---- labelPlayers ----

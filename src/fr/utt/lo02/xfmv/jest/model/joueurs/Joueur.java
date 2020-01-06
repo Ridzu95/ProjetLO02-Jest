@@ -75,6 +75,15 @@ public abstract class Joueur implements Comparable<Joueur> {
 		this.score = score;
 	}
 
+	public LinkedList<JButton> getGuiCards() {
+		return guiCards;
+	}
+
+	public void setGuiCards(LinkedList<JButton> guiCards) {
+		this.guiCards = guiCards;
+	}
+
+
 	@Override
 	public int compareTo(Joueur joueur) {
 
