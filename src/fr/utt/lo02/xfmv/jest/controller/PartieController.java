@@ -64,13 +64,13 @@ public class PartieController implements Runnable{ //Consumer
             if (msg == 4 || msg == 3){
                 this.partie.setPlayerCount(msg);
             } else {
-                System.out.println("Format incorrect dd");
+                System.out.println("Format incorrect");
             }
         }
 
         else if (this.partie.getRealPlayerCount() == -1){
             if (msg > Partie.getInstance().getPlayerCount() || msg < 0){
-                System.out.println("Format incorrect cc");
+                System.out.println("Format incorrect");
             } else {
                 this.partie.setRealPlayerCount(msg);
             }
@@ -87,7 +87,7 @@ public class PartieController implements Runnable{ //Consumer
                 case 3:
                     this.partie.setVariante(new Variante2());
                 default:
-                    System.out.println("Format incorrecte aa");
+                    System.out.println("Format incorrecte");
             }
         }
 
@@ -95,7 +95,7 @@ public class PartieController implements Runnable{ //Consumer
             if (msg == 1 || msg == 2){
                 this.partie.setMessage(msg);
             } else {
-                System.out.println("Format incorrect bb");
+                System.out.println("Format incorrect");
             }
         }
 
