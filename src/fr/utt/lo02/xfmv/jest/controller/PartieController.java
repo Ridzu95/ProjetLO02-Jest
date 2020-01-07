@@ -109,15 +109,13 @@ public class PartieController implements Runnable{ //Consumer
             this.partie.setMessage(msg);
         }
 
+        if (Partie.getInstance().getGamePhase() == "results") {
+            new Thread(gui).start();;
+        }
 
         this.run(); // on retourne dans la boucle
 
     }
-
-
-
-
-
 
     public Partie getPartie() {
         return partie;

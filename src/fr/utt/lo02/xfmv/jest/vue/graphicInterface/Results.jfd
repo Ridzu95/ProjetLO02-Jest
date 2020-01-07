@@ -6,146 +6,87 @@ new FormModel {
 		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class net.miginfocom.swing.MigLayout ) {
 			"$layoutConstraints": "hidemode 3"
 			"$columnConstraints": "0[160,fill]0[160,fill]0[160,fill]0[160,fill]0[160,fill]0[160,fill]"
-			"$rowConstraints": "0[]para[][]para[][]para[][]30[][]"
+			"$rowConstraints": "0[]70[][]para[][]para[][]para[]rel[]30[][][]"
 		} ) {
 			name: "this"
 			"maximumSize": new java.awt.Dimension( 800, 1200 )
 			"minimumSize": new java.awt.Dimension( 800, 700 )
-			"preferredSize": new java.awt.Dimension( 800, 820 )
+			"preferredSize": new java.awt.Dimension( 800, 600 )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label1"
+				name: "header"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/Results.png" )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 0 0 5 1"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label7"
+				name: "player1Label"
 				"text": "Joueur 1 - 10 Points"
 				"font": new java.awt.Font( "Ubuntu Light", 1, 14 )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 0 1 5 1,alignx center,growx 0"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label2"
-				"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 0, "/CardBack.png" )
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 0 2,alignx right,growx 0"
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label3"
-				"icon": #SwingIcon0
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 1 2,alignx center,growx 0"
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label4"
-				"icon": #SwingIcon0
+				name: "label1"
+				"text": "jest"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 2 2,alignx center,growx 0"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label5"
-				"icon": #SwingIcon0
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 2,alignx center,growx 0"
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label6"
-				"icon": #SwingIcon0
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 4 2,alignx left,growx 0"
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label8"
+				name: "player2Label"
 				"text": "Joueur 1 - 10 Points"
 				"font": new java.awt.Font( "Ubuntu Light", 1, 14 )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 0 3 5 1,alignx center,growx 0"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label14"
-				"icon": #SwingIcon0
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 0 4,alignx right,growx 0"
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label11"
-				"icon": #SwingIcon0
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 1 4,alignx center,growx 0"
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label12"
-				"icon": #SwingIcon0
+				name: "label2"
+				"text": "jest"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 2 4,alignx center,growx 0"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label13"
-				"icon": #SwingIcon0
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 4,alignx center,growx 0"
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label15"
-				"icon": #SwingIcon0
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 4 4,alignx left,growx 0"
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label9"
+				name: "playe3Label"
 				"text": "Joueur 1 - 10 Points"
-				"font": new java.awt.Font( "Ubuntu Light", 1, 14 )
+				"font": &Font0 new java.awt.Font( "Ubuntu Light", 1, 14 )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 0 5 5 1,alignx center,growx 0"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label20"
-				"icon": #SwingIcon0
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 0 6,alignx right,growx 0"
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label19"
-				"icon": #SwingIcon0
-			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 1 6,alignx center,growx 0"
-			} )
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label18"
-				"icon": #SwingIcon0
+				name: "label3"
+				"text": "jest"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
 				"value": "cell 2 6,alignx center,growx 0"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label17"
-				"icon": #SwingIcon0
+				name: "player4Label"
+				"text": "Joueur 1 - 10 Points"
+				"font": #Font0
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 3 6,alignx center,growx 0"
+				"value": "cell 2 7,alignx center,growx 0"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label16"
-				"icon": #SwingIcon0
+				name: "label4"
+				"text": "jest"
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 4 6,alignx left,growx 0"
+				"value": "cell 2 8,alignx center,growx 0"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label10"
+				name: "winnerLabel"
 				"text": "Joueur 1 gagne la partie !"
 				"font": new java.awt.Font( "Ubuntu Light", 1, 22 )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 0 7 5 1,alignx center,growx 0"
+				"value": "cell 0 9 5 1,alignx center,growx 0"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button1"
+				name: "menuButton"
 				"text": "Retour au menu"
 				"font": new java.awt.Font( "Ubuntu Light", 1, 16 )
 			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
-				"value": "cell 1 8 3 1,align center top,grow 0 0"
+				"value": "cell 1 10 3 1,align center top,grow 0 0"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 15, 0 )
-			"size": new java.awt.Dimension( 800, 820 )
+			"size": new java.awt.Dimension( 800, 600 )
 		} )
 	}
 }

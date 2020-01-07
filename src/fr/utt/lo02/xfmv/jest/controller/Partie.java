@@ -47,6 +47,7 @@ public class Partie implements Runnable {
 	private Console console;
 	private Joueur currentPlaying;
 	private Game game;
+	private Joueur gameWinner;
 
 	public Console getConsole() {
 		return console;
@@ -251,7 +252,7 @@ public class Partie implements Runnable {
 		return;
 	}
 
-	public void terminerPartie() {
+	public void terminerPartie() throws InterruptedException {
 
 		Joueur winner = joueurs.get(0);
 		for (Joueur joueur : joueurs) {
@@ -260,12 +261,29 @@ public class Partie implements Runnable {
 			}
 		}
 
+		this.gameWinner = winner;
 		this.console.showWinner(winner);
 
+		this.gamePhase = "results";
+		this.queue.put(1);
+
+		while (this.getGamePhase() != "init") {
+			Thread.sleep(500);
+		}
+
+		tour = 1;
+		isStarted = false;
+		isSetup = false;
+		playerCount = -1;
+		realPlayerCount = -1;
+		hidingPhasePlayed = false;
+		jestingPhasePlayed = false;
+		variante = null;
+		ready = true;
+		message = -1;
 		this.basePioche.clear();
 		this.tempPioche.clear();
 		this.joueurs.clear();
-		this.tour = 1;
 		this.tropheesPartie.clear();
 	}
 
@@ -478,6 +496,14 @@ public class Partie implements Runnable {
 
 	public void setGame(Game game) {
 		this.game = game;
+	}
+
+	public Joueur getGameWinner() {
+		return gameWinner;
+	}
+
+	public void setGameWinner(Joueur gameWinner) {
+		this.gameWinner = gameWinner;
 	}
 
 	@Override

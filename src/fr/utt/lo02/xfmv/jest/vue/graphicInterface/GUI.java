@@ -46,11 +46,13 @@ public class GUI extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        this.setVisible(true); //maj l'affichage
-        this.getContentPane().add(new Menu());
-        this.pack();
 
-        if (Partie.getInstance().isStarted() && !Partie.getInstance().isSetup()) {
+        if (!Partie.getInstance().isStarted() && !Partie.getInstance().isSetup()) {
+            this.setVisible(true); //maj l'affichage
+            this.getContentPane().add(new Menu());
+            this.pack();
+        }
+        if (Partie.getInstance().isStarted() && !Partie.getInstance().isSetup() && Partie.getInstance().getGamePhase() != "results") {
             this.getContentPane().removeAll();
             this.getContentPane().add(new GameConfig());
             this.pack();
@@ -66,6 +68,11 @@ public class GUI extends JFrame implements Runnable {
             }
             this.getContentPane().add(game);
             Partie.getInstance().setGame(game);
+            this.pack();
+        }
+        if (Partie.getInstance().getGamePhase() == "results") {
+            this.getContentPane().removeAll();
+            this.getContentPane().add(new Results());
             this.pack();
         }
 

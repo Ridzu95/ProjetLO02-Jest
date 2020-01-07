@@ -14,6 +14,7 @@ public class Variante2 implements Variante{
 	public void activerTrophees(ArrayList<Carte> trophees) {
 		// TODO Auto-generated method stub
 		for (Carte carte : trophees) {
+			carte.setVisible(false);
 			switch(carte.toString()) {
 				case "2♥":
 				case "4♥":
