@@ -27,7 +27,7 @@ public class JoueurReel extends Joueur {
 	}
 
 	public int faireOffre() {
-		Console.cardChoice(this);
+		/*this.console.cardChoice(this);
 
         int choice = 0;
 
@@ -37,11 +37,12 @@ public class JoueurReel extends Joueur {
 
         System.out.println("");
 
-        return choice -1;
+        return choice -1; */
+		return 0;
 	}
 	
 	public int prendreOffre(ArrayList<Carte> selectCards) {
-		Console.displaySelectCards(selectCards, this);
+		//Console.displaySelectCards(selectCards, this);
 
 		int choice = 0;
 

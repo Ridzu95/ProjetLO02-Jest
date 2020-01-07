@@ -1,0 +1,52 @@
+JFDML JFormDesigner: "7.0.0.6.255" Java: "11.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class net.miginfocom.swing.MigLayout ) {
+			"$layoutConstraints": "hidemode 3"
+			"$columnConstraints": "0[sizegroup 1,fill]6[400,sizegroup 1,fill]0[fill]"
+			"$rowConstraints": "0[][115][][][][0][]"
+		} ) {
+			name: "this"
+			"minimumSize": new java.awt.Dimension( 800, 600 )
+			"preferredSize": new java.awt.Dimension( 800, 600 )
+			"maximumSize": new java.awt.Dimension( 800, 600 )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "titleImage"
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "/home/ridzu/dev/ProjetLO02-Jest/resources/MainTitle.png" )
+				"iconTextGap": 0
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 0 0 2 1,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "playButton"
+				"text": "Jouer"
+				"font": new com.jformdesigner.model.SwingDerivedFont( "Ubuntu Light", 1, 20, true )
+				"maximumSize": new java.awt.Dimension( 156, 34 )
+				"minimumSize": new java.awt.Dimension( 156, 34 )
+				"preferredSize": new java.awt.Dimension( 156, 34 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 0 1 2 1,align center bottom,grow 0 0"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "rulesButton"
+				"text": "Règles"
+				"font": new java.awt.Font( "Ubuntu Light", 1, 12 )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "rulesButtonActionPerformed", true ) )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 0 2,alignx right,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "quitButton"
+				"text": "Quitter"
+				"font": new java.awt.Font( "Ubuntu Light", 1, 12 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 1 2 2 1,alignx left,growx 0"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 800, 600 )
+		} )
+	}
+}

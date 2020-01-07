@@ -1,0 +1,160 @@
+JFDML JFormDesigner: "7.0.0.6.255" Java: "11.0.5" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class net.miginfocom.swing.MigLayout ) {
+			"$layoutConstraints": "hidemode 3"
+			"$columnConstraints": "0[grow,sizegroup 1,fill][grow,sizegroup 1,fill][grow,sizegroup 1,fill][grow,sizegroup 1,fill][grow,sizegroup 1,fill][127,grow,sizegroup 1,fill]0"
+			"$rowConstraints": "0[]rel[]rel[][][44][][][16][]"
+		} ) {
+			name: "this"
+			"minimumSize": new java.awt.Dimension( 800, 600 )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "header"
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "/home/ridzu/dev/ProjetLO02-Jest/resources/Rules.png" )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 0 0 6 1,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labelTurn"
+				"text": "Tour 1"
+				"font": new java.awt.Font( "Ubuntu Light", 1, 22 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 0 2 2 1,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "pioche"
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png" )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 2 2 2 1,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "trophy1"
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "/home/ridzu/dev/ProjetLO02-Jest/resources/4Pique.png" )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 4 2,alignx right,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "trophy2"
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "/home/ridzu/dev/ProjetLO02-Jest/resources/3Carreau.png" )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 5 2,alignx left,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labelPioche"
+				"text": "9 cartes dans la pioche"
+				"font": new java.awt.Font( "Ubuntu Light", 3, 10 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 2 3 2 1,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labelTrophies"
+				"text": "Trophées de la partie"
+				"font": new java.awt.Font( "Ubuntu Light", 3, 10 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 4 3 2 1,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labelWhosPlaying"
+				"text": "C'est à Player 1 de jouer !"
+				"font": new java.awt.Font( "Ubuntu Light", 1, 16 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 1 4 4 1,align center bottom,grow 0 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "labelPhase"
+				"text": "Clique sur la carte que tu souhaites cacher."
+				"font": new java.awt.Font( "Ubuntu Light", 3, 16 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 1 5 4 1,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "player1Card1"
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 1, "/home/ridzu/dev/ProjetLO02-Jest/resources/CardBack.png" )
+				"margin": new java.awt.Insets( 0, 0, 0, 0 )
+				"iconTextGap": 0
+				"borderPainted": false
+				"contentAreaFilled": false
+				"horizontalAlignment": 4
+				"maximumSize": new java.awt.Dimension( 109, 173 )
+				"minimumSize": new java.awt.Dimension( 109, 173 )
+				"preferredSize": new java.awt.Dimension( 109, 173 )
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 0 6,alignx right,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "player1Card2"
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"borderPainted": false
+				"icon": #SwingIcon0
+				"contentAreaFilled": false
+				"horizontalAlignment": 2
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 1 6,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "player2Card1"
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"borderPainted": false
+				"icon": #SwingIcon0
+				"horizontalAlignment": 4
+				"contentAreaFilled": false
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 2 6,alignx right,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "player2Card2"
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"borderPainted": false
+				"icon": #SwingIcon0
+				"horizontalAlignment": 2
+				"contentAreaFilled": false
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 3 6,alignx left,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "player3Card1"
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"borderPainted": false
+				"icon": #SwingIcon0
+				"horizontalAlignment": 4
+				"contentAreaFilled": false
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 4 6,alignx right,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "player3Card2"
+				"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+				"borderPainted": false
+				"icon": #SwingIcon0
+				"horizontalAlignment": 2
+				"contentAreaFilled": false
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 5 6,alignx left,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "player1Label"
+				"text": "Player 1"
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 0 7 2 1,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "player2Label"
+				"text": "Player 2"
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 2 7 2 1,alignx center,growx 0"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "player3Label"
+				"text": "Player 3"
+			}, new FormLayoutConstraints( class net.miginfocom.layout.CC ) {
+				"value": "cell 4 7 2 1,alignx center,growx 0"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 800, 600 )
+		} )
+	}
+}

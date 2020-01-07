@@ -7,7 +7,6 @@ import fr.utt.lo02.xfmv.jest.model.cartes.Trophees;
 
 public class Variante2 implements Variante{
 
-	//Variante 2 ne dévoile pas quels sont les trophées aux joueurs
 	public void showTrophies(ArrayList<Carte> trophees) {
         System.out.println("Les deux trophées pour cette partie sont inconnus");
     }
@@ -15,6 +14,7 @@ public class Variante2 implements Variante{
 	public void activerTrophees(ArrayList<Carte> trophees) {
 		// TODO Auto-generated method stub
 		for (Carte carte : trophees) {
+			carte.setVisible(false);
 			switch(carte.toString()) {
 				case "2♥":
 				case "4♥":

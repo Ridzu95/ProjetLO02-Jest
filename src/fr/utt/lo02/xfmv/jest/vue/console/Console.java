@@ -3,143 +3,40 @@ package fr.utt.lo02.xfmv.jest.vue.console;
 import java.awt.*;
 import java.lang.reflect.Array;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
+import java.util.concurrent.BlockingQueue;
 
 import fr.utt.lo02.xfmv.jest.controller.Partie;
 import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
 import fr.utt.lo02.xfmv.jest.model.joueurs.Joueur;
 import fr.utt.lo02.xfmv.jest.model.joueurs.JoueurReel;
+import fr.utt.lo02.xfmv.jest.model.variantes.Variante1;
+import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
+import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
 
-public abstract class Console {
+public class Console implements Runnable {
 
-    public static void welcomeMessage() {
-        System.out.println("--- Jeu de Jest inventé par Brett J. Gilbert ---");
+    private final BlockingQueue<Integer> queue;
+    private Scanner scan;
+    private Partie partie;
+
+    private Joueur joueur; //faire majAfficher() avec partie en passant un joueur pour pouvoir
+    //prendre des infos sur lui et les afficher
+
+    public Console(BlockingQueue<Integer> queue) {
+        this.queue = queue;
+        this.partie = Partie.getInstance();
     }
 
-    public static void showMenu() {
-        System.out.println("(1) --- Jouer\n(2) --- Lire les règles\n(3) --- Quitter");
-        int choice = 0;
-        do {
-            choice = Console.choiceMaking();
-        } while (choice !=1 && choice != 2 && choice !=3);
-
-        switch (choice) {
-            case 1 :
-                Partie.getInstance().initialiserPartie();
-                break;
-            case 2 :
-                try {
-                    URI uri = new URI("https://puu.sh/EKl29/655216593a.png");
-                    Desktop.getDesktop().browse(uri);
-                }
-                catch(Exception ex) {}
-                Console.showMenu();
-                break;
-            case 3 :
-                System.exit(0);
-                break;
-        }
-
-    }
-
-    public static String playerUsernameChoice(int id) {
+    public String playerUsernameChoice(int id) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Entrez le pseudo du joueur n° " + id);
         String username = sc.nextLine();
         return username;
     }
-    
-    // permet de récupérer le choix du joueur pour la variante
-    
-    public static int demanderVariante() {
-
-        int choice = 0;
-    	
-    	System.out.println("Choisissez une variante pour la partie");
-    	System.out.println("(1) -- Variante de base : les trophées sont assignés selon les règles classiques" );
-    	System.out.println("(2) -- Variante 1 : les trophées sont assignés aléatoirement" );
-    	System.out.println("(3) -- Variante 2 : les trophées sont assignés selon les règles classiques mais sont inconnus" );
-    	System.out.println("");
-    	
-    	do {
-            choice = Console.choiceMaking();
-        } while (choice !=1 && choice != 2 && choice !=3);
-        
-        
-        return choice;
-    }
-    
-    public static int demanderNombreJoueurs() {
-    	Scanner sc = new Scanner(System.in);
-    	int choice = 0;
-    	
-    	System.out.println("Voulez-vous jouer à 3 ou 4 joueurs ?");
-    	System.out.println("");
-    	
-    	do {
-            try {
-                System.out.print("Votre choix : ");
-                choice = sc.nextInt();
-                System.out.println("");
-            }
-            catch (InputMismatchException e){
-                System.out.println("Format invalide.");
-            }
-            sc.nextLine();
-        } while (choice !=3 && choice != 4);
-        
-        
-        return choice;
-    }
-    
-    public static int demanderJoueursReels(int nombreJoueurs) {
-
-    	int choice = 0;
-    	
-    	System.out.println("Combien y a-t-il de joueurs réels ?");
-    	System.out.println("");
-    	
-    	do {
-            choice = Console.choiceMaking();
-        } while ( choice < -1 || choice > nombreJoueurs); // vérifier qu'on ne choisit pas plus de joueurs réels que de joueurs
-        
-        
-        return choice;
-    }
-    
-    public static int demanderStrategie(int id) {
-
-    	int choice = 0;
-    	
-    	System.out.println("Choisissez la stratégie utilisée par le bot n°" + (id + 1));
-    	System.out.println("(1) -- Stratégie de base : le bot choisis aléatoirement une carte à chaque tour de jeu" );
-    	System.out.println("(2) -- Stratégie avancée : le bot choisis la carte avec la valeur la plus haute" );
-    	System.out.println("");
-    	
-    	do {
-            choice = Console.choiceMaking();
-        } while (choice !=1 && choice != 2);
-        
-        
-        return choice;
-    }
-
-    public static void cardChoice(Joueur joueur) {
-
-        System.out.println("");
-        System.out.println(joueur + " choisis la carte à cacher :");
-
-        System.out.println("(1) --- " + joueur.getMain().get(0));
-        System.out.println("(2) --- " + joueur.getMain().get(1));
-
-        return;
-    }
 
 
-    public static void displayPlayerCards(ArrayList<Joueur> joueurs) {
+    public void displayPlayerCards(ArrayList<Joueur> joueurs) {
 
         for (Joueur joueur : joueurs) {
             System.out.print(joueur.toString() + " --- ");
@@ -151,17 +48,17 @@ public abstract class Console {
 
     }
 
-    public static void displaySelectCards(ArrayList<Carte> selectCards, Joueur joueur) {
+    public void displaySelectCards(ArrayList<Carte> selectCards, Joueur joueur) {
 
         System.out.println(joueur + " choisis la carte à mettre dans ton Jest :");
-        for (int i = 0; i < selectCards.size(); i++ ) {
+        for (int i = 0; i < selectCards.size(); i++) {
             System.out.println("(" + (i + 1) + ") --- " + selectCards.get(i).toString());
         }
 
 
     }
 
-    public static void showTurn(int tour) {
+    public void showTurn(int tour) {
         System.out.println("");
         System.out.println("*********");
         System.out.println(" TOUR " + tour);
@@ -169,7 +66,7 @@ public abstract class Console {
         System.out.println("");
     }
 
-    public static void showJests() {
+    public void showJests() {
         System.out.println("Révélez vos Jests !");
         for (Joueur joueur : Partie.getInstance().getJoueurs()) {
             System.out.print(joueur.toString() + ": ");
@@ -181,7 +78,7 @@ public abstract class Console {
         }
     }
 
-    public static void showScores() {
+    public void showScores() {
         System.out.println("");
         System.out.println("Voilà les scores !");
         for (Joueur joueur : Partie.getInstance().getJoueurs()) {
@@ -189,8 +86,8 @@ public abstract class Console {
         }
         System.out.println("");
     }
-    
-    public static void showWinner(Joueur winner) {
+
+    public void showWinner(Joueur winner) {
         System.out.println("Le gagnant de la partie est " + winner.toString() + " !");
     }
     
@@ -199,35 +96,109 @@ public abstract class Console {
 		System.out.println("");
     }
 
-    public static void endOfGame() {
+    public void endOfGame() throws InterruptedException {
         System.out.println("(1) --- Retourner au menu\n(2) --- Quitter");
         int choice = 0;
         do {
-            choice = Console.choiceMaking();
-        } while (choice !=1 && choice != 2);
+            try {
+                System.out.print("Votre choix : ");
+                choice = sc.nextInt();
+                System.out.println("");
+            } catch (InputMismatchException e) {
+                System.out.println("Format invalide.");
+            }
+            sc.nextLine();
+        } while (choice != 1 && choice != 2);
         switch (choice) {
-            case 1 :
-                Console.showMenu();
+            case 1:
+                //this.showMenu();
                 break;
-            case 2 :
+            case 2:
                 System.exit(0);
                 break;
         }
     }
 
-    public static int choiceMaking() {
-        Scanner sc = new Scanner(System.in);
-        int choice = 0;
-        try {
-            System.out.print("Votre choix : ");
-            choice = sc.nextInt();
-            System.out.println("");
+    public void showHands(){
+        System.out.println("## Mains des joueurs : \n"
+                + Partie.getInstance().getJoueurs().get(0) + " possède : " + Partie.getInstance().getJoueurs().get(0).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(0).getMain().get(1) + "\n"
+                + Partie.getInstance().getJoueurs().get(1) + " possède : " + Partie.getInstance().getJoueurs().get(1).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(1).getMain().get(1) + "\n"
+                + Partie.getInstance().getJoueurs().get(2) + " possède : " + Partie.getInstance().getJoueurs().get(2).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(2).getMain().get(1) + "\n"
+        );
+        if ( Partie.getInstance().getPlayerCount() == 4 ){
+            System.out.println(Partie.getInstance().getJoueurs().get(3) + " possèdes : " + Partie.getInstance().getJoueurs().get(3).getMain().get(0) + " --- " + Partie.getInstance().getJoueurs().get(3).getMain().get(1)
+            );
+
         }
-        catch (InputMismatchException e){
-            System.out.println("Format invalide.");
-        }
-        sc.nextLine();
-        return choice;
     }
-    
+
+
+    //Partie producer
+
+    @Override
+    public void run() {
+        try {
+            this.process();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void majAffichage() throws InterruptedException {
+        System.out.println("");
+        if (partie.isStarted() == false) {
+            System.out.println("(1) --- Jouer\n(2) --- Lire les règles\n(3) --- Quitter");
+        }
+
+        if(partie.isStarted()==true && partie.isSetup()==false && (partie.getPlayerCount() == -1 || partie.getRealPlayerCount() == -1 || partie.getVariante() == null) ) {
+            if (partie.getPlayerCount() == -1) {
+                System.out.println("Voulez-vous jouer à 3 ou 4 joueurs ?");
+
+            } else if (partie.getRealPlayerCount() == -1) {
+                System.out.println("Combien y a-t-il de joueurs réels dans la partie ?");
+
+            } else if (partie.getVariante() == null) {
+                System.out.println("Choisissez une variante pour la partie :\n" +
+                        "(1) -- Variante de base : les trophées sont assignés selon les règles classiques\n" +
+                        "(2) -- Variante 1 : les trophées sont assignés aléatoirement\n" +
+                        "(3) -- Variante 2 : les trophées sont assignés selon les règles classiques mais sont inconnus");
+            }
+        }
+
+        if (this.partie.getGamePhase() == "hiding"){
+            if (this.partie.getCurrentPlaying() instanceof JoueurReel){
+                System.out.println("Le joueur " + Partie.getInstance().getCurrentPlaying() + " doit choisir une carte à cacher parmi "+
+                        Partie.getInstance().getCurrentPlaying().getMain().get(0) + " - " + Partie.getInstance().getCurrentPlaying().getMain().get(1));
+            }
+        }
+
+        if (this.partie.getGamePhase() == "jesting"){
+            if (Partie.getInstance().getCurrentPlaying() instanceof JoueurReel){
+                System.out.println("Le joueur " + Partie.getInstance().getCurrentPlaying() + " dois choisir une carte à mettre dans son Jest parmi :");
+                for (Carte carte: Partie.getInstance().getSelectCards()){
+                    System.out.println("-- " + carte);
+                }
+
+            }
+        }
+
+        System.out.println("Votre choix : ");
+    }
+
+    public void process() throws InterruptedException {
+        this.majAffichage();
+
+        this.scan = new Scanner(System.in);
+        int msg = -1;
+
+        msg = this.scan.nextInt(); //le thread reste bloqué ici s'il n'y a pas d'input
+
+        this.queue.put(msg); //on envoit le msg dès qu'il y a un input
+        Thread.sleep(500); //besoin d'attentre que la partie aie finit ses manips pour maj l'affichage sinon cv pas
+        run();
+    }
+
+    public void setJoueur(Joueur joueur) {
+        this.joueur = joueur;
+    }
 }
