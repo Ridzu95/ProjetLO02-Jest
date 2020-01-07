@@ -168,7 +168,8 @@ public class Console implements Runnable {
 
         if (this.partie.getGamePhase() == "hiding"){
             if (this.partie.getCurrentPlaying() instanceof JoueurReel){
-                System.out.println("Le joueur " + Partie.getInstance().getCurrentPlaying() + " doit choisir une carte à cacher");
+                System.out.println("Le joueur " + Partie.getInstance().getCurrentPlaying() + " doit choisir une carte à cacher parmi "+
+                        Partie.getInstance().getCurrentPlaying().getMain().get(0) + " - " + Partie.getInstance().getCurrentPlaying().getMain().get(1));
             }
         }
 
@@ -179,8 +180,6 @@ public class Console implements Runnable {
                     System.out.println("-- " + carte);
                 }
 
-            } else {
-                System.out.println("Le bot " + Partie.getInstance().getCurrentPlaying() + " choisis une carte à mettre dans son Jest ...");
             }
         }
 
@@ -189,6 +188,7 @@ public class Console implements Runnable {
 
     public void process() throws InterruptedException {
         this.majAffichage();
+
         this.scan = new Scanner(System.in);
         int msg = -1;
 

@@ -214,6 +214,8 @@ public class Partie implements Runnable {
 					int random = (int) (Math.random() + 0.5);
 					joueur.getMain().get(random).setVisible(false);
 					this.message = -1;
+					System.out.println("Le bot " + Partie.getInstance().getCurrentPlaying() + " choisis une carte à mettre dans son Jest ...");
+
 				}
 
 				System.out.println("\nLe joueur " + joueur + " a caché une carte");
