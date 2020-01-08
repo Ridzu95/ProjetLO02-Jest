@@ -240,6 +240,8 @@ public class Partie implements Runnable {
 		    joueur.getJest().add(joueur.getMain().poll());
         }
 
+		this.attribuerTrophees();
+
 		this.console.showJests();
 		CompteurVarianteBase compteur = new CompteurVarianteBase();
 
@@ -368,6 +370,314 @@ public class Partie implements Runnable {
 
 		System.out.println("Phase de jesting terminée");
 
+	}
+
+	/* attribuerTrophees() méthode qui permet d'assigner le(s) trophée(s) à la fin de la partie
+	 * on test chaque id de trophée et on les assigne en fonction de leur caractétistiques */
+	public void attribuerTrophees() {
+
+
+		int i = 0, pos1 = 0, pos2 = 0, position = -1; //on a besoin de positions pour garder en mémoire à qui on va attribuer les trophées
+
+		for (Carte trophee : this.tropheesPartie) {
+			i += 1;
+			if (trophee.getTrophee().getId() == 1) { //HighestTrefle
+				for ( Joueur joueur : this.joueurs) { //test pour chaque joueur s'il possède le 4 de trèfle
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♣" && carte.getValeur().getValeur() == 4) {
+
+							position = this.joueurs.indexOf(joueur); //on sauvegarde la position du joueur qui possède le trophée
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+						}
+					}
+				}
+			}
+
+			if (trophee.getTrophee().getId() == 3) { //HighestCoeur
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♥" && carte.getValeur().getValeur() == 4) {
+							position = this.joueurs.indexOf(joueur);
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+						}
+					}
+				}
+			}
+
+			if (trophee.getTrophee().getId() == 4 ) {//HighestPique
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♠" && carte.getValeur().getValeur() == 4) {
+							position = this.joueurs.indexOf(joueur);
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+						}
+					}
+				}
+			}
+
+			if (trophee.getTrophee().getId() == 2) {//"HighestCarreau"
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♦" && carte.getValeur().getValeur() == 4) {
+							position = this.joueurs.indexOf(joueur);
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+						}
+					}
+				}
+			}
+
+			if (trophee.getTrophee().getId() == 6) {//LowestCarreau"
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♦" && carte.getValeur().getValeur() == 1) {
+							position = this.joueurs.indexOf(joueur);
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+						}
+					}
+				}
+			}
+
+			if (trophee.getTrophee().getId() == 8) {//"LowestPique"
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♠" && carte.getValeur().getValeur() == 1) {
+							position = this.joueurs.indexOf(joueur);
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+						}
+					}
+				}
+			}
+
+			if (trophee.getTrophee().getId() == 7) {//"LowestCoeur"
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♥" && carte.getValeur().getValeur() == 1) {
+							position = this.joueurs.indexOf(joueur);
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+						}
+					}
+				}
+			}
+
+			if (trophee.getTrophee().getId() == 5) {//"LowestTrefle"
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "♣" && carte.getValeur().getValeur() == 1) {
+							position = this.joueurs.indexOf(joueur);
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+						}
+					}
+				}
+			}
+
+			if (trophee.getTrophee().getId() == 14) {//"Joker"
+				for ( Joueur joueur : this.joueurs) {
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getCouleur().getCouleur() == "★") {
+							position = this.joueurs.indexOf(joueur);
+							Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+						}
+					}
+				}
+			}
+
+			if (trophee.getTrophee().getId() == 9) {//"MajorityDeux"
+				int nb;
+				position = 0;
+				int nbest = 0;
+				for ( Joueur joueur : this.joueurs) {
+					nb = 0;
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getValeur().getValeur() == 2) {
+							nb+= 1;
+						}
+					}
+					if (nb > nbest) {
+						position = joueurs.indexOf(joueur);
+						nbest = nb;
+					} else if (nb == nbest) { //si égalité on garde la position du joueur qui possède le pique
+						for (Carte carte : joueur.getJest()) {
+							if (carte.getValeur().getValeur() == 2 && carte.getCouleur().getCouleur() == "♠") {
+								position = joueurs.indexOf(joueur);
+								nbest = nb;
+							}
+						}
+					}
+
+
+				}
+				Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+
+			}
+
+			if (trophee.getTrophee().getId() == 10) {//"MajorityTrois"
+				int nb;
+				position = 0;
+				int nbest = 0;
+				for ( Joueur joueur : this.joueurs) {
+					nb = 0;
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getValeur().getValeur() == 3) {
+							nb+= 1;
+						}
+					}
+					if (nb > nbest) {
+						position = joueurs.indexOf(joueur);
+						nbest = nb;
+					} else if (nb == nbest) { //si égalité on garde la position du joueur qui possède le pique
+						for (Carte carte : joueur.getJest()) {
+							if (carte.getValeur().getValeur() == 3 && carte.getCouleur().getCouleur() == "♠") {
+								position = joueurs.indexOf(joueur);
+								nbest = nb;
+							}
+						}
+					}
+				}
+				Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+
+			}
+
+			if (trophee.getTrophee().getId() == 11) {//"MajorityQuatre"
+				int nb;
+				position = 0;
+				int nbest = 0;
+				for ( Joueur joueur : this.joueurs) {
+					nb = 0;
+					for (Carte carte : joueur.getJest()) {
+						if (carte.getValeur().getValeur() == 4) {
+							nb+= 1;
+						}
+					}
+					if (nb > nbest) {
+						position = joueurs.indexOf(joueur);
+						nbest = nb;
+					} else if (nb == nbest) { //si égalité on garde la position du joueur qui possède le pique
+						for (Carte carte : joueur.getJest()) {
+							if (carte.getValeur().getValeur() == 4 && carte.getCouleur().getCouleur() == "♠") {
+								position = joueurs.indexOf(joueur);
+								nbest = nb;
+							}
+						}
+					}
+				}
+				Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+
+			}
+
+			if (trophee.getTrophee().getId() == 12) {//"BestJest"
+				CompteurVarianteBase compteur = new CompteurVarianteBase();
+				int score;
+				position = 0;
+				int bestscore = 0;
+				for ( Joueur joueur : this.joueurs) {
+
+					joueur.accept(compteur);
+					score = joueur.getScore();
+					if (score > bestscore) {
+						position = joueurs.indexOf(joueur);
+						bestscore = score;
+					} else if (score == bestscore) {
+						Carte bestCardJest = joueur.getJest().get(0);
+
+						Collections.sort(joueur.getJest());
+						Collections.sort(this.joueurs.get(position).getJest());
+
+						if (bestCardJest.getValeur().getValeur() > this.joueurs.get(position).getJest().get(0).getValeur().getValeur()) {
+							position = joueurs.indexOf(joueur);
+							bestscore = score;
+						} else if (bestCardJest.getValeur().getValeur() == this.joueurs.get(position).getJest().get(0).getValeur().getValeur()
+								&& bestCardJest.getCouleur().getOrdre() > this.joueurs.get(position).getJest().get(0).getCouleur().getOrdre()) {
+							position = joueurs.indexOf(joueur);
+							bestscore = score;
+						}
+					}
+					joueur.setScore(0); //à vérifier si c'est nécessaure
+				}
+				Console.showTropheeWinner(joueurs.get(position),trophee);
+			}
+
+			if (trophee.getTrophee().getId() == 13) {//"BestJestNoJoker"
+				CompteurVarianteBase compteur1 = new CompteurVarianteBase(); //compteur pour comparer la valeur des Jest
+				int score;
+				position = 0;
+				int bestscore = 0;
+				boolean hasJoker; //permet d'exclure le joueur qui possède le Joker
+				for ( Joueur joueur : this.joueurs){
+					hasJoker = false;
+					for (Carte carte : joueur.getJest()) {
+						if ( carte.getCouleur().getCouleur() == "★" ) {
+							hasJoker = true;
+						}
+					}
+
+					if (hasJoker == false) {
+						joueur.accept(compteur1);
+						score = joueur.getScore();
+						if (score > bestscore) {
+							position = joueurs.indexOf(joueur);
+							bestscore = score;
+						}  else if (score == bestscore) { // si égalité on va tester qui a la plus grande valeur
+							Carte bestCardJest = joueur.getJest().get(0);
+							Collections.sort(joueur.getJest()); //sort permet de mettre la carte la plus forte du joueur en position 0 du Jest
+							Collections.sort(this.joueurs.get(position).getJest());
+							if (bestCardJest.getValeur().getValeur() > this.joueurs.get(position).getJest().get(0).getValeur().getValeur()) {
+								position = joueurs.indexOf(joueur);
+								bestscore = score;
+							} else if //si à nouveau égalité on va tester qui a la couleur la plus hate
+							(bestCardJest.getValeur().getValeur() == this.joueurs.get(position).getJest().get(0).getValeur().getValeur()
+											&& bestCardJest.getCouleur().getOrdre() > this.joueurs.get(position).getJest().get(0).getCouleur().getOrdre()) {
+								position = joueurs.indexOf(joueur);
+								bestscore = score;
+							}
+						}
+						joueur.setScore(0); //à vérifier si c'est nécessaire
+					}
+
+				}
+				Console.showTropheeWinner(joueurs.get(position),trophee);
+
+
+			}
+
+			if ( i == 1) {
+				pos1 = position;
+			} else {
+				pos2 = position;
+			}
+
+
+
+		}
+		//enfin on ajoute les trophées dans les Jest des joueurs
+		this.joueurs.get(pos1).getJest().add(this.tropheesPartie.get(0)); //fait en dehors de la boucle sinon erreur de concurrence
+
+		if (this.tropheesPartie.size() == 2) {
+			this.joueurs.get(pos2).getJest().add(this.tropheesPartie.get(1));
+		}
 	}
 
 	/* getter setter */
