@@ -1,13 +1,16 @@
 package fr.utt.lo02.xfmv.jest.controller;
-import fr.utt.lo02.xfmv.jest.vue.graphicInterface.Menu;
+import fr.utt.lo02.xfmv.jest.vue.GUI.Menu;
 
-import javax.management.openmbean.TabularData;
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URI;
-import java.util.concurrent.BlockingQueue;
+
+/**
+ * Controller for the menu GUI.
+ * Adds events listeners for the buttons in GUI.
+ * Clicking on a button sends an integer-type message in the game message queue (from 1 to 3).
+ * At this state, the game engine waits for input.
+ * It was made this way to allow people to play in CLI and GUI at the same time.
+ */
 
 public class MenuController {
 
@@ -20,13 +23,13 @@ public class MenuController {
 
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Partie.getInstance().getQueue().put(1);
+                    Game.getInstance().getQueue().put(1);
 
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
                 try {
-                    Partie.getInstance().getConsole().majAffichage();
+                    Game.getInstance().getCLI().displayUpdate();
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -37,7 +40,7 @@ public class MenuController {
 
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Partie.getInstance().getQueue().put(2);
+                    Game.getInstance().getQueue().put(2);
 
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
@@ -49,7 +52,7 @@ public class MenuController {
 
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Partie.getInstance().getQueue().put(3);
+                    Game.getInstance().getQueue().put(3);
 
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();

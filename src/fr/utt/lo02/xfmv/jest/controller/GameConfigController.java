@@ -1,14 +1,14 @@
 package fr.utt.lo02.xfmv.jest.controller;
 
-import fr.utt.lo02.xfmv.jest.model.variantes.Variante1;
-import fr.utt.lo02.xfmv.jest.model.variantes.Variante2;
-import fr.utt.lo02.xfmv.jest.model.variantes.Variantebase;
-import fr.utt.lo02.xfmv.jest.vue.graphicInterface.GameConfig;
+import fr.utt.lo02.xfmv.jest.vue.GUI.GameConfig;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URI;
+
+/**
+ * Controller class for the Game Configuration UI.
+ * Its constructor adds an event listener that set the game settings to the values entered in GUI.
+ */
 
 public class GameConfigController {
 
@@ -20,24 +20,24 @@ public class GameConfigController {
 
                 if (((Integer) gameConfig.getSpinnerPlayers().getValue()).intValue() >= ((Integer) gameConfig.getSpinnerRealPlayers().getValue()).intValue()) {
                     try {
-                        Partie.getInstance().getQueue().put(((Integer) gameConfig.getSpinnerPlayers().getValue()).intValue());
-                        Partie.getInstance().getQueue().put(((Integer) gameConfig.getSpinnerRealPlayers().getValue()).intValue());
+                        Game.getInstance().getQueue().put(((Integer) gameConfig.getSpinnerPlayers().getValue()).intValue());
+                        Game.getInstance().getQueue().put(((Integer) gameConfig.getSpinnerRealPlayers().getValue()).intValue());
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
 
 
-                    switch ((String) gameConfig.getSpinnerVariante().getValue()) {
+                    switch ((String) gameConfig.getSpinnerVariant().getValue()) {
                         case "Normale":
                             try {
-                                Partie.getInstance().getQueue().put(1);
+                                Game.getInstance().getQueue().put(1);
                             } catch (InterruptedException ex) {
                                 ex.printStackTrace();
                             }
                             break;
                         case "Aléatoire":
                             try {
-                                Partie.getInstance().getQueue().put(2);
+                                Game.getInstance().getQueue().put(2);
                             } catch (InterruptedException ex) {
                                 ex.printStackTrace();
                             }
@@ -45,7 +45,7 @@ public class GameConfigController {
                             break;
                         case "Caché":
                             try {
-                                Partie.getInstance().getQueue().put(3);
+                                Game.getInstance().getQueue().put(3);
                             } catch (InterruptedException ex) {
                                 ex.printStackTrace();
                             }

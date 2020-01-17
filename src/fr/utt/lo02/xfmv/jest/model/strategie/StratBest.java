@@ -2,29 +2,33 @@ package fr.utt.lo02.xfmv.jest.model.strategie;
 
 import java.util.ArrayList;
 
-import fr.utt.lo02.xfmv.jest.model.cartes.Carte;
+import fr.utt.lo02.xfmv.jest.model.card.Card;
 
-public class StratBest implements Strategie{
+/**
+ * Strategy for bots where the bot select the best visible card he can choose every time.
+ */
+
+public class StratBest implements Strategy {
 
 	@Override
-	public int executerStrategie(ArrayList<Carte> selectCards) {
+	public int executerStrategie(ArrayList<Card> selectCards) {
 		// TODO Auto-generated method stub
 		
-		Carte carteChoisie = new Carte();//on créer la carte qui sera renvoyée
+		Card cardChoisie = new Card();//on créer la carte qui sera renvoyée
 		
-		carteChoisie = selectCards.get(0); //par défaut on va mettre la première carte
-		for (Carte carte : selectCards) {
-			if (carte.isVisible() == true) {
+		cardChoisie = selectCards.get(0); //par défaut on va mettre la première carte
+		for (Card card : selectCards) {
+			if (card.isVisible() == true) {
 				
-				if (carte.getValeur().getValeur() > carteChoisie.getValeur().getValeur() ) {
-					carteChoisie = carte;
+				if (card.getValue().getValeur() > cardChoisie.getValue().getValeur() ) {
+					cardChoisie = card;
 				}
  				
 			}
 				
 			
 		}
-		return selectCards.indexOf(carteChoisie);
+		return selectCards.indexOf(cardChoisie);
 	}
 
 }

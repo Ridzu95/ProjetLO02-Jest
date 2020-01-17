@@ -1,9 +1,14 @@
 package fr.utt.lo02.xfmv.jest.controller;
 
-import fr.utt.lo02.xfmv.jest.vue.graphicInterface.Results;
+import fr.utt.lo02.xfmv.jest.vue.GUI.Results;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+/**
+ * Controller for the results GUI.
+ * Adds events listeners for the "back to menu" button in GUI.
+ */
 
 public class ResultsController {
 
@@ -13,9 +18,9 @@ public class ResultsController {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
-                    Partie.getInstance().getQueue().put(1);
+                    Game.getInstance().getQueue().put(1);
                     Thread.sleep(500);
-                    Partie.getInstance().setGamePhase("init");
+                    Game.getInstance().setGamePhase("init");
 
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
